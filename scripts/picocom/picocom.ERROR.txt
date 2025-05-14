@@ -1,0 +1,32 @@
+Exception in thread rx:
+Traceback (most recent call last):
+File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+self.run()
+File "/usr/lib/python3.10/threading.py", line 953, in run
+Error encountered!
+self._target(*self._args, **self._kwargs)
+File "/home/oreo/Src/FPGA-Gowin/vgaminikbd/./picocom/picocom.py", line 521, in reader
+Exception in thread tx:
+Traceback (most recent call last):
+File "/usr/local/lib/python3.10/dist-packages/serial/serialposix.py", line 621, in write
+data = self.serial.read(self.serial.in_waiting or 1)
+File "/usr/local/lib/python3.10/dist-packages/serial/serialposix.py", line 595, in read
+n = os.write(self.fd, d)
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+raise SerialException(
+serial.serialutil.SerialException: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+self.run()
+File "/usr/lib/python3.10/threading.py", line 953, in run
+self._target(*self._args, **self._kwargs)
+File "/home/oreo/Src/FPGA-Gowin/vgaminikbd/./picocom/picocom.py", line 601, in writer
+self.serial.write(self.tx_encoder.encode(text))
+File "/usr/local/lib/python3.10/dist-packages/serial/serialposix.py", line 655, in write
+raise SerialException('write failed: {}'.format(e))
+serial.serialutil.SerialException: write failed: [Errno 5] Input/output error
+
+Exit

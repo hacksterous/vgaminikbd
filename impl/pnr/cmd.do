@@ -1,0 +1,14 @@
+-d /home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
+-p GW1NZ-1-QFN48-6
+-pn GW1NZ-LV1QN48C6/I5
+-cst /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.cst
+-cfg /home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/device.cfg
+-sdc /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.sdc
+-bit
+-tr
+-ph
+-timing
+-cst_error
+-correct_hold 1
+-route_maxfan 10
+-global_freq 50.000

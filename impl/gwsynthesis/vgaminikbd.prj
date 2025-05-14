@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gowin-synthesis-project>
+<Project>
+    <Version>beta</Version>
+    <Device id="GW1NZ-1" package="QFN48" speed="6" partNumber="GW1NZ-LV1QN48C6/I5"/>
+    <FileList>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/charBuffer.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charROM/charROM.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGen/clockGen.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGenALT/clockGenALT.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbdrom/kbdrom.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/ps2receiver.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v" type="verilog"/>
+        <File path="/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v" type="verilog"/>
+    </FileList>
+    <OptionList>
+        <Option type="disable_insert_pad" value="0"/>
+        <Option type="global_freq" value="50.000"/>
+        <Option type="looplimit" value="2000"/>
+        <Option type="output_file" value="/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg"/>
+        <Option type="print_all_synthesis_warning" value="0"/>
+        <Option type="ram_rw_check" value="0"/>
+        <Option type="verilog_language" value="verilog-2001"/>
+        <Option type="vhdl_language" value="vhdl-1993"/>
+    </OptionList>
+</Project>

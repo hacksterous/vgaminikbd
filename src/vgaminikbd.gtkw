@@ -1,0 +1,43 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Fri May  2 17:14:35 2025
+[*]
+[dumpfile] "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vcd"
+[dumpfile_mtime] "Fri May  2 17:12:43 2025"
+[dumpfile_size] 259146138
+[savefile] "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.gtkw"
+[timestart] 9987300000
+[size] 1920 947
+[pos] -1 -1
+*-23.129625 10005235000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.uvgaminikbd.
+[treeopen] tb.uvgaminikbd.uvga.
+[sst_width] 254
+[signals_width] 349
+[sst_expanded] 1
+[sst_vpaned_height] 544
+@28
+tb.uvgaminikbd.clk
+tb.uvgaminikbd.uvga.uheartbeat.userResetn
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.initData[6:0]
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.initStateACTIVE
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.initAddress[11:0]
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.zeroize
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorRow[4:0]
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.zeroizeStretched
+@29
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorColAtMax
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.initWrEn
+tb.uvgaminikbd.uvga.ucharbufinit.initAddressAtMax
+tb.uvgaminikbd.uvga.ucharbufinit.initStateIDLE
+tb.uvgaminikbd.uvga.ucharbufinit.enableRiseEdge
+[pattern_trace] 1
+[pattern_trace] 0

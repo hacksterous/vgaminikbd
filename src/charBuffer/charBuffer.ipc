@@ -1,0 +1,17 @@
+[General]
+ipc_version=4
+file=charBuffer
+module=charBuffer
+target_device=gw1nz1c-000
+type=ram_sp
+version=3.0
+
+[Config]
+BYTE_SIZE=0
+LANG=0
+MEM_FILE=../mem/charBuffer.mi
+RESET_MODE=true
+DEPTH=2560
+READ=0
+WIDTH=8
+WRITE=0

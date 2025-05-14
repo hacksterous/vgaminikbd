@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="vgaminikbd" T_Register="191(0)" T_Alu="56(0)" T_Lut="331(0)" T_Bsram="3(0)">
+ <SubModule name="ukdA" Register="2" T_Register="2(2)"/>
+ <SubModule name="ukdB" Register="2" T_Register="2(2)"/>
+ <SubModule name="uclockGen"/>
+ <SubModule name="uuart0" Register="59" Lut="97" T_Register="59(59)" T_Lut="97(97)"/>
+ <SubModule name="uvga" Register="77" Alu="27" Lut="189" T_Register="128(77)" T_Alu="56(27)" T_Lut="234(189)" T_Bsram="3(0)">
+  <SubModule name="uheartbeat" Register="8" Alu="5" Lut="4" T_Register="8(8)" T_Alu="5(5)" T_Lut="4(4)"/>
+  <SubModule name="ucharbufinit" Register="23" Alu="6" Lut="30" T_Register="23(23)" T_Alu="6(6)" T_Lut="30(30)"/>
+  <SubModule name="ucharROM" Bsram="1" T_Bsram="1(1)"/>
+  <SubModule name="ucharBuffer" Bsram="2" T_Bsram="2(2)"/>
+  <SubModule name="uhvsync" Register="20" Alu="18" Lut="11" T_Register="20(20)" T_Alu="18(18)" T_Lut="11(11)"/>
+ </SubModule>
+</Module>

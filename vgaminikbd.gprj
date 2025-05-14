@@ -1,0 +1,27 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW1NZ-1" pn="GW1NZ-LV1QN48C6/I5">gw1nz1-015</Device>
+    <FileList>
+        <File path="src/charBuffer/charBuffer.v" type="file.verilog" enable="1"/>
+        <File path="src/charROM/charROM.v" type="file.verilog" enable="1"/>
+        <File path="src/charbufferinit.v" type="file.verilog" enable="1"/>
+        <File path="src/clockGen/clockGen.v" type="file.verilog" enable="1"/>
+        <File path="src/clockGenALT/clockGenALT.v" type="file.verilog" enable="1"/>
+        <File path="src/datamux2in.v" type="file.verilog" enable="1"/>
+        <File path="src/fifo.v" type="file.verilog" enable="1"/>
+        <File path="src/heartbeat.v" type="file.verilog" enable="1"/>
+        <File path="src/hvsync.v" type="file.verilog" enable="1"/>
+        <File path="src/kbd.v" type="file.verilog" enable="1"/>
+        <File path="src/kbdrom/kbdrom.v" type="file.verilog" enable="1"/>
+        <File path="src/keysynchronizer.v" type="file.verilog" enable="1"/>
+        <File path="src/ps2receiver.v" type="file.verilog" enable="1"/>
+        <File path="src/uart.v" type="file.verilog" enable="1"/>
+        <File path="src/vga.v" type="file.verilog" enable="1"/>
+        <File path="src/vgaminikbd.v" type="file.verilog" enable="1"/>
+        <File path="src/vgaminikbd.cst" type="file.cst" enable="1"/>
+        <File path="src/vgaminikbd.sdc" type="file.sdc" enable="1"/>
+    </FileList>
+</Project>

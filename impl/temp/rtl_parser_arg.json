@@ -1,0 +1,77 @@
+{
+ "Device" : "GW1NZ-1",
+ "Files" : [
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/charBuffer.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charROM/charROM.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGen/clockGen.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGenALT/clockGenALT.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbdrom/kbdrom.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/ps2receiver.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
+   "Type" : "verilog"
+  },
+  {
+   "Path" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
+   "Type" : "verilog"
+  }
+ ],
+ "IncludePath" : [
+
+ ],
+ "LoopLimit" : 2000,
+ "ResultFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/temp/rtl_parser.result",
+ "Top" : "",
+ "VerilogStd" : "verilog_2001",
+ "VhdlStd" : "vhdl_93"
+}
