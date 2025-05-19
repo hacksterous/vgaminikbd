@@ -5,6 +5,9 @@
 `timescale 1ns/1ps
 `include "vgaminikbd.vh"
 module datamux2in (
+	debug0,
+	debug1,
+	debug2,
 	clk,
 	resetn,
 	d0,
@@ -15,6 +18,9 @@ module datamux2in (
 	od,
 	odv);
 
+	output debug0;
+	output debug1;
+	output debug2;
 	input clk;
 	input resetn;
 	input [7:0] d0;
@@ -24,6 +30,10 @@ module datamux2in (
 	output error;
 	output [7:0] od;
 	output odv;
+
+	assign debug0 = ~nedfifo0;//data in UART FIFO
+	assign debug1 = ~nedfifo1;//data in KBD FIFO
+	assign debug2 = ~arbFifoNotEmpty;//data in output FIFO
 
 	wire nedfifo0;
 	reg popdfifo0;
@@ -54,8 +64,8 @@ module datamux2in (
 		.outData (outdfifo1));
 
 	wire arbFifoError;
-	reg inArbFifoPush0;
-	reg inArbFifoPush1;
+	reg arbFifoPush0;
+	reg arbFifoPush1;
 	wire push0Error = d0v & ~nfdfifo0;
 	wire push1Error = d1v & ~nfdfifo1;
 	wire pushError = push0Error | push1Error;
@@ -78,7 +88,7 @@ module datamux2in (
 	end
 
 	//same as delayed version of popdfifo1/0
-	assign lastPopFifo = {inArbFifoPush1, inArbFifoPush0};
+	assign lastPopFifo = {arbFifoPush1, arbFifoPush0};
 
 	always @(*) begin
 		casez ({nefifo[1:0], lastPopFifo[1:0], arbCounter[1:0]})
@@ -94,37 +104,37 @@ module datamux2in (
 		endcase
 	end
 
-	wire pushArbFifo;
-	wire popArbFifo;
-	wire nfArbFifo;
+	wire arbFifoPush;
+	wire arbFifoNotFull;
 	reg odv;
-	wire inArbFifoNotEmpty;
+	wire arbFifoNotEmpty;
 	always @(posedge clk) begin
 		if (~resetn) begin
-			inArbFifoPush0	<= `DELAY 1'b0;
-			inArbFifoPush1	<= `DELAY 1'b0;
+			arbFifoPush0	<= `DELAY 1'b0;
+			arbFifoPush1	<= `DELAY 1'b0;
 			odv				<= `DELAY 1'b0;
 		end else begin
-			inArbFifoPush0	<= `DELAY popdfifo0;
-			inArbFifoPush1	<= `DELAY popdfifo1;
-			odv				<= `DELAY inArbFifoNotEmpty;
+			arbFifoPush0	<= `DELAY popdfifo0;
+			arbFifoPush1	<= `DELAY popdfifo1;
+			odv				<= `DELAY arbFifoNotEmpty;
 		end
 	end
 
-	wire [7:0] inArbFifo = (inArbFifoPush1)? outdfifo1:
-							(inArbFifoPush0)? outdfifo0:
+	wire [7:0] arbFifoInData = (arbFifoPush1)? outdfifo1:
+							(arbFifoPush0)? outdfifo0:
 							8'h0;
-	assign pushArbFifo = inArbFifoPush0 | inArbFifoPush1;
-	assign arbFifoError = pushArbFifo & ~nfArbFifo;
+
+	assign arbFifoPush = arbFifoPush0 | arbFifoPush1;
+	assign arbFifoError = arbFifoPush & ~arbFifoNotFull;
 
 	fifo #(.WIDTH(8), .DEPTH(2)) ArbFifo (
 		.clk (clk),
 		.resetn (resetn),
-		.push (pushArbFifo),
-		.notfull (nfArbFifo),
-		.inData (inArbFifo),
-		.notempty (inArbFifoNotEmpty),
-		.pop (inArbFifoNotEmpty),
+		.push (arbFifoPush),
+		.notfull (arbFifoNotFull),
+		.inData (arbFifoInData),
+		.notempty (arbFifoNotEmpty),
+		.pop (arbFifoNotEmpty),
 		.outData (od));
 
 endmodule

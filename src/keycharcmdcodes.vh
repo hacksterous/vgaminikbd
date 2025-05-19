@@ -18,9 +18,9 @@
 `define CMD_DOWN 10
 `define CMD_CR 13
 `define CMD_HOME 13
-`define CMD_CLS 14
-`define CMD_LEFT 17
-`define CMD_RIGHT 18
-`define CMD_END 20
+`define CMD_CLS 12
+`define CMD_LEFT 13
+`define CMD_RIGHT 14
+`define CMD_END 15
 `define CMD_SPC 32
 `endif

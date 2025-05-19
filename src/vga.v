@@ -91,6 +91,7 @@ module vga(
 	input debug,
 	input inputKeyA,
 	input inputKeyB,
+	output wire userResetn,
 	output wire debug0,
 	output wire debug1,
 	output wire debug2,
@@ -164,29 +165,29 @@ module vga(
 	reg screenEndScrollingStarted;
 	wire [4:0] currentScrolledRow;
 
-	wire userResetn;
 	wire oneSecPulse;
 
 	//The heartbeat module takes in the VSync pulse
-	//and generates user reset that remains active (low)
-	//for 4 seconds and then deasserts to high.
-	//cursorBlink is a 1 second pulse (low+pulse)
-	wire slowClkPosEdge;
+	//and generates user reset that remains active low
+	//for 1 second and then deasserts to high.
+	//cursorBlink is a 0.5 second pulse 
 	heartbeat uheartbeat (
 		.clk (clk),
 		.resetn (resetn),
 		.vsync (vsync),
 		.inputKey (inputKeyB),
-		.slowClkPosEdge (slowClkPosEdge),
 		.userResetn (userResetn),
 		.cursorBlink (oneSecPulse)
 	);
 
-	wire inputCmdDown		= (inputCmdMemWrData == 8'd`CMD_DOWN) & (currentCursorRow == MAXROW_M_1);
+	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
+								((inputCmdMemWrData[3:0] ==4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF)) & 
+								(currentCursorRow == MAXROW_M_1);
 	wire screenEndScroll	= (currentCursorRow == MAXROW_M_1) & (currentCursorCol == MAXCOL_M_1);
 	wire inputCmdCMD_CLS	= inputCmdValid & (inputCmdData == 8'd`CMD_CLS);
 	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEndScroll);
 
+	reg inputCmdScrollUp_r0;
 	charBufferInit ucharbufinit (
 		.clk (clk),
 		.resetn (resetn),
@@ -200,10 +201,9 @@ module vga(
 		.initData (charBufferInitData)
 		);
 
-	reg inputCmdScrollUp_r0;
-	reg inputCmdCMD_BKSP_r0;
-	wire inputCmdCMD_BKSP = inputCmdValid_r0 & (inputCmdMemWrData == 8'd`CMD_BKSP);
-	wire inputCmdCMD_DEL = inputCmdValid & (inputCmdValid == 8'd`CMD_DEL);
+	reg inputCmdCMD_BKSP_DEL_r0;
+	wire inputCmdCMD_BKSP_DEL = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) &
+							((inputCmdMemWrData[3:0] == 4'd`CMD_BKSP) | (inputCmdMemWrData[3:0] == 4'd`CMD_DEL));
 	always @(posedge clk) begin
 		if (~resetn) begin
 			currentCursorCol <= `DELAY 7'h0;
@@ -214,96 +214,97 @@ module vga(
 			scrollRow <= `DELAY 5'h0;
 			screenEndScrollingStarted <= `DELAY 1'b0;
 			inputCmdScrollUp_r0 <= `DELAY 1'b0;
-			inputCmdCMD_BKSP_r0 <= `DELAY 1'b0;
+			inputCmdCMD_BKSP_DEL_r0 <= `DELAY 1'b0;
 		end else begin
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
 			inputCmdMemWrEn <= `DELAY inputCmdValid & (inputCmdData >= 8'd32);
 			inputCmdMemWrData <= `DELAY inputCmdData;
 			inputCmdScrollUp_r0 <= `DELAY inputCmdScrollUp;
-			inputCmdCMD_BKSP_r0 <= `DELAY inputCmdCMD_BKSP;
+			inputCmdCMD_BKSP_DEL_r0 <= `DELAY inputCmdCMD_BKSP_DEL;
 			//character at current cursor is stored at (MAXROW_M_1 + 1) * currentCursorCol + currentCursorRow
 			if (inputCmdValid_r0) begin
-				case (inputCmdMemWrData)
-					8'd`CMD_CRLF: begin
-						//Return is CMD_HOME + CMD_DOWN
-						currentCursorCol <= `DELAY 7'h0;
-						//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
-						if (currentCursorRow == MAXROW_M_1) begin
-							//screenEndScrollingStarted <= `DELAY 1'b1;
-							scrollRow <= `DELAY (scrollRow + 1'b1);
-							//erase previous line
-						end else begin
-							currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
-						end
-					end
-					8'd`CMD_DOWN: begin
-						//same as LF
-						//remain on row MAXROW_M_1
-						//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
-						if (currentCursorRow == MAXROW_M_1) begin
-							//screenEndScrollingStarted <= `DELAY 1'b1;
-							scrollRow <= `DELAY (scrollRow + 1'b1);
-						end else begin
-							currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
-						end
-					end
-					8'd`CMD_UP: begin
-						if (currentCursorRow != 5'h0) begin
-							currentCursorRow <= `DELAY (currentCursorRow - 1'b1);
-						end
-					end
-					8'd`CMD_LEFT, 8'd`CMD_BKSP: begin
-						if (currentCursorCol != 7'h0) begin
-							currentCursorCol <= `DELAY (currentCursorCol - 1'b1);
-						end else if (currentCursorRow != 5'h0) begin
-								currentCursorCol <= `DELAY MAXCOL_M_1;
-								currentCursorRow <= `DELAY (currentCursorRow - 1'b1);
-						end
-					end
-					8'd`CMD_RIGHT, 8'd`CMD_TAB: begin
-						if (currentCursorCol == MAXCOL_M_1) begin
-							//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
-							if (currentCursorRow == MAXROW_M_1) begin
-								screenEndScrollingStarted <= `DELAY 1'b1;
-								scrollRow <= `DELAY (scrollRow + 1'b1);
-							end else begin
-								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
-							end
+				if (inputCmdMemWrData[7:4] == 4'h0) begin
+					case (inputCmdMemWrData[3:0])
+						4'd`CMD_CRLF: begin
+							//Return is CMD_HOME + CMD_DOWN
 							currentCursorCol <= `DELAY 7'h0;
-						end else begin
-							currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
-						end
-					end
-					8'd`CMD_HOME: begin
-						//same as CR
-						currentCursorCol <= `DELAY 7'h0;
-					end
-					8'd`CMD_END: begin
-						currentCursorCol <= `DELAY MAXCOL_M_1;
-					end
-					8'd`CMD_CLS: begin //kbd.v will generate ASCII code 'd14 (Form-Feed or ^L) on seeing Shift+Esc
-						currentCursorCol <= `DELAY 7'h0;
-						currentCursorRow <= `DELAY 7'h0;
-						scrollRow <= `DELAY 5'h0;
-						screenEndScrollingStarted <= `DELAY 1'b0;
-					end
-					default: begin
-						//printable character > ASCII 31
-						if (currentCursorCol == MAXCOL_M_1) begin
-							currentCursorCol <= `DELAY 5'h0;
 							//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 							if (currentCursorRow == MAXROW_M_1) begin
-								screenEndScrollingStarted <= `DELAY 1'b1;
+								//screenEndScrollingStarted <= `DELAY 1'b1;
 								scrollRow <= `DELAY (scrollRow + 1'b1);
 								//erase previous line
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
 							end
-						end else begin
-							currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
 						end
+						4'd`CMD_DOWN: begin
+							//same as LF
+							//remain on row MAXROW_M_1
+							//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
+							if (currentCursorRow == MAXROW_M_1) begin
+								//screenEndScrollingStarted <= `DELAY 1'b1;
+								scrollRow <= `DELAY (scrollRow + 1'b1);
+							end else begin
+								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
+							end
+						end
+						4'd`CMD_UP: begin
+							if (currentCursorRow != 5'h0) begin
+								currentCursorRow <= `DELAY (currentCursorRow - 1'b1);
+							end
+						end
+						4'd`CMD_LEFT, 8'd`CMD_BKSP: begin
+							if (currentCursorCol != 7'h0) begin
+								currentCursorCol <= `DELAY (currentCursorCol - 1'b1);
+							end else if (currentCursorRow != 5'h0) begin
+									currentCursorCol <= `DELAY MAXCOL_M_1;
+									currentCursorRow <= `DELAY (currentCursorRow - 1'b1);
+							end
+						end
+						4'd`CMD_RIGHT, 8'd`CMD_TAB: begin
+							if (currentCursorCol == MAXCOL_M_1) begin
+								//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
+								if (currentCursorRow == MAXROW_M_1) begin
+									screenEndScrollingStarted <= `DELAY 1'b1;
+									scrollRow <= `DELAY (scrollRow + 1'b1);
+								end else begin
+									currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
+								end
+								currentCursorCol <= `DELAY 7'h0;
+							end else begin
+								currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
+							end
+						end
+						4'd`CMD_HOME: begin
+							//same as CR
+							currentCursorCol <= `DELAY 7'h0;
+						end
+						4'd`CMD_END: begin
+							currentCursorCol <= `DELAY MAXCOL_M_1;
+						end
+						4'd`CMD_CLS: begin //kbd.v will generate ASCII code 'd14 (Form-Feed or ^L) on seeing Shift+Esc
+							currentCursorCol <= `DELAY 7'h0;
+							currentCursorRow <= `DELAY 7'h0;
+							scrollRow <= `DELAY 5'h0;
+							screenEndScrollingStarted <= `DELAY 1'b0;
+						end
+					endcase
+				end else begin
+					//printable character > ASCII 31
+					if (currentCursorCol == MAXCOL_M_1) begin
+						currentCursorCol <= `DELAY 5'h0;
+						//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
+						if (currentCursorRow == MAXROW_M_1) begin
+							screenEndScrollingStarted <= `DELAY 1'b1;
+							scrollRow <= `DELAY (scrollRow + 1'b1);
+							//erase previous line
+						end else begin
+							currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
+						end
+					end else begin
+						currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
 					end
-				endcase
+				end
 			end else if (~inputKeyB | ~inputKeyA) begin
 				//key presses will initialize cursor
 				currentCursorCol	<= `DELAY 7'h0;
@@ -340,8 +341,8 @@ module vga(
 
 	//backspace writes a space character one clock after the cursor is moved left
 	//delete just writes a space character without moving the cursor
-	wire backspaceOrDelCmd = inputCmdCMD_BKSP_r0 | inputCmdCMD_DEL;
-	assign charBufferWrEn = charBufferInitInProgress | inputCmdMemWrEn | backspaceOrDelCmd;
+	assign charBufferWrEn = charBufferInitInProgress | inputCmdMemWrEn | 
+							inputCmdCMD_BKSP_DEL_r0;// | inputCmdCMD_DEL;
 
 	charBuffer ucharBuffer (
 		//using single port RAM -- write has higher priority on the address bus
@@ -352,7 +353,7 @@ module vga(
         .reset (~resetn),
         .wre (charBufferWrEn),
         .ad (charBufferWrEn? charBufferWrAddr: charBufferRdAddr),
-        .din (backspaceOrDelCmd? 8'd`CMD_SPC: charBufferWrData));
+        .din (inputCmdCMD_BKSP_DEL_r0? 8'd`CMD_SPC: charBufferWrData));
 
 	//https://ktln2.org/2018/01/23/implementing-vga-in-verilog/
 	hvsync uhvsync(
@@ -367,7 +368,6 @@ module vga(
 	assign charROMRdAddr = {charBufferRdData, charHeightCounter_r0[2:0]};
 
 	wire [4:0] currentScrolledScanRow = currentScanCharRow + scrollRow;
-	//assign charBufferRdAddr = {currentScanCharCol[6:0], currentScanCharRow[4:0]}; //FIXME
 	assign charBufferRdAddr = {currentScanCharCol[6:0], currentScrolledScanRow[4:0]};
 	assign charBufferRdEn = (charWidthCounter == 3'h0) & inDisplayArea_r0;
 

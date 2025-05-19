@@ -26,7 +26,7 @@ module tb ();
 	reg debug;
 	integer f;
 	wire tbuartTX;
-	wire pixel, hsync, vsync, heartbeat;
+	wire pixel, hsync, vsync;
 	reg keyA, keyB;
 	initial resetn = 1'b0;
 	initial #7 resetn = 1'b1;
@@ -172,8 +172,7 @@ module tb ();
 		.resetn (resetn),
 		.UART_RX0 (tbuartTX),
 		.UART_TX0 (),
-		.debug (debug),
-		.debug0 (heartbeat),
+		.debug0 (),
 		.debug1 (),
 		.debug2 (),
 		.clkin (clk),

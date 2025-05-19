@@ -5,33 +5,33 @@
 1. PnR Messages
 
   <Report Title>: PnR Report
-  <Design File>: /home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
-  <Physical Constraints File>: /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.cst
-  <Timing Constraints File>: /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.sdc
+  <Design File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
+  <Physical Constraints File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.cst
+  <Timing Constraints File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.sdc
   <Tool Version>: V1.9.9.02
   <Part Number>: GW1NZ-LV1QN48C6/I5
   <Device>: GW1NZ-1
-  <Created Time>:Wed May 14 18:22:34 2025
+  <Created Time>:Mon May 19 13:52:07 2025
 
 
 2. PnR Details
 
   Running placement:
-    Placement Phase 0: CPU time = 0h 0m 0.287s, Elapsed time = 0h 0m 0.282s
-    Placement Phase 1: CPU time = 0h 0m 0.117s, Elapsed time = 0h 0m 0.115s
-    Placement Phase 2: CPU time = 0h 0m 0.324s, Elapsed time = 0h 0m 0.328s
-    Placement Phase 3: CPU time = 0h 0m 8s, Elapsed time = 0h 0m 8s
-    Total Placement: CPU time = 0h 0m 9s, Elapsed time = 0h 0m 9s
+    Placement Phase 0: CPU time = 0h 0m 0.477s, Elapsed time = 0h 0m 0.456s
+    Placement Phase 1: CPU time = 0h 0m 0.154s, Elapsed time = 0h 0m 0.151s
+    Placement Phase 2: CPU time = 0h 0m 0.467s, Elapsed time = 0h 0m 0.447s
+    Placement Phase 3: CPU time = 0h 0m 9s, Elapsed time = 0h 0m 9s
+    Total Placement: CPU time = 0h 0m 10s, Elapsed time = 0h 0m 10s
  Running routing:
-    Routing Phase 0: CPU time = 0h 0m 0.001s, Elapsed time = 0h 0m 0.001s
-    Routing Phase 1: CPU time = 0h 0m 0.278s, Elapsed time = 0h 0m 0.275s
-    Routing Phase 2: CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s
+    Routing Phase 0: CPU time = 0h 0m 0.002s, Elapsed time = 0h 0m 0.002s
+    Routing Phase 1: CPU time = 0h 0m 0.326s, Elapsed time = 0h 0m 0.331s
+    Routing Phase 2: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
     Routing Phase 3: CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s
-    Total Routing: CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s
+    Total Routing: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
  Generate output files:
     CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s
 
- Total Time and Memory Usage: CPU time = 0h 0m 13s, Elapsed time = 0h 0m 12s, Peak memory usage = 300MB
+ Total Time and Memory Usage: CPU time = 0h 0m 15s, Elapsed time = 0h 0m 14s, Peak memory usage = 300MB
 
 
 3. Resource Usage Summary
@@ -39,24 +39,24 @@
   ----------------------------------------------------------
   Resources                   | Usage
   ----------------------------------------------------------
-  Logic                       | 399/1152  35%
-    --LUT,ALU,ROM16           | 399(332 LUT, 67 ALU, 0 ROM16)
-    --SSRAM(RAM16)            | 0
-  Register                    | 196/957  21%
+  Logic                       | 579/1152  51%
+    --LUT,ALU,ROM16           | 567(500 LUT, 67 ALU, 0 ROM16)
+    --SSRAM(RAM16)            | 2
+  Register                    | 290/957  31%
     --Logic Register as Latch | 0/864  0%
-    --Logic Register as FF    | 192/864  23%
+    --Logic Register as FF    | 286/864  34%
     --I/O Register as Latch   | 0/93  0%
     --I/O Register as FF      | 4/93  5%
-  CLS                         | 252/576  44%
+  CLS                         | 368/576  64%
   I/O Port                    | 13
-  I/O Buf                     | 11
-    --Input Buf               | 4
+  I/O Buf                     | 13
+    --Input Buf               | 6
     --Output Buf              | 7
     --Inout Buf               | 0
   IOLOGIC                     | 0%
-  BSRAM                       | 75%
+  BSRAM                       | 100%
     --SP                      | 2
-    --pROM                    | 1
+    --pROM                    | 2
   PLL                         | 1/1  100%
   DCS                         | 0/4  0%
   DQCE                        | 0/12  0%
@@ -85,7 +85,7 @@
   Global Clock  | Usage       
   -------------------------------
   PRIMARY       | 1/8(13%)
-  LW            | 0/8(0%)
+  LW            | 1/8(13%)
   GCLK_PIN      | 1/3(34%)
   PLL           | 1/1(100%)
   CLKDIV        | 0/4(0%)
@@ -99,6 +99,7 @@
   Signal         | Global Clock   | Location
   -------------------------------------------
   clk            | PRIMARY        |  LEFT RIGHT
+  userResetn     | LW             |  -
   clkin_d        | HCLK           | RIGHT[0]
   ===========================================
 

@@ -17,7 +17,7 @@ module fifo (
 	parameter WIDTH = 8;
 	parameter DEPTH = 8;
 	localparam WIDTH_M_1 = WIDTH - 1;
-	localparam LOG2DEPTH = 3;//clog2(DEPTH);
+	localparam LOG2DEPTH = 3;
 	localparam LOG2DEPTH_M_1 = LOG2DEPTH - 1;
 	localparam LOG2DEPTH_P_1 = LOG2DEPTH + 1;
 	localparam DEPTH_M_1 = DEPTH - 1;
@@ -58,7 +58,7 @@ module fifo (
 	end
 
 	assign fifo_notempty	= (cnt_c != 4'h0);//(cnt_c != {LOG2DEPTH_P_1{1'b0}});
-	assign fifo_full		= (cnt_c != 4'b1000);//(cnt_c == {1'b1, {LOG2DEPTH{1'b0}}});
+	assign fifo_full		= (cnt_c == 4'b1000);//(cnt_c == {1'b1, {LOG2DEPTH{1'b0}}});
 
 	assign fifo_wptr_c	 = (fifo_wptr + fifo_wen);
 	assign fifo_rptr_inc = (fifo_rptr + 1'b1);
@@ -77,14 +77,14 @@ module fifo (
 		if (~resetn) begin
 			fifo_wptr	<= `DELAY {LOG2DEPTH{1'b0}};
 			fifo_rptr	<= `DELAY {LOG2DEPTH{1'b0}};
-			cnt		<= `DELAY {LOG2DEPTH_P_1{1'b0}};
-			notfull	<= `DELAY 1'b0;
+			cnt			<= `DELAY {LOG2DEPTH_P_1{1'b0}};
+			notfull		<= `DELAY 1'b0;
 			notempty	<= `DELAY 1'b0;
 	    end else begin
 			fifo_wptr	<= `DELAY fifo_wptr_c;
 			fifo_rptr	<= `DELAY nxt_fifo_rptr;
-			cnt		<= `DELAY cnt_c;
-			notfull	<= `DELAY ~fifo_full;
+			cnt			<= `DELAY cnt_c;
+			notfull		<= `DELAY ~fifo_full;
 			notempty	<= `DELAY fifo_notempty;
 	    end
 	end

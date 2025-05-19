@@ -59,7 +59,7 @@ module uart (
 	        rxError <= `DELAY 1'b0;
 	    end else begin
 	        uartRxR0 <= `DELAY UART_RX;
-			uartRxReg <= `DELAY uartRxR0;
+			uartRxReg <= `DELAY uartRxR0; //synchronized RX bit
 	        rxError <= `DELAY 1'b0;
 	        dataOutRxAvailable <= `DELAY 1'b0;
 	        if (rxClockDividerReg > 20'h0) begin
@@ -102,7 +102,7 @@ module uart (
 
 	assign dataOutRx = rxDataReg;
 
-	wire txClockDividerRegGTZ = (txClockDividerReg > 20'h0);
+	wire txClockDividerRegGTZ = (txClockDividerReg != 20'h0);
 	assign dataInTxBusy = (txClockDividerRegGTZ | (txBitCount > 4'h0));
 
 	always @(posedge clk) begin

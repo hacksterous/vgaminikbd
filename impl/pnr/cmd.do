@@ -1,9 +1,9 @@
--d /home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
+-d /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
 -p GW1NZ-1-QFN48-6
 -pn GW1NZ-LV1QN48C6/I5
--cst /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.cst
--cfg /home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/device.cfg
--sdc /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.sdc
+-cst /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.cst
+-cfg /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/device.cfg
+-sdc /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.sdc
 -bit
 -tr
 -ph

@@ -1,69 +1,65 @@
 GowinSynthesis start
 Running parser ...
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/charBuffer.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v":9)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v":9)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charROM/charROM.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGen/clockGen.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGenALT/clockGenALT.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":6)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":6)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":6)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":6)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v":6)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v":6)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v":23)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v":23)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keycharcmdcodes.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":5)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":5)
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":6)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":6)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbdrom/kbdrom.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v":6)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v":6)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/ps2receiver.v'
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v":3)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v":3)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keycharcmdcodes.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":83)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":83)
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":84)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":84)
-Undeclared symbol 'inputCmdScrollUp_r0', assumed default net type 'wire'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":193)
-WARN  (EX3638) : 'inputCmdScrollUp_r0' is already implicitly declared on line 193("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":203)
-Analyzing Verilog file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v'
-Analyzing included file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vh'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":8)
-Back to file '/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":8)
-Compiling module 'vgaminikbd'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":9)
-Compiling module 'keySynchronizer'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v":7)
-Compiling module 'kbd'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":7)
-Compiling module 'kbdrom'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbdrom/kbdrom.v":10)
-Compiling module 'fifo(DEPTH=4)'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":7)
-Extracting RAM for identifier 'array'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":93)
-Compiling module 'ps2receiver'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/ps2receiver.v":11)
-Compiling module 'clockGenALT'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGenALT/clockGenALT.v":9)
-Compiling module 'datamux2in'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":7)
-Compiling module 'fifo(DEPTH=2)'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":7)
-Extracting RAM for identifier 'array'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v":93)
-Compiling module 'uart'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v":4)
-Compiling module 'vga'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v":86)
-Compiling module 'heartbeat'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v":7)
-Compiling module 'charBufferInit'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v":10)
-Compiling module 'charROM'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charROM/charROM.v":10)
-Compiling module 'charBuffer'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/charBuffer.v":10)
-Compiling module 'hvsync'("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v":25)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":9)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":9)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGen/clockGen.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGenALT/clockGenALT.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v":6)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v":6)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":6)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":6)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v":6)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v":6)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v":23)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v":23)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v":5)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v":5)
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v":6)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v":6)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbdrom/kbdrom.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v":6)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v":6)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v'
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":83)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":83)
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":84)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":84)
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)
+Compiling module 'vgaminikbd'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":9)
+Compiling module 'clockGenALT'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGenALT/clockGenALT.v":9)
+Compiling module 'keySynchronizer'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v":7)
+Compiling module 'kbd'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v":7)
+Compiling module 'kbdrom'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbdrom/kbdrom.v":10)
+Compiling module 'fifo(DEPTH=4)'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":7)
+Extracting RAM for identifier 'array'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":93)
+Compiling module 'ps2receiver'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v":11)
+Compiling module 'datamux2in'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v":7)
+Compiling module 'fifo(DEPTH=2)'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":7)
+Extracting RAM for identifier 'array'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":93)
+Compiling module 'uart'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":4)
+Compiling module 'vga'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":86)
+Compiling module 'heartbeat'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v":7)
+Compiling module 'charBufferInit'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":10)
+Compiling module 'charROM'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v":10)
+Compiling module 'charBuffer'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v":10)
+Compiling module 'hvsync'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v":25)
 NOTE  (EX0101) : Current top module is "vgaminikbd"
 [5%] Running netlist conversion ...
-WARN  (CV0016) : Input KBD_CLK is unused("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":15)
-WARN  (CV0016) : Input KBD_DATA is unused("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":16)
 Running device independent optimization ...
 [10%] Optimizing Phase 0 completed
 [15%] Optimizing Phase 1 completed
@@ -79,14 +75,6 @@ Running technical mapping ...
 [75%] Tech-Mapping Phase 2 completed
 [80%] Tech-Mapping Phase 3 completed
 [90%] Tech-Mapping Phase 4 completed
-WARN  (NL0002) : The module "datamux2in" instantiated to "uarb" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":131)
-WARN  (NL0002) : The module "fifo" instantiated to "ArbFifo" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":128)
-WARN  (NL0002) : The module "fifo" instantiated to "dfifo0" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":40)
-WARN  (NL0002) : The module "fifo" instantiated to "dfifo1" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v":54)
-WARN  (NL0002) : The module "kbd" instantiated to "ukbd" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v":64)
-WARN  (NL0002) : The module "fifo" instantiated to "kbdfifo" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":212)
-WARN  (NL0002) : The module "ps2receiver" instantiated to "ps2kbd" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":220)
-WARN  (NL0002) : The module "kbdrom" instantiated to "ukbdrom" is swept in optimizing("/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v":201)
-[95%] Generate netlist file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg" completed
-[100%] Generate report file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd_syn.rpt.html" completed
+[95%] Generate netlist file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg" completed
+[100%] Generate report file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd_syn.rpt.html" completed
 GowinSynthesis finish

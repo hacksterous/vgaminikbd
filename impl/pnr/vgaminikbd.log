@@ -1,7 +1,7 @@
-Reading netlist file: "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg"
-Parsing netlist file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg" completed
+Reading netlist file: "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg"
+Parsing netlist file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg" completed
 Processing netlist completed
-Reading constraint file: "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.cst"
+Reading constraint file: "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.cst"
 Physical Constraint parsed completed
 Running placement......
 [10%] Placement Phase 0 completed
@@ -20,10 +20,10 @@ Bitstream generation in progress......
 Bitstream generation completed
 Running power analysis......
 [100%] Power analysis completed
-Generate file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/vgaminikbd.power.html" completed
-Generate file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/vgaminikbd.pin.html" completed
-Generate file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/vgaminikbd.rpt.html" completed
-Generate file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/vgaminikbd.rpt.txt" completed
-Generate file "/home/oreo/Src/FPGA-Gowin/vgaminikbd/impl/pnr/vgaminikbd.tr.html" completed
-Wed May 14 18:22:34 2025
+Generate file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/vgaminikbd.power.html" completed
+Generate file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/vgaminikbd.pin.html" completed
+Generate file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/vgaminikbd.rpt.html" completed
+Generate file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/vgaminikbd.rpt.txt" completed
+Generate file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/pnr/vgaminikbd.tr.html" completed
+Mon May 19 13:52:08 2025
 

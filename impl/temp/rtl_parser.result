@@ -1,165 +1,165 @@
 [
  {
-  "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGen/clockGen.v",
+  "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGen/clockGen.v",
   "InstLine" : 9,
   "InstName" : "clockGen",
-  "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGen/clockGen.v",
+  "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGen/clockGen.v",
   "ModuleLine" : 9,
   "ModuleName" : "clockGen"
  },
  {
-  "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
+  "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
   "InstLine" : 9,
   "InstName" : "vgaminikbd",
-  "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
+  "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
   "ModuleLine" : 9,
   "ModuleName" : "vgaminikbd",
   "SubInsts" : [
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 43,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 83,
+    "InstName" : "uclockGen",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGenALT/clockGenALT.v",
+    "ModuleLine" : 9,
+    "ModuleName" : "clockGenALT"
+   },
+   {
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 91,
     "InstName" : "ukdA",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v",
     "ModuleLine" : 7,
     "ModuleName" : "keySynchronizer"
    },
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 49,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 97,
     "InstName" : "ukdB",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/keysynchronizer.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v",
     "ModuleLine" : 7,
     "ModuleName" : "keySynchronizer"
    },
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 58,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 106,
     "InstName" : "ukbd",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
     "ModuleLine" : 7,
     "ModuleName" : "kbd",
     "SubInsts" : [
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v",
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
       "InstLine" : 195,
       "InstName" : "ukbdrom",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbdrom/kbdrom.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbdrom/kbdrom.v",
       "ModuleLine" : 10,
       "ModuleName" : "kbdrom"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v",
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
       "InstLine" : 204,
       "InstName" : "kbdfifo",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
       "ModuleLine" : 7,
       "ModuleName" : "fifo"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/kbd.v",
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
       "InstLine" : 214,
       "InstName" : "ps2kbd",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/ps2receiver.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v",
       "ModuleLine" : 11,
       "ModuleName" : "ps2receiver"
      }
     ]
    },
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 109,
-    "InstName" : "uclockGen",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/clockGenALT/clockGenALT.v",
-    "ModuleLine" : 9,
-    "ModuleName" : "clockGenALT"
-   },
-   {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 122,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 119,
     "InstName" : "uarb",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
     "ModuleLine" : 7,
     "ModuleName" : "datamux2in",
     "SubInsts" : [
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 32,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
+      "InstLine" : 42,
       "InstName" : "dfifo0",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
       "ModuleLine" : 7,
       "ModuleName" : "fifo"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 46,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
+      "InstLine" : 56,
       "InstName" : "dfifo1",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
       "ModuleLine" : 7,
       "ModuleName" : "fifo"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 120,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
+      "InstLine" : 130,
       "InstName" : "ArbFifo",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/fifo.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
       "ModuleLine" : 7,
       "ModuleName" : "fifo"
      }
     ]
    },
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 137,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 135,
     "InstName" : "uuart0",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/uart.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v",
     "ModuleLine" : 4,
     "ModuleName" : "uart"
    },
    {
-    "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 158,
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 156,
     "InstName" : "uvga",
-    "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
     "ModuleLine" : 86,
     "ModuleName" : "vga",
     "SubInsts" : [
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
-      "InstLine" : 175,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
+      "InstLine" : 174,
       "InstName" : "uheartbeat",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/heartbeat.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v",
       "ModuleLine" : 7,
       "ModuleName" : "heartbeat"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
-      "InstLine" : 190,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
+      "InstLine" : 191,
       "InstName" : "ucharbufinit",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charbufferinit.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
       "ModuleLine" : 10,
       "ModuleName" : "charBufferInit"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
-      "InstLine" : 321,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
+      "InstLine" : 322,
       "InstName" : "ucharROM",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charROM/charROM.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
       "ModuleLine" : 10,
       "ModuleName" : "charROM"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
-      "InstLine" : 346,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
+      "InstLine" : 347,
       "InstName" : "ucharBuffer",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/charBuffer.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v",
       "ModuleLine" : 10,
       "ModuleName" : "charBuffer"
      },
      {
-      "InstFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vga.v",
-      "InstLine" : 358,
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
+      "InstLine" : 359,
       "InstName" : "uhvsync",
-      "ModuleFile" : "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/hvsync.v",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v",
       "ModuleLine" : 25,
       "ModuleName" : "hvsync"
      }
