@@ -11,10 +11,10 @@
 	input clk,
 	input resetn,
 	input enable,
-	input partLineInit, //only erase one line partially
+	input partLineInit,		 //only erase one line partially
 	input [4:0] partLineRow, //partial line erase: row number
 	input [6:0] partLineCol, //partial line erase: column to start at
-	input zeroize,
+	input sequentialInit,	 //initialize with sequential values
 	output wire initWrEn,
 	output wire [11:0] initAddress,
 	output reg [6:0] initData
@@ -43,7 +43,7 @@
 	reg [4:0] initCursorRow;
 	reg enable_r0;
 
-	reg zeroizeStretched;
+	reg sequentialInitStretched;
 	reg partLineInitStretched;
 	reg initState;
 	wire nextInitState;
@@ -70,7 +70,7 @@
 			initCursorCol <= `DELAY 7'h0;
 			initData <= `DELAY 7'h0;
 			initState <= `DELAY 1'b0;
-			zeroizeStretched <= `DELAY 1'b0;
+			sequentialInitStretched <= `DELAY 1'b0;
 			partLineInitStretched <= `DELAY 1'b0;
 			enable_r0 <= `DELAY 1'b0;
 		end else begin
@@ -81,14 +81,14 @@
 			end else if (initStateACTIVE) begin
 				initCursorRow <= `DELAY (initCursorColAtMax & ~partLineInitStretched)? (initCursorRow + 1'b1): initCursorRow;
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);
-				initData <= `DELAY (zeroizeStretched)? 7'h0: (initData + 1'b1);
+				initData <= `DELAY (sequentialInitStretched)? (initData + 1'b1): 7'h0;
 			end else begin
 				initCursorCol <= `DELAY 7'h0;
 				initCursorRow <= `DELAY 5'h0;
 				initData <= `DELAY 7'h0;
 			end
 			initState <= `DELAY nextInitState;
-			zeroizeStretched <= `DELAY (initStateACTIVE & initAddressAtMax)? 1'b0: (zeroize & initStateIDLE)? 1'b1: zeroizeStretched;
+			sequentialInitStretched <= `DELAY (initStateACTIVE & initAddressAtMax)? 1'b0: (sequentialInit & initStateIDLE)? 1'b1: sequentialInitStretched;
 			partLineInitStretched <= `DELAY (initStateACTIVE & initAddressAtMax)? 1'b0: (partLineInit & initStateIDLE)? 1'b1: partLineInitStretched;
 			enable_r0 <= `DELAY enable;
 		end

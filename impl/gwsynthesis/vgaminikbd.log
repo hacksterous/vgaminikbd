@@ -29,6 +29,8 @@ Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynch
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v":6)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v":6)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v":10)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v":10)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)

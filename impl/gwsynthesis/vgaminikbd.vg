@@ -1,7 +1,7 @@
 //
 //Written by GowinSynthesis
 //Tool Version "V1.9.9.02"
-//Mon May 19 13:51:46 2025
+//Sat May 24 13:33:42 2025
 
 //Source file index table:
 //file0 "\/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v"
@@ -141,14 +141,14 @@ endmodule /* keySynchronizer_0 */
 module kbdrom (
   clk,
   readKbdRom,
-  n33_6,
+  n40_6,
   kbdromAddr,
   romAsciiDoutNormalAndShift
 )
 ;
 input clk;
 input readKbdRom;
-input n33_6;
+input n40_6;
 input [6:0] kbdromAddr;
 output [13:0] romAsciiDoutNormalAndShift;
 wire [31:14] DO;
@@ -160,7 +160,7 @@ wire GND;
     .CLK(clk),
     .CE(readKbdRom),
     .OCE(GND),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam prom_inst_0.BIT_WIDTH=16;
 defparam prom_inst_0.INIT_RAM_00=256'h0000307E04890000000000000000000000000000000000000000000000000000;
@@ -182,7 +182,7 @@ defparam prom_inst_0.RESET_MODE="SYNC";
 endmodule /* kbdrom */
 module fifo (
   clk,
-  n33_6,
+  n40_6,
   kbdcodeValid_Z,
   kbdcode_Z,
   kbdfifoNotEmpty,
@@ -190,7 +190,7 @@ module fifo (
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input kbdcodeValid_Z;
 input [7:0] kbdcode_Z;
 output kbdfifoNotEmpty;
@@ -234,28 +234,28 @@ wire VCC;
 wire GND;
   LUT4 fifo_notempty_s0 (
     .F(fifo_notempty),
-    .I0(fifo_notempty_4),
+    .I0(cnt[3]),
     .I1(cnt[2]),
     .I2(cnt[1]),
-    .I3(cnt[3]) 
+    .I3(fifo_notempty_4) 
 );
-defparam fifo_notempty_s0.INIT=16'hBFFE;
+defparam fifo_notempty_s0.INIT=16'hFE7F;
   LUT4 n61_s2 (
     .F(n61_5),
-    .I0(fifo_notempty_4),
-    .I1(cnt[3]),
+    .I0(cnt[3]),
+    .I1(fifo_notempty_4),
     .I2(cnt[1]),
     .I3(cnt[2]) 
 );
-defparam n61_s2.INIT=16'hEFFB;
+defparam n61_s2.INIT=16'hEFF7;
   LUT4 cnt_c_3_s13 (
     .F(cnt_c_3_19),
     .I0(cnt_c_3_20),
-    .I1(cnt[3]),
-    .I2(kbdfifoNotEmpty),
+    .I1(kbdfifoNotEmpty),
+    .I2(cnt[3]),
     .I3(n78_4) 
 );
-defparam cnt_c_3_s13.INIT=16'h0990;
+defparam cnt_c_3_s13.INIT=16'h2148;
   LUT4 cnt_c_2_s13 (
     .F(cnt_c_2_19),
     .I0(cnt_c_2_20),
@@ -288,12 +288,12 @@ defparam fifo_rptr_inc_1_s3.INIT=4'h6;
 defparam fifo_wptr_c_2_s0.INIT=16'h7F80;
   LUT4 fifo_notempty_s1 (
     .F(fifo_notempty_4),
-    .I0(kbdfifoNotEmpty),
-    .I1(cnt[1]),
-    .I2(cnt[0]),
-    .I3(n78_4) 
+    .I0(cnt[1]),
+    .I1(cnt[0]),
+    .I2(n78_4),
+    .I3(kbdfifoNotEmpty) 
 );
-defparam fifo_notempty_s1.INIT=16'hBDDE;
+defparam fifo_notempty_s1.INIT=16'hBE2B;
   LUT2 n78_s1 (
     .F(n78_4),
     .I0(kbdcodeValid_Z),
@@ -302,12 +302,12 @@ defparam fifo_notempty_s1.INIT=16'hBDDE;
 defparam n78_s1.INIT=4'h8;
   LUT4 cnt_c_3_s14 (
     .F(cnt_c_3_20),
-    .I0(kbdfifoNotEmpty),
-    .I1(cnt[2]),
-    .I2(cnt[1]),
-    .I3(cnt[0]) 
+    .I0(cnt[2]),
+    .I1(cnt[1]),
+    .I2(cnt[0]),
+    .I3(kbdfifoNotEmpty) 
 );
-defparam cnt_c_3_s14.INIT=16'hBFFD;
+defparam cnt_c_3_s14.INIT=16'h017F;
   LUT3 cnt_c_2_s14 (
     .F(cnt_c_2_20),
     .I0(kbdfifoNotEmpty),
@@ -356,52 +356,52 @@ defparam cnt_c_0_s16.INIT=16'h1444;
     .Q(fifo_wptr[2]),
     .D(fifo_wptr_c[2]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR fifo_wptr_1_s0 (
     .Q(fifo_wptr[1]),
     .D(fifo_wptr_c[1]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR fifo_wptr_0_s0 (
     .Q(fifo_wptr[0]),
     .D(fifo_wptr_c[0]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE fifo_rptr_1_s0 (
     .Q(fifo_rptr[1]),
     .D(fifo_rptr_inc[1]),
     .CLK(clk),
     .CE(kbdfifoNotEmpty),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE fifo_rptr_0_s0 (
     .Q(fifo_rptr[0]),
     .D(fifo_rptr_inc_0_6),
     .CLK(clk),
     .CE(kbdfifoNotEmpty),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR notfull_s0 (
     .Q(notfull),
     .D(n61_5),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR notempty_s0 (
     .Q(kbdfifoNotEmpty),
     .D(fifo_notempty),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE cnt_3_s1 (
     .Q(cnt[3]),
     .D(cnt_c_3_19),
     .CLK(clk),
     .CE(n43_13),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam cnt_3_s1.INIT=1'b0;
   DFFRE cnt_2_s1 (
@@ -409,7 +409,7 @@ defparam cnt_3_s1.INIT=1'b0;
     .D(cnt_c_2_19),
     .CLK(clk),
     .CE(n43_13),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam cnt_2_s1.INIT=1'b0;
   DFFRE cnt_1_s1 (
@@ -417,7 +417,7 @@ defparam cnt_2_s1.INIT=1'b0;
     .D(cnt_c_1_19),
     .CLK(clk),
     .CE(n43_13),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam cnt_1_s1.INIT=1'b0;
   DFFRE cnt_0_s1 (
@@ -425,7 +425,7 @@ defparam cnt_1_s1.INIT=1'b0;
     .D(cnt_c_0_23),
     .CLK(clk),
     .CE(n43_13),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam cnt_0_s1.INIT=1'b0;
   DFFR outData_6_s1 (
@@ -537,7 +537,7 @@ defparam cnt_0_s1.INIT=1'b0;
 endmodule /* fifo */
 module ps2receiver (
   clk,
-  n33_6,
+  n40_6,
   KBD_CLK_d,
   KBD_DATA_d,
   userResetn,
@@ -546,7 +546,7 @@ module ps2receiver (
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input KBD_CLK_d;
 input KBD_DATA_d;
 input userResetn;
@@ -556,12 +556,12 @@ wire n177_4;
 wire n96_19;
 wire n52_6;
 wire n51_5;
-wire n50_5;
 wire n49_5;
 wire n68_5;
 wire ns_ps2_receiver_1_13;
 wire ns_ps2_receiver_0_13;
-wire n49_6;
+wire n50_6;
+wire n50_8;
 wire data_count_3_10;
 wire n131_5;
 wire n68_7;
@@ -590,20 +590,20 @@ defparam n177_s1.INIT=4'hB;
 defparam n96_s15.INIT=4'h8;
   LUT4 ns_ps2_receiver_1_s8 (
     .F(ns_ps2_receiver[1]),
-    .I0(ns_ps2_receiver_1_13),
-    .I1(s_ps2_receiver[0]),
-    .I2(n68_5),
+    .I0(s_ps2_receiver[0]),
+    .I1(n68_5),
+    .I2(ns_ps2_receiver_1_13),
     .I3(s_ps2_receiver[1]) 
 );
-defparam ns_ps2_receiver_1_s8.INIT=16'h3F80;
+defparam ns_ps2_receiver_1_s8.INIT=16'h0708;
   LUT4 ns_ps2_receiver_0_s8 (
     .F(ns_ps2_receiver[0]),
-    .I0(ns_ps2_receiver_0_13),
+    .I0(ns_ps2_receiver_1_13),
     .I1(n68_5),
-    .I2(s_ps2_receiver[1]),
+    .I2(ns_ps2_receiver_0_13),
     .I3(s_ps2_receiver[0]) 
 );
-defparam ns_ps2_receiver_0_s8.INIT=16'h3BC5;
+defparam ns_ps2_receiver_0_s8.INIT=16'hBB0F;
   LUT2 n52_s2 (
     .F(n52_6),
     .I0(data_count[0]),
@@ -617,21 +617,14 @@ defparam n52_s2.INIT=4'h4;
     .I2(n68_7) 
 );
 defparam n51_s1.INIT=8'h60;
-  LUT4 n50_s1 (
-    .F(n50_5),
-    .I0(data_count[0]),
-    .I1(data_count[1]),
-    .I2(data_count[2]),
+  LUT4 n49_s1 (
+    .F(n49_5),
+    .I0(data_count[2]),
+    .I1(n50_6),
+    .I2(data_count[3]),
     .I3(n68_7) 
 );
-defparam n50_s1.INIT=16'h7800;
-  LUT3 n49_s1 (
-    .F(n49_5),
-    .I0(n49_6),
-    .I1(data_count[3]),
-    .I2(n68_7) 
-);
-defparam n49_s1.INIT=8'h60;
+defparam n49_s1.INIT=16'h7800;
   LUT2 n68_s2 (
     .F(n68_5),
     .I0(last_ps2_clk),
@@ -641,26 +634,33 @@ defparam n68_s2.INIT=4'h4;
   LUT4 ns_ps2_receiver_1_s9 (
     .F(ns_ps2_receiver_1_13),
     .I0(data_count[3]),
-    .I1(data_count[1]),
-    .I2(data_count[2]),
-    .I3(data_count[0]) 
+    .I1(data_count[2]),
+    .I2(n50_6),
+    .I3(s_ps2_receiver[1]) 
 );
-defparam ns_ps2_receiver_1_s9.INIT=16'h4000;
+defparam ns_ps2_receiver_1_s9.INIT=16'h00BF;
   LUT4 ns_ps2_receiver_0_s9 (
     .F(ns_ps2_receiver_0_13),
     .I0(kbdcodeValid_Z),
     .I1(start_receiving_data),
-    .I2(ns_ps2_receiver_1_13),
-    .I3(s_ps2_receiver[0]) 
+    .I2(n68_5),
+    .I3(s_ps2_receiver[1]) 
 );
 defparam ns_ps2_receiver_0_s9.INIT=16'h0FBB;
-  LUT3 n49_s2 (
-    .F(n49_6),
+  LUT2 n50_s2 (
+    .F(n50_6),
     .I0(data_count[0]),
-    .I1(data_count[1]),
-    .I2(data_count[2]) 
+    .I1(data_count[1]) 
 );
-defparam n49_s2.INIT=8'h80;
+defparam n50_s2.INIT=4'h8;
+  LUT4 n50_s3 (
+    .F(n50_8),
+    .I0(data_count[2]),
+    .I1(data_count[0]),
+    .I2(data_count[1]),
+    .I3(n68_7) 
+);
+defparam n50_s3.INIT=16'h6A00;
   LUT4 data_count_3_s4 (
     .F(data_count_3_10),
     .I0(s_ps2_receiver[1]),
@@ -696,131 +696,131 @@ defparam n126_s3.INIT=16'h4000;
     .Q(s_ps2_receiver[1]),
     .D(ns_ps2_receiver[1]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR s_ps2_receiver_0_s0 (
     .Q(s_ps2_receiver[0]),
     .D(ns_ps2_receiver[0]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_7_s0 (
     .Q(data_shift_reg[7]),
     .D(ps2_data_reg),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_6_s0 (
     .Q(data_shift_reg[6]),
     .D(data_shift_reg[7]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_5_s0 (
     .Q(data_shift_reg[5]),
     .D(data_shift_reg[6]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_4_s0 (
     .Q(data_shift_reg[4]),
     .D(data_shift_reg[5]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_3_s0 (
     .Q(data_shift_reg[3]),
     .D(data_shift_reg[4]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_2_s0 (
     .Q(data_shift_reg[2]),
     .D(data_shift_reg[3]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_1_s0 (
     .Q(data_shift_reg[1]),
     .D(data_shift_reg[2]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE data_shift_reg_0_s0 (
     .Q(data_shift_reg[0]),
     .D(data_shift_reg[1]),
     .CLK(clk),
     .CE(n68_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_7_s0 (
     .Q(kbdcode_Z[7]),
     .D(data_shift_reg[7]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_6_s0 (
     .Q(kbdcode_Z[6]),
     .D(data_shift_reg[6]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_5_s0 (
     .Q(kbdcode_Z[5]),
     .D(data_shift_reg[5]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_4_s0 (
     .Q(kbdcode_Z[4]),
     .D(data_shift_reg[4]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_3_s0 (
     .Q(kbdcode_Z[3]),
     .D(data_shift_reg[3]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_2_s0 (
     .Q(kbdcode_Z[2]),
     .D(data_shift_reg[2]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_1_s0 (
     .Q(kbdcode_Z[1]),
     .D(data_shift_reg[1]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE kbdcode_0_s0 (
     .Q(kbdcode_Z[0]),
     .D(data_shift_reg[0]),
     .CLK(clk),
     .CE(n96_19),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR kbdcodeValid_s0 (
     .Q(kbdcodeValid_Z),
     .D(n126_8),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE start_receiving_data_s0 (
     .Q(start_receiving_data),
@@ -833,34 +833,34 @@ defparam n126_s3.INIT=16'h4000;
     .Q(last_ps2_clk),
     .D(ps2_clk_reg),
     .CLK(clk),
-    .SET(n33_6) 
+    .SET(n40_6) 
 );
   DFFS ps2_clk_reg_s0 (
     .Q(ps2_clk_reg),
     .D(KBD_CLK_d),
     .CLK(clk),
-    .SET(n33_6) 
+    .SET(n40_6) 
 );
   DFFS ps2_data_reg_s0 (
     .Q(ps2_data_reg),
     .D(KBD_DATA_d),
     .CLK(clk),
-    .SET(n33_6) 
+    .SET(n40_6) 
 );
   DFFRE data_count_3_s1 (
     .Q(data_count[3]),
     .D(n49_5),
     .CLK(clk),
     .CE(data_count_3_10),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam data_count_3_s1.INIT=1'b0;
   DFFRE data_count_2_s1 (
     .Q(data_count[2]),
-    .D(n50_5),
+    .D(n50_8),
     .CLK(clk),
     .CE(data_count_3_10),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam data_count_2_s1.INIT=1'b0;
   DFFRE data_count_1_s1 (
@@ -868,7 +868,7 @@ defparam data_count_2_s1.INIT=1'b0;
     .D(n51_5),
     .CLK(clk),
     .CE(data_count_3_10),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam data_count_1_s1.INIT=1'b0;
   DFFRE data_count_0_s1 (
@@ -876,7 +876,7 @@ defparam data_count_1_s1.INIT=1'b0;
     .D(n52_6),
     .CLK(clk),
     .CE(data_count_3_10),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam data_count_0_s1.INIT=1'b0;
   VCC VCC_cZ (
@@ -892,7 +892,7 @@ module kbd (
   KBD_CLK_d,
   KBD_DATA_d,
   kbdAsciiDataValid,
-  n33_6,
+  n40_6,
   kbdAsciiData
 )
 ;
@@ -901,67 +901,42 @@ input userResetn;
 input KBD_CLK_d;
 input KBD_DATA_d;
 output kbdAsciiDataValid;
-output n33_6;
+output n40_6;
 output [6:0] kbdAsciiData;
-wire n123_4;
-wire n109_3;
-wire n111_3;
-wire n113_3;
 wire nextKbdDataValid;
 wire nextSkipNextCode;
-wire n319_5;
+wire n46_4;
+wire n200_5;
 wire readKbdRom;
-wire n178_5;
-wire n176_5;
-wire n174_5;
-wire n109_4;
-wire n109_5;
-wire n109_6;
-wire n109_7;
-wire n111_4;
-wire n113_4;
-wire nextKbdData_2_4;
-wire nextKbdData_2_5;
-wire nextKbdData_2_6;
-wire nextKbdData_2_7;
-wire nextKbdData_0_4;
-wire nextKbdData_0_5;
-wire n306_4;
+wire asciiCode_5_5;
+wire asciiCode_5_7;
+wire asciiCode_3_4;
+wire asciiCode_3_5;
+wire asciiCode_2_4;
+wire asciiCode_2_5;
+wire asciiCode_1_4;
+wire asciiCode_1_5;
+wire asciiCode_0_4;
+wire asciiCode_0_5;
+wire n187_4;
 wire nextSkipNextCode_4;
+wire n200_6;
 wire readKbdRom_6;
-wire n178_6;
-wire n178_7;
-wire n176_6;
-wire n176_7;
-wire n176_8;
-wire n174_6;
-wire nextKbdData_6_7;
-wire nextKbdData_6_8;
-wire n109_8;
-wire n109_9;
-wire n109_10;
-wire n109_11;
-wire nextKbdData_2_9;
-wire nextKbdData_2_10;
-wire nextKbdData_2_11;
-wire nextKbdData_2_12;
-wire nextKbdData_2_13;
-wire nextKbdData_2_14;
+wire asciiCode_5_8;
+wire asciiCode_5_9;
+wire asciiCode_3_6;
+wire asciiCode_3_7;
+wire asciiCode_2_6;
+wire asciiCode_2_7;
+wire asciiCode_1_6;
+wire asciiCode_0_6;
+wire asciiCode_0_7;
 wire nextSkipNextCode_5;
-wire nextSkipNextCode_6;
 wire readKbdRom_8;
-wire readKbdRom_9;
-wire n176_9;
-wire n176_10;
-wire n109_12;
-wire n109_13;
-wire nextKbdData_2_15;
-wire nextKbdData_2_16;
-wire nextKbdData_2_17;
-wire nextKbdData_2_18;
-wire n174_9;
-wire nextKbdData_2_20;
-wire readKbdRom_11;
+wire asciiCode_3_8;
+wire asciiCode_1_7;
+wire readKbdRom_10;
+wire asciiCode_5_11;
 wire nextShiftState_9;
 wire readKbdRom_r0;
 wire specialCodeValid;
@@ -970,69 +945,61 @@ wire fifoReadDataValid;
 wire shiftState;
 wire kbdfifoNotEmpty;
 wire kbdcodeValid_Z;
-wire [6:0] nextKbdData;
+wire [6:0] asciiCode;
 wire [6:0] kbdromAddr;
-wire [2:0] multiKeySeqState;
 wire [13:0] romAsciiDoutNormalAndShift;
 wire [7:0] kbdOutCode;
 wire [7:0] kbdcode_Z;
 wire VCC;
 wire GND;
-  LUT4 n123_s0 (
-    .F(n123_4),
-    .I0(readKbdRom_r0),
-    .I1(multiKeySeqState[0]),
-    .I2(multiKeySeqState[1]),
-    .I3(multiKeySeqState[2]) 
+  LUT4 asciiCode_5_s0 (
+    .F(asciiCode[5]),
+    .I0(asciiCode_5_5),
+    .I1(asciiCode_5_11),
+    .I2(asciiCode_5_7),
+    .I3(readKbdRom_r0) 
 );
-defparam n123_s0.INIT=16'hFFFE;
-  LUT4 n109_s0 (
-    .F(n109_3),
-    .I0(n109_4),
-    .I1(n109_5),
-    .I2(n109_6),
-    .I3(n109_7) 
+defparam asciiCode_5_s0.INIT=16'hF888;
+  LUT4 asciiCode_3_s0 (
+    .F(asciiCode[3]),
+    .I0(asciiCode_5_5),
+    .I1(asciiCode_3_4),
+    .I2(asciiCode_5_11),
+    .I3(asciiCode_3_5) 
 );
-defparam n109_s0.INIT=16'hFF80;
-  LUT3 n111_s0 (
-    .F(n111_3),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(n111_4) 
+defparam asciiCode_3_s0.INIT=16'hFFB0;
+  LUT4 asciiCode_2_s0 (
+    .F(asciiCode[2]),
+    .I0(asciiCode_2_4),
+    .I1(asciiCode_5_11),
+    .I2(asciiCode_2_5),
+    .I3(readKbdRom_r0) 
 );
-defparam n111_s0.INIT=8'hF4;
-  LUT4 n113_s0 (
-    .F(n113_3),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(n113_4),
-    .I3(n109_5) 
+defparam asciiCode_2_s0.INIT=16'h4F44;
+  LUT4 asciiCode_1_s0 (
+    .F(asciiCode[1]),
+    .I0(asciiCode_1_4),
+    .I1(asciiCode_5_11),
+    .I2(asciiCode_1_5),
+    .I3(readKbdRom_r0) 
 );
-defparam n113_s0.INIT=16'hF444;
+defparam asciiCode_1_s0.INIT=16'h4F44;
+  LUT4 asciiCode_0_s0 (
+    .F(asciiCode[0]),
+    .I0(asciiCode_5_5),
+    .I1(asciiCode_0_4),
+    .I2(asciiCode_5_11),
+    .I3(asciiCode_0_5) 
+);
+defparam asciiCode_0_s0.INIT=16'hFFE0;
   LUT4 nextKbdDataValid_s0 (
     .F(nextKbdDataValid),
-    .I0(nextSkipNextCode),
-    .I1(specialCodeValid),
-    .I2(fifoReadDataValid),
-    .I3(n123_4) 
+    .I0(specialCodeValid),
+    .I1(fifoReadDataValid),
+    .I2(readKbdRom_r0),
+    .I3(nextSkipNextCode) 
 );
-defparam nextKbdDataValid_s0.INIT=16'hFF40;
-  LUT4 nextKbdData_2_s0 (
-    .F(nextKbdData[2]),
-    .I0(nextKbdData_2_4),
-    .I1(nextKbdData_2_5),
-    .I2(nextKbdData_2_6),
-    .I3(nextKbdData_2_7) 
-);
-defparam nextKbdData_2_s0.INIT=16'hF2FF;
-  LUT4 nextKbdData_0_s0 (
-    .F(nextKbdData[0]),
-    .I0(nextKbdData_0_4),
-    .I1(nextKbdData_2_5),
-    .I2(nextKbdData_0_5),
-    .I3(nextKbdData_2_7) 
-);
-defparam nextKbdData_0_s0.INIT=16'hF2FF;
+defparam nextKbdDataValid_s0.INIT=16'hF0F8;
   LUT4 nextSkipNextCode_s0 (
     .F(nextSkipNextCode),
     .I0(kbdOutCode[4]),
@@ -1040,324 +1007,245 @@ defparam nextKbdData_0_s0.INIT=16'hF2FF;
     .I2(skipNextCode),
     .I3(fifoReadDataValid) 
 );
-defparam nextSkipNextCode_s0.INIT=16'h88F0;
-  LUT4 n319_s1 (
-    .F(n319_5),
-    .I0(kbdOutCode[4]),
-    .I1(nextSkipNextCode_4),
-    .I2(specialCodeValid),
-    .I3(fifoReadDataValid) 
+defparam nextSkipNextCode_s0.INIT=16'h08F0;
+  LUT2 n46_s1 (
+    .F(n46_4),
+    .I0(userResetn),
+    .I1(nextKbdDataValid) 
 );
-defparam n319_s1.INIT=16'h04F0;
-  LUT2 readKbdRom_s1 (
+defparam n46_s1.INIT=4'h7;
+  LUT3 n200_s1 (
+    .F(n200_5),
+    .I0(n200_6),
+    .I1(specialCodeValid),
+    .I2(fifoReadDataValid) 
+);
+defparam n200_s1.INIT=8'h2C;
+  LUT3 readKbdRom_s1 (
     .F(readKbdRom),
+    .I0(nextSkipNextCode_4),
+    .I1(readKbdRom_6),
+    .I2(readKbdRom_10) 
+);
+defparam readKbdRom_s1.INIT=8'h10;
+  LUT3 kbdromAddr_0_s2 (
+    .F(kbdromAddr[0]),
     .I0(readKbdRom_6),
-    .I1(readKbdRom_11) 
+    .I1(kbdOutCode[0]),
+    .I2(readKbdRom_10) 
 );
-defparam readKbdRom_s1.INIT=4'h4;
-  LUT2 kbdromAddr_2_s2 (
-    .F(kbdromAddr[2]),
-    .I0(kbdOutCode[2]),
-    .I1(readKbdRom_11) 
+defparam kbdromAddr_0_s2.INIT=8'h40;
+  LUT3 kbdromAddr_1_s2 (
+    .F(kbdromAddr[1]),
+    .I0(readKbdRom_6),
+    .I1(kbdOutCode[1]),
+    .I2(readKbdRom_10) 
 );
-defparam kbdromAddr_2_s2.INIT=4'h8;
-  LUT2 kbdromAddr_5_s2 (
-    .F(kbdromAddr[5]),
-    .I0(kbdOutCode[5]),
-    .I1(readKbdRom_11) 
+defparam kbdromAddr_1_s2.INIT=8'h40;
+  LUT3 kbdromAddr_3_s2 (
+    .F(kbdromAddr[3]),
+    .I0(readKbdRom_6),
+    .I1(kbdOutCode[3]),
+    .I2(readKbdRom_10) 
 );
-defparam kbdromAddr_5_s2.INIT=4'h8;
-  LUT4 n178_s1 (
-    .F(n178_5),
-    .I0(n178_6),
-    .I1(n178_7),
-    .I2(multiKeySeqState[2]),
-    .I3(multiKeySeqState[1]) 
+defparam kbdromAddr_3_s2.INIT=8'h40;
+  LUT4 asciiCode_6_s1 (
+    .F(asciiCode[6]),
+    .I0(romAsciiDoutNormalAndShift[13]),
+    .I1(romAsciiDoutNormalAndShift[6]),
+    .I2(shiftState),
+    .I3(readKbdRom_r0) 
 );
-defparam n178_s1.INIT=16'h000D;
-  LUT3 n176_s1 (
-    .F(n176_5),
-    .I0(n176_6),
-    .I1(n176_7),
-    .I2(n176_8) 
-);
-defparam n176_s1.INIT=8'h3A;
-  LUT3 n174_s1 (
-    .F(n174_5),
-    .I0(n176_6),
-    .I1(n174_6),
-    .I2(n176_8) 
-);
-defparam n174_s1.INIT=8'h35;
-  LUT4 nextKbdData_4_s2 (
-    .F(nextKbdData[4]),
+defparam asciiCode_6_s1.INIT=16'hAC00;
+  LUT4 asciiCode_4_s1 (
+    .F(asciiCode[4]),
     .I0(romAsciiDoutNormalAndShift[4]),
     .I1(romAsciiDoutNormalAndShift[11]),
     .I2(shiftState),
-    .I3(nextKbdData_6_8) 
-);
-defparam nextKbdData_4_s2.INIT=16'hCA00;
-  LUT3 n109_s1 (
-    .F(n109_4),
-    .I0(romAsciiDoutNormalAndShift[0]),
-    .I1(romAsciiDoutNormalAndShift[7]),
-    .I2(shiftState) 
-);
-defparam n109_s1.INIT=8'h35;
-  LUT4 n109_s2 (
-    .F(n109_5),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(multiKeySeqState[2]),
-    .I3(n109_8) 
-);
-defparam n109_s2.INIT=16'h0100;
-  LUT4 n109_s3 (
-    .F(n109_6),
-    .I0(n109_4),
-    .I1(n109_9),
-    .I2(n109_10),
-    .I3(n109_11) 
-);
-defparam n109_s3.INIT=16'h7080;
-  LUT3 n109_s4 (
-    .F(n109_7),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[2]),
-    .I2(multiKeySeqState[1]) 
-);
-defparam n109_s4.INIT=8'h60;
-  LUT4 n111_s1 (
-    .F(n111_4),
-    .I0(n109_10),
-    .I1(n109_11),
-    .I2(n109_5),
-    .I3(n109_9) 
-);
-defparam n111_s1.INIT=16'h0080;
-  LUT4 n113_s1 (
-    .F(n113_4),
-    .I0(n109_9),
-    .I1(n109_10),
-    .I2(n109_4),
-    .I3(n109_11) 
-);
-defparam n113_s1.INIT=16'h0880;
-  LUT4 nextKbdData_2_s1 (
-    .F(nextKbdData_2_4),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(multiKeySeqState[2]),
-    .I3(nextKbdData_2_20) 
-);
-defparam nextKbdData_2_s1.INIT=16'h0100;
-  LUT4 nextKbdData_2_s2 (
-    .F(nextKbdData_2_5),
-    .I0(nextKbdData_2_9),
-    .I1(nextKbdData_2_10),
-    .I2(nextKbdData_2_11),
-    .I3(nextKbdData_2_12) 
-);
-defparam nextKbdData_2_s2.INIT=16'h004F;
-  LUT3 nextKbdData_2_s3 (
-    .F(nextKbdData_2_6),
-    .I0(readKbdRom_r0),
-    .I1(n109_11),
-    .I2(n176_8) 
-);
-defparam nextKbdData_2_s3.INIT=8'h20;
-  LUT4 nextKbdData_2_s4 (
-    .F(nextKbdData_2_7),
-    .I0(n109_8),
-    .I1(nextKbdData_6_8),
-    .I2(nextKbdData_2_13),
-    .I3(nextKbdData_2_14) 
-);
-defparam nextKbdData_2_s4.INIT=16'h007F;
-  LUT4 nextKbdData_0_s1 (
-    .F(nextKbdData_0_4),
-    .I0(kbdOutCode[3]),
-    .I1(kbdOutCode[2]),
-    .I2(kbdOutCode[0]),
-    .I3(nextKbdData_2_4) 
-);
-defparam nextKbdData_0_s1.INIT=16'hEB00;
-  LUT3 nextKbdData_0_s2 (
-    .F(nextKbdData_0_5),
-    .I0(readKbdRom_r0),
-    .I1(n109_4),
-    .I2(n176_8) 
-);
-defparam nextKbdData_0_s2.INIT=8'h20;
-  LUT2 n306_s1 (
-    .F(n306_4),
-    .I0(specialCodeValid),
-    .I1(readKbdRom_6) 
-);
-defparam n306_s1.INIT=4'h4;
-  LUT4 nextSkipNextCode_s1 (
-    .F(nextSkipNextCode_4),
-    .I0(nextSkipNextCode_5),
-    .I1(kbdOutCode[5]),
-    .I2(kbdOutCode[6]),
-    .I3(nextSkipNextCode_6) 
-);
-defparam nextSkipNextCode_s1.INIT=16'h8000;
-  LUT4 readKbdRom_s2 (
-    .F(readKbdRom_6),
-    .I0(kbdOutCode[2]),
-    .I1(readKbdRom_8),
-    .I2(kbdOutCode[4]),
-    .I3(readKbdRom_9) 
-);
-defparam readKbdRom_s2.INIT=16'h1000;
-  LUT3 n178_s2 (
-    .F(n178_6),
-    .I0(n109_10),
-    .I1(readKbdRom_r0),
-    .I2(multiKeySeqState[0]) 
-);
-defparam n178_s2.INIT=8'h0B;
-  LUT3 n178_s3 (
-    .F(n178_7),
-    .I0(nextKbdData_2_9),
-    .I1(nextKbdData_2_12),
-    .I2(nextKbdData_2_20) 
-);
-defparam n178_s3.INIT=8'hE0;
-  LUT4 n176_s2 (
-    .F(n176_6),
-    .I0(nextKbdData_2_13),
-    .I1(multiKeySeqState[0]),
-    .I2(multiKeySeqState[1]),
-    .I3(multiKeySeqState[2]) 
-);
-defparam n176_s2.INIT=16'hCC0E;
-  LUT4 n176_s3 (
-    .F(n176_7),
-    .I0(nextKbdData_2_5),
-    .I1(n176_9),
-    .I2(readKbdRom_r0),
-    .I3(n109_9) 
-);
-defparam n176_s3.INIT=16'hBB0B;
-  LUT4 n176_s4 (
-    .F(n176_8),
-    .I0(readKbdRom_r0),
-    .I1(n109_8),
-    .I2(n109_6),
-    .I3(n176_10) 
-);
-defparam n176_s4.INIT=16'h7F00;
-  LUT4 n174_s2 (
-    .F(n174_6),
-    .I0(kbdOutCode[1]),
-    .I1(nextKbdData_2_12),
-    .I2(nextKbdData_2_20),
-    .I3(n174_9) 
-);
-defparam n174_s2.INIT=16'h007F;
-  LUT3 nextKbdData_6_s3 (
-    .F(nextKbdData_6_7),
-    .I0(romAsciiDoutNormalAndShift[13]),
-    .I1(romAsciiDoutNormalAndShift[6]),
-    .I2(shiftState) 
-);
-defparam nextKbdData_6_s3.INIT=8'h53;
-  LUT4 nextKbdData_6_s4 (
-    .F(nextKbdData_6_8),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(multiKeySeqState[2]),
     .I3(readKbdRom_r0) 
 );
-defparam nextKbdData_6_s4.INIT=16'h0100;
-  LUT3 n109_s5 (
-    .F(n109_8),
-    .I0(nextKbdData_6_7),
-    .I1(n109_12),
-    .I2(n109_13) 
+defparam asciiCode_4_s1.INIT=16'hCA00;
+  LUT4 asciiCode_5_s1 (
+    .F(asciiCode_5_5),
+    .I0(kbdOutCode[0]),
+    .I1(asciiCode_5_8),
+    .I2(kbdOutCode[1]),
+    .I3(asciiCode_5_9) 
 );
-defparam n109_s5.INIT=8'h08;
-  LUT3 n109_s6 (
-    .F(n109_9),
+defparam asciiCode_5_s1.INIT=16'h4000;
+  LUT3 asciiCode_5_s3 (
+    .F(asciiCode_5_7),
+    .I0(romAsciiDoutNormalAndShift[5]),
+    .I1(romAsciiDoutNormalAndShift[12]),
+    .I2(shiftState) 
+);
+defparam asciiCode_5_s3.INIT=8'hCA;
+  LUT3 asciiCode_3_s1 (
+    .F(asciiCode_3_4),
+    .I0(kbdOutCode[0]),
+    .I1(asciiCode_3_6),
+    .I2(asciiCode_3_7) 
+);
+defparam asciiCode_3_s1.INIT=8'h23;
+  LUT4 asciiCode_3_s2 (
+    .F(asciiCode_3_5),
     .I0(romAsciiDoutNormalAndShift[3]),
     .I1(romAsciiDoutNormalAndShift[10]),
-    .I2(shiftState) 
+    .I2(shiftState),
+    .I3(readKbdRom_r0) 
 );
-defparam n109_s6.INIT=8'h35;
-  LUT3 n109_s7 (
-    .F(n109_10),
-    .I0(romAsciiDoutNormalAndShift[1]),
-    .I1(romAsciiDoutNormalAndShift[8]),
-    .I2(shiftState) 
+defparam asciiCode_3_s2.INIT=16'hCA00;
+  LUT4 asciiCode_2_s1 (
+    .F(asciiCode_2_4),
+    .I0(asciiCode_2_6),
+    .I1(asciiCode_2_7),
+    .I2(asciiCode_3_6),
+    .I3(asciiCode_5_5) 
 );
-defparam n109_s7.INIT=8'h35;
-  LUT3 n109_s8 (
-    .F(n109_11),
+defparam asciiCode_2_s1.INIT=16'h000D;
+  LUT3 asciiCode_2_s2 (
+    .F(asciiCode_2_5),
     .I0(romAsciiDoutNormalAndShift[2]),
     .I1(romAsciiDoutNormalAndShift[9]),
     .I2(shiftState) 
 );
-defparam n109_s8.INIT=8'h35;
-  LUT4 nextKbdData_2_s6 (
-    .F(nextKbdData_2_9),
-    .I0(nextKbdData_2_15),
-    .I1(kbdOutCode[0]),
+defparam asciiCode_2_s2.INIT=8'h35;
+  LUT3 asciiCode_1_s1 (
+    .F(asciiCode_1_4),
+    .I0(asciiCode_3_7),
+    .I1(asciiCode_5_5),
+    .I2(asciiCode_1_6) 
+);
+defparam asciiCode_1_s1.INIT=8'h01;
+  LUT3 asciiCode_1_s2 (
+    .F(asciiCode_1_5),
+    .I0(romAsciiDoutNormalAndShift[1]),
+    .I1(romAsciiDoutNormalAndShift[8]),
+    .I2(shiftState) 
+);
+defparam asciiCode_1_s2.INIT=8'h35;
+  LUT4 asciiCode_0_s1 (
+    .F(asciiCode_0_4),
+    .I0(asciiCode_0_6),
+    .I1(kbdOutCode[3]),
+    .I2(kbdOutCode[1]),
+    .I3(asciiCode_0_7) 
+);
+defparam asciiCode_0_s1.INIT=16'h1800;
+  LUT4 asciiCode_0_s2 (
+    .F(asciiCode_0_5),
+    .I0(romAsciiDoutNormalAndShift[0]),
+    .I1(romAsciiDoutNormalAndShift[7]),
+    .I2(shiftState),
+    .I3(readKbdRom_r0) 
+);
+defparam asciiCode_0_s2.INIT=16'hCA00;
+  LUT2 n187_s1 (
+    .F(n187_4),
+    .I0(specialCodeValid),
+    .I1(readKbdRom_6) 
+);
+defparam n187_s1.INIT=4'h4;
+  LUT4 nextSkipNextCode_s1 (
+    .F(nextSkipNextCode_4),
+    .I0(kbdOutCode[0]),
+    .I1(kbdOutCode[1]),
+    .I2(kbdOutCode[2]),
+    .I3(nextSkipNextCode_5) 
+);
+defparam nextSkipNextCode_s1.INIT=16'h0100;
+  LUT3 n200_s2 (
+    .F(n200_6),
+    .I0(kbdOutCode[4]),
+    .I1(skipNextCode),
+    .I2(nextSkipNextCode_4) 
+);
+defparam n200_s2.INIT=8'h10;
+  LUT4 readKbdRom_s2 (
+    .F(readKbdRom_6),
+    .I0(readKbdRom_8),
+    .I1(kbdOutCode[2]),
     .I2(kbdOutCode[4]),
-    .I3(nextKbdData_2_11) 
+    .I3(asciiCode_5_9) 
 );
-defparam nextKbdData_2_s6.INIT=16'h1000;
-  LUT4 nextKbdData_2_s7 (
-    .F(nextKbdData_2_10),
-    .I0(kbdOutCode[1]),
+defparam readKbdRom_s2.INIT=16'h1000;
+  LUT4 asciiCode_5_s4 (
+    .F(asciiCode_5_8),
+    .I0(kbdOutCode[2]),
     .I1(kbdOutCode[4]),
-    .I2(kbdOutCode[0]),
-    .I3(nextKbdData_2_16) 
+    .I2(kbdOutCode[3]),
+    .I3(kbdOutCode[6]) 
 );
-defparam nextKbdData_2_s7.INIT=16'hDFBE;
-  LUT3 nextKbdData_2_s8 (
-    .F(nextKbdData_2_11),
+defparam asciiCode_5_s4.INIT=16'h1000;
+  LUT2 asciiCode_5_s5 (
+    .F(asciiCode_5_9),
+    .I0(kbdOutCode[5]),
+    .I1(kbdOutCode[7]) 
+);
+defparam asciiCode_5_s5.INIT=4'h1;
+  LUT4 asciiCode_3_s3 (
+    .F(asciiCode_3_6),
+    .I0(asciiCode_3_8),
+    .I1(kbdOutCode[4]),
+    .I2(kbdOutCode[3]),
+    .I3(asciiCode_0_7) 
+);
+defparam asciiCode_3_s3.INIT=16'h1000;
+  LUT4 asciiCode_3_s4 (
+    .F(asciiCode_3_7),
+    .I0(kbdOutCode[1]),
+    .I1(kbdOutCode[3]),
+    .I2(kbdOutCode[2]),
+    .I3(asciiCode_2_6) 
+);
+defparam asciiCode_3_s4.INIT=16'h1000;
+  LUT4 asciiCode_2_s3 (
+    .F(asciiCode_2_6),
+    .I0(kbdOutCode[7]),
+    .I1(kbdOutCode[5]),
+    .I2(kbdOutCode[6]),
+    .I3(kbdOutCode[4]) 
+);
+defparam asciiCode_2_s3.INIT=16'h4000;
+  LUT4 asciiCode_2_s4 (
+    .F(asciiCode_2_7),
+    .I0(kbdOutCode[0]),
+    .I1(kbdOutCode[1]),
+    .I2(kbdOutCode[3]),
+    .I3(kbdOutCode[2]) 
+);
+defparam asciiCode_2_s4.INIT=16'hDEBD;
+  LUT4 asciiCode_1_s3 (
+    .F(asciiCode_1_6),
+    .I0(asciiCode_1_7),
+    .I1(kbdOutCode[2]),
+    .I2(kbdOutCode[3]),
+    .I3(asciiCode_0_7) 
+);
+defparam asciiCode_1_s3.INIT=16'h1000;
+  LUT4 asciiCode_0_s3 (
+    .F(asciiCode_0_6),
+    .I0(kbdOutCode[4]),
+    .I1(kbdOutCode[3]),
+    .I2(kbdOutCode[0]),
+    .I3(kbdOutCode[2]) 
+);
+defparam asciiCode_0_s3.INIT=16'hB771;
+  LUT3 asciiCode_0_s4 (
+    .F(asciiCode_0_7),
     .I0(kbdOutCode[7]),
     .I1(kbdOutCode[6]),
     .I2(kbdOutCode[5]) 
 );
-defparam nextKbdData_2_s8.INIT=8'h40;
-  LUT3 nextKbdData_2_s9 (
-    .F(nextKbdData_2_12),
-    .I0(nextKbdData_2_17),
-    .I1(kbdOutCode[2]),
-    .I2(nextKbdData_2_18) 
-);
-defparam nextKbdData_2_s9.INIT=8'h10;
-  LUT4 nextKbdData_2_s10 (
-    .F(nextKbdData_2_13),
-    .I0(n109_10),
-    .I1(n109_11),
-    .I2(n109_4),
-    .I3(n109_9) 
-);
-defparam nextKbdData_2_s10.INIT=16'h0880;
-  LUT2 nextKbdData_2_s11 (
-    .F(nextKbdData_2_14),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[2]) 
-);
-defparam nextKbdData_2_s11.INIT=4'h8;
-  LUT2 nextSkipNextCode_s2 (
+defparam asciiCode_0_s4.INIT=8'h40;
+  LUT4 nextSkipNextCode_s2 (
     .F(nextSkipNextCode_5),
-    .I0(skipNextCode),
-    .I1(kbdOutCode[7]) 
+    .I0(kbdOutCode[3]),
+    .I1(kbdOutCode[5]),
+    .I2(kbdOutCode[6]),
+    .I3(kbdOutCode[7]) 
 );
-defparam nextSkipNextCode_s2.INIT=4'h4;
-  LUT4 nextSkipNextCode_s3 (
-    .F(nextSkipNextCode_6),
-    .I0(kbdOutCode[0]),
-    .I1(kbdOutCode[1]),
-    .I2(kbdOutCode[2]),
-    .I3(kbdOutCode[3]) 
-);
-defparam nextSkipNextCode_s3.INIT=16'h0001;
+defparam nextSkipNextCode_s2.INIT=16'h4000;
   LUT4 readKbdRom_s4 (
     .F(readKbdRom_8),
     .I0(kbdOutCode[0]),
@@ -1366,259 +1254,168 @@ defparam nextSkipNextCode_s3.INIT=16'h0001;
     .I3(kbdOutCode[1]) 
 );
 defparam readKbdRom_s4.INIT=16'hFE7F;
-  LUT2 readKbdRom_s5 (
-    .F(readKbdRom_9),
-    .I0(kbdOutCode[5]),
-    .I1(kbdOutCode[7]) 
-);
-defparam readKbdRom_s5.INIT=4'h1;
-  LUT4 n176_s5 (
-    .F(n176_9),
-    .I0(kbdOutCode[2]),
-    .I1(kbdOutCode[4]),
-    .I2(kbdOutCode[0]),
-    .I3(nextKbdData_2_20) 
-);
-defparam n176_s5.INIT=16'hBF00;
-  LUT3 n176_s6 (
-    .F(n176_10),
-    .I0(multiKeySeqState[0]),
-    .I1(multiKeySeqState[1]),
-    .I2(multiKeySeqState[2]) 
-);
-defparam n176_s6.INIT=8'h01;
-  LUT3 n109_s9 (
-    .F(n109_12),
-    .I0(romAsciiDoutNormalAndShift[5]),
-    .I1(romAsciiDoutNormalAndShift[12]),
-    .I2(shiftState) 
-);
-defparam n109_s9.INIT=8'h35;
-  LUT3 n109_s10 (
-    .F(n109_13),
-    .I0(romAsciiDoutNormalAndShift[4]),
-    .I1(romAsciiDoutNormalAndShift[11]),
-    .I2(shiftState) 
-);
-defparam n109_s10.INIT=8'hCA;
-  LUT3 nextKbdData_2_s12 (
-    .F(nextKbdData_2_15),
-    .I0(kbdOutCode[3]),
-    .I1(kbdOutCode[1]),
+  LUT3 asciiCode_3_s5 (
+    .F(asciiCode_3_8),
+    .I0(kbdOutCode[1]),
+    .I1(kbdOutCode[0]),
     .I2(kbdOutCode[2]) 
 );
-defparam nextKbdData_2_s12.INIT=8'hE3;
-  LUT3 nextKbdData_2_s13 (
-    .F(nextKbdData_2_16),
-    .I0(kbdOutCode[2]),
-    .I1(kbdOutCode[0]),
-    .I2(kbdOutCode[3]) 
-);
-defparam nextKbdData_2_s13.INIT=8'h53;
-  LUT3 nextKbdData_2_s14 (
-    .F(nextKbdData_2_17),
+defparam asciiCode_3_s5.INIT=8'hE3;
+  LUT3 asciiCode_1_s4 (
+    .F(asciiCode_1_7),
     .I0(kbdOutCode[0]),
-    .I1(kbdOutCode[5]),
-    .I2(kbdOutCode[1]) 
+    .I1(kbdOutCode[1]),
+    .I2(kbdOutCode[4]) 
 );
-defparam nextKbdData_2_s14.INIT=8'hE7;
-  LUT4 nextKbdData_2_s15 (
-    .F(nextKbdData_2_18),
-    .I0(kbdOutCode[4]),
-    .I1(kbdOutCode[7]),
-    .I2(kbdOutCode[6]),
-    .I3(kbdOutCode[3]) 
+defparam asciiCode_1_s4.INIT=8'hBD;
+  LUT3 readKbdRom_s5 (
+    .F(readKbdRom_10),
+    .I0(specialCodeValid),
+    .I1(skipNextCode),
+    .I2(fifoReadDataValid) 
 );
-defparam nextKbdData_2_s15.INIT=16'h1000;
-  LUT4 n174_s4 (
-    .F(n174_9),
-    .I0(readKbdRom_r0),
-    .I1(romAsciiDoutNormalAndShift[5]),
-    .I2(romAsciiDoutNormalAndShift[12]),
-    .I3(shiftState) 
-);
-defparam n174_s4.INIT=16'hA088;
-  LUT4 nextKbdData_6_s5 (
-    .F(nextKbdData[6]),
-    .I0(romAsciiDoutNormalAndShift[13]),
-    .I1(romAsciiDoutNormalAndShift[6]),
-    .I2(shiftState),
-    .I3(nextKbdData_6_8) 
-);
-defparam nextKbdData_6_s5.INIT=16'hAC00;
-  LUT4 nextKbdData_2_s16 (
-    .F(nextKbdData_2_20),
+defparam readKbdRom_s5.INIT=8'h10;
+  LUT4 asciiCode_5_s6 (
+    .F(asciiCode_5_11),
     .I0(readKbdRom_r0),
     .I1(specialCodeValid),
     .I2(skipNextCode),
     .I3(fifoReadDataValid) 
 );
-defparam nextKbdData_2_s16.INIT=16'h0400;
-  LUT4 readKbdRom_s6 (
-    .F(readKbdRom_11),
-    .I0(specialCodeValid),
-    .I1(nextSkipNextCode_4),
-    .I2(skipNextCode),
-    .I3(fifoReadDataValid) 
-);
-defparam readKbdRom_s6.INIT=16'h0100;
-  LUT3 kbdromAddr_6_s3 (
+defparam asciiCode_5_s6.INIT=16'h0400;
+  LUT4 kbdromAddr_6_s3 (
     .F(kbdromAddr[6]),
     .I0(kbdOutCode[6]),
-    .I1(readKbdRom_6),
-    .I2(readKbdRom_11) 
+    .I1(nextSkipNextCode_4),
+    .I2(readKbdRom_6),
+    .I3(readKbdRom_10) 
 );
-defparam kbdromAddr_6_s3.INIT=8'h20;
-  LUT3 kbdromAddr_4_s3 (
+defparam kbdromAddr_6_s3.INIT=16'h0200;
+  LUT4 kbdromAddr_5_s3 (
+    .F(kbdromAddr[5]),
+    .I0(kbdOutCode[5]),
+    .I1(nextSkipNextCode_4),
+    .I2(readKbdRom_6),
+    .I3(readKbdRom_10) 
+);
+defparam kbdromAddr_5_s3.INIT=16'h0200;
+  LUT4 kbdromAddr_4_s3 (
     .F(kbdromAddr[4]),
     .I0(kbdOutCode[4]),
-    .I1(readKbdRom_6),
-    .I2(readKbdRom_11) 
+    .I1(nextSkipNextCode_4),
+    .I2(readKbdRom_6),
+    .I3(readKbdRom_10) 
 );
-defparam kbdromAddr_4_s3.INIT=8'h20;
-  LUT3 kbdromAddr_3_s3 (
-    .F(kbdromAddr[3]),
-    .I0(kbdOutCode[3]),
-    .I1(readKbdRom_6),
-    .I2(readKbdRom_11) 
-);
-defparam kbdromAddr_3_s3.INIT=8'h20;
-  LUT3 kbdromAddr_1_s3 (
-    .F(kbdromAddr[1]),
-    .I0(kbdOutCode[1]),
-    .I1(readKbdRom_6),
-    .I2(readKbdRom_11) 
-);
-defparam kbdromAddr_1_s3.INIT=8'h20;
-  LUT3 kbdromAddr_0_s3 (
-    .F(kbdromAddr[0]),
-    .I0(kbdOutCode[0]),
-    .I1(readKbdRom_6),
-    .I2(readKbdRom_11) 
-);
-defparam kbdromAddr_0_s3.INIT=8'h20;
+defparam kbdromAddr_4_s3.INIT=16'h0200;
   LUT4 nextShiftState_s3 (
     .F(nextShiftState_9),
     .I0(shiftState),
     .I1(skipNextCode),
     .I2(fifoReadDataValid),
-    .I3(n306_4) 
+    .I3(n187_4) 
 );
 defparam nextShiftState_s3.INIT=16'h3A2A;
+  LUT4 kbdromAddr_2_s3 (
+    .F(kbdromAddr[2]),
+    .I0(kbdOutCode[2]),
+    .I1(specialCodeValid),
+    .I2(skipNextCode),
+    .I3(fifoReadDataValid) 
+);
+defparam kbdromAddr_2_s3.INIT=16'h0200;
   DFFR readKbdRom_r0_s0 (
     .Q(readKbdRom_r0),
     .D(readKbdRom),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR specialCodeValid_s0 (
     .Q(specialCodeValid),
-    .D(n319_5),
+    .D(n200_5),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR skipNextCode_s0 (
     .Q(skipNextCode),
     .D(nextSkipNextCode),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR kbdData_6_s0 (
     .Q(kbdAsciiData[6]),
-    .D(nextKbdData[6]),
+    .D(asciiCode[6]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_5_s0 (
     .Q(kbdAsciiData[5]),
-    .D(n174_5),
+    .D(asciiCode[5]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_4_s0 (
     .Q(kbdAsciiData[4]),
-    .D(nextKbdData[4]),
+    .D(asciiCode[4]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_3_s0 (
     .Q(kbdAsciiData[3]),
-    .D(n176_5),
+    .D(asciiCode[3]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_2_s0 (
     .Q(kbdAsciiData[2]),
-    .D(nextKbdData[2]),
+    .D(asciiCode[2]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_1_s0 (
     .Q(kbdAsciiData[1]),
-    .D(n178_5),
+    .D(asciiCode[1]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdData_0_s0 (
     .Q(kbdAsciiData[0]),
-    .D(nextKbdData[0]),
+    .D(asciiCode[0]),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n46_4) 
 );
   DFFR kbdDataValid_s0 (
     .Q(kbdAsciiDataValid),
     .D(nextKbdDataValid),
     .CLK(clk),
-    .RESET(n33_6) 
-);
-  DFFRE multiKeySeqState_2_s0 (
-    .Q(multiKeySeqState[2]),
-    .D(n109_3),
-    .CLK(clk),
-    .CE(n123_4),
-    .RESET(n33_6) 
-);
-  DFFRE multiKeySeqState_1_s0 (
-    .Q(multiKeySeqState[1]),
-    .D(n111_3),
-    .CLK(clk),
-    .CE(n123_4),
-    .RESET(n33_6) 
-);
-  DFFRE multiKeySeqState_0_s0 (
-    .Q(multiKeySeqState[0]),
-    .D(n113_3),
-    .CLK(clk),
-    .CE(n123_4),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR fifoReadDataValid_s0 (
     .Q(fifoReadDataValid),
     .D(kbdfifoNotEmpty),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR shiftState_s2 (
     .Q(shiftState),
     .D(nextShiftState_9),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam shiftState_s2.INIT=1'b0;
-  INV n33_s2 (
-    .O(n33_6),
+  INV n40_s2 (
+    .O(n40_6),
     .I(userResetn) 
 );
   kbdrom ukbdrom (
     .clk(clk),
     .readKbdRom(readKbdRom),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .kbdromAddr(kbdromAddr[6:0]),
     .romAsciiDoutNormalAndShift(romAsciiDoutNormalAndShift[13:0])
 );
   fifo kbdfifo (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .kbdcodeValid_Z(kbdcodeValid_Z),
     .kbdcode_Z(kbdcode_Z[7:0]),
     .kbdfifoNotEmpty(kbdfifoNotEmpty),
@@ -1626,7 +1423,7 @@ defparam shiftState_s2.INIT=1'b0;
 );
   ps2receiver ps2kbd (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .KBD_CLK_d(KBD_CLK_d),
     .KBD_DATA_d(KBD_DATA_d),
     .userResetn(userResetn),
@@ -1642,31 +1439,29 @@ defparam shiftState_s2.INIT=1'b0;
 endmodule /* kbd */
 module fifo_0 (
   clk,
-  n33_6,
+  n40_6,
   popdfifo0,
   rxDataOutValid,
-  popdfifo0_4,
   nedfifo0
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input popdfifo0;
 input rxDataOutValid;
-input popdfifo0_4;
 output nedfifo0;
 wire fifo_notempty;
 wire n61_5;
 wire cnt_c_3_19;
 wire cnt_c_2_19;
 wire cnt_c_1_19;
-wire cnt_c_0_21;
 wire fifo_notempty_4;
 wire n43_12;
 wire n61_6;
 wire cnt_c_3_20;
-wire n43_16;
 wire cnt_c_2_22;
+wire n43_14;
+wire cnt_c_0_23;
 wire nfdfifo0;
 wire [3:0] cnt;
 wire VCC;
@@ -1678,7 +1473,7 @@ wire GND;
     .I2(cnt[2]),
     .I3(cnt[1]) 
 );
-defparam fifo_notempty_s0.INIT=16'hBFFD;
+defparam fifo_notempty_s0.INIT=16'hBFFE;
   LUT4 n61_s2 (
     .F(n61_5),
     .I0(n61_6),
@@ -1690,19 +1485,19 @@ defparam n61_s2.INIT=16'hEFF7;
   LUT4 cnt_c_3_s13 (
     .F(cnt_c_3_19),
     .I0(cnt_c_3_20),
-    .I1(n43_12),
-    .I2(cnt[3]),
+    .I1(cnt[3]),
+    .I2(n43_12),
     .I3(popdfifo0) 
 );
-defparam cnt_c_3_s13.INIT=16'h1284;
+defparam cnt_c_3_s13.INIT=16'h0990;
   LUT4 cnt_c_2_s13 (
     .F(cnt_c_2_19),
     .I0(cnt_c_2_22),
-    .I1(n43_12),
-    .I2(cnt[2]),
+    .I1(cnt[2]),
+    .I2(n43_12),
     .I3(popdfifo0) 
 );
-defparam cnt_c_2_s13.INIT=16'h1284;
+defparam cnt_c_2_s13.INIT=16'h0990;
   LUT4 cnt_c_1_s13 (
     .F(cnt_c_1_19),
     .I0(cnt[1]),
@@ -1711,12 +1506,6 @@ defparam cnt_c_2_s13.INIT=16'h1284;
     .I3(popdfifo0) 
 );
 defparam cnt_c_1_s13.INIT=16'h0960;
-  LUT2 cnt_c_0_s15 (
-    .F(cnt_c_0_21),
-    .I0(cnt[0]),
-    .I1(n43_16) 
-);
-defparam cnt_c_0_s15.INIT=4'h4;
   LUT4 fifo_notempty_s1 (
     .F(fifo_notempty_4),
     .I0(cnt[3]),
@@ -1724,7 +1513,7 @@ defparam cnt_c_0_s15.INIT=4'h4;
     .I2(n43_12),
     .I3(popdfifo0) 
 );
-defparam fifo_notempty_s1.INIT=16'hBE2B;
+defparam fifo_notempty_s1.INIT=16'hEB7E;
   LUT2 n43_s8 (
     .F(n43_12),
     .I0(rxDataOutValid),
@@ -1741,20 +1530,12 @@ defparam n43_s8.INIT=4'h8;
 defparam n61_s3.INIT=16'h6F17;
   LUT4 cnt_c_3_s14 (
     .F(cnt_c_3_20),
-    .I0(cnt[2]),
-    .I1(cnt[1]),
-    .I2(cnt[0]),
-    .I3(n43_12) 
+    .I0(n43_12),
+    .I1(cnt[2]),
+    .I2(cnt[1]),
+    .I3(cnt[0]) 
 );
-defparam cnt_c_3_s14.INIT=16'h7F01;
-  LUT4 n43_s10 (
-    .F(n43_16),
-    .I0(popdfifo0_4),
-    .I1(nedfifo0),
-    .I2(rxDataOutValid),
-    .I3(nfdfifo0) 
-);
-defparam n43_s10.INIT=16'h7888;
+defparam cnt_c_3_s14.INIT=16'h7FFE;
   LUT4 cnt_c_2_s15 (
     .F(cnt_c_2_22),
     .I0(rxDataOutValid),
@@ -1762,49 +1543,64 @@ defparam n43_s10.INIT=16'h7888;
     .I2(cnt[1]),
     .I3(cnt[0]) 
 );
-defparam cnt_c_2_s15.INIT=16'h088F;
+defparam cnt_c_2_s15.INIT=16'h7FF8;
+  LUT3 n43_s9 (
+    .F(n43_14),
+    .I0(popdfifo0),
+    .I1(rxDataOutValid),
+    .I2(nfdfifo0) 
+);
+defparam n43_s9.INIT=8'h6A;
+  LUT4 cnt_c_0_s16 (
+    .F(cnt_c_0_23),
+    .I0(cnt[0]),
+    .I1(popdfifo0),
+    .I2(rxDataOutValid),
+    .I3(nfdfifo0) 
+);
+defparam cnt_c_0_s16.INIT=16'h1444;
   DFFR notfull_s0 (
     .Q(nfdfifo0),
     .D(n61_5),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR notempty_s0 (
     .Q(nedfifo0),
     .D(fifo_notempty),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE cnt_3_s1 (
     .Q(cnt[3]),
     .D(cnt_c_3_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_3_s1.INIT=1'b0;
   DFFRE cnt_2_s1 (
     .Q(cnt[2]),
     .D(cnt_c_2_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_2_s1.INIT=1'b0;
   DFFRE cnt_1_s1 (
     .Q(cnt[1]),
     .D(cnt_c_1_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_1_s1.INIT=1'b0;
   DFFRE cnt_0_s1 (
     .Q(cnt[0]),
-    .D(cnt_c_0_21),
+    .D(cnt_c_0_23),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_0_s1.INIT=1'b0;
   VCC VCC_cZ (
@@ -1816,31 +1612,29 @@ defparam cnt_0_s1.INIT=1'b0;
 endmodule /* fifo_0 */
 module fifo_1 (
   clk,
-  n33_6,
+  n40_6,
   popdfifo1,
   kbdAsciiDataValid,
-  popdfifo1_4,
   nedfifo1
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input popdfifo1;
 input kbdAsciiDataValid;
-input popdfifo1_4;
 output nedfifo1;
 wire fifo_notempty;
 wire n61_5;
 wire cnt_c_3_19;
 wire cnt_c_2_19;
 wire cnt_c_1_19;
-wire cnt_c_0_21;
 wire fifo_notempty_4;
 wire n43_12;
 wire n61_6;
 wire cnt_c_3_20;
-wire n43_16;
 wire cnt_c_2_22;
+wire n43_14;
+wire cnt_c_0_23;
 wire nfdfifo1;
 wire [3:0] cnt;
 wire VCC;
@@ -1852,7 +1646,7 @@ wire GND;
     .I2(cnt[2]),
     .I3(cnt[1]) 
 );
-defparam fifo_notempty_s0.INIT=16'hBFFD;
+defparam fifo_notempty_s0.INIT=16'hBFFE;
   LUT4 n61_s2 (
     .F(n61_5),
     .I0(n61_6),
@@ -1864,19 +1658,19 @@ defparam n61_s2.INIT=16'hEFF7;
   LUT4 cnt_c_3_s13 (
     .F(cnt_c_3_19),
     .I0(cnt_c_3_20),
-    .I1(n43_12),
-    .I2(cnt[3]),
+    .I1(cnt[3]),
+    .I2(n43_12),
     .I3(popdfifo1) 
 );
-defparam cnt_c_3_s13.INIT=16'h1284;
+defparam cnt_c_3_s13.INIT=16'h0990;
   LUT4 cnt_c_2_s13 (
     .F(cnt_c_2_19),
     .I0(cnt_c_2_22),
-    .I1(n43_12),
-    .I2(cnt[2]),
+    .I1(cnt[2]),
+    .I2(n43_12),
     .I3(popdfifo1) 
 );
-defparam cnt_c_2_s13.INIT=16'h1284;
+defparam cnt_c_2_s13.INIT=16'h0990;
   LUT4 cnt_c_1_s13 (
     .F(cnt_c_1_19),
     .I0(cnt[1]),
@@ -1885,12 +1679,6 @@ defparam cnt_c_2_s13.INIT=16'h1284;
     .I3(popdfifo1) 
 );
 defparam cnt_c_1_s13.INIT=16'h0960;
-  LUT2 cnt_c_0_s15 (
-    .F(cnt_c_0_21),
-    .I0(cnt[0]),
-    .I1(n43_16) 
-);
-defparam cnt_c_0_s15.INIT=4'h4;
   LUT4 fifo_notempty_s1 (
     .F(fifo_notempty_4),
     .I0(cnt[3]),
@@ -1898,7 +1686,7 @@ defparam cnt_c_0_s15.INIT=4'h4;
     .I2(n43_12),
     .I3(popdfifo1) 
 );
-defparam fifo_notempty_s1.INIT=16'hBE2B;
+defparam fifo_notempty_s1.INIT=16'hEB7E;
   LUT2 n43_s8 (
     .F(n43_12),
     .I0(kbdAsciiDataValid),
@@ -1915,20 +1703,12 @@ defparam n43_s8.INIT=4'h8;
 defparam n61_s3.INIT=16'h6F17;
   LUT4 cnt_c_3_s14 (
     .F(cnt_c_3_20),
-    .I0(cnt[2]),
-    .I1(cnt[1]),
-    .I2(cnt[0]),
-    .I3(n43_12) 
+    .I0(n43_12),
+    .I1(cnt[2]),
+    .I2(cnt[1]),
+    .I3(cnt[0]) 
 );
-defparam cnt_c_3_s14.INIT=16'h7F01;
-  LUT4 n43_s10 (
-    .F(n43_16),
-    .I0(popdfifo1_4),
-    .I1(nedfifo1),
-    .I2(kbdAsciiDataValid),
-    .I3(nfdfifo1) 
-);
-defparam n43_s10.INIT=16'h7888;
+defparam cnt_c_3_s14.INIT=16'h7FFE;
   LUT4 cnt_c_2_s15 (
     .F(cnt_c_2_22),
     .I0(kbdAsciiDataValid),
@@ -1936,49 +1716,64 @@ defparam n43_s10.INIT=16'h7888;
     .I2(cnt[1]),
     .I3(cnt[0]) 
 );
-defparam cnt_c_2_s15.INIT=16'h088F;
+defparam cnt_c_2_s15.INIT=16'h7FF8;
+  LUT3 n43_s9 (
+    .F(n43_14),
+    .I0(popdfifo1),
+    .I1(kbdAsciiDataValid),
+    .I2(nfdfifo1) 
+);
+defparam n43_s9.INIT=8'h6A;
+  LUT4 cnt_c_0_s16 (
+    .F(cnt_c_0_23),
+    .I0(cnt[0]),
+    .I1(popdfifo1),
+    .I2(kbdAsciiDataValid),
+    .I3(nfdfifo1) 
+);
+defparam cnt_c_0_s16.INIT=16'h1444;
   DFFR notfull_s0 (
     .Q(nfdfifo1),
     .D(n61_5),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR notempty_s0 (
     .Q(nedfifo1),
     .D(fifo_notempty),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE cnt_3_s1 (
     .Q(cnt[3]),
     .D(cnt_c_3_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_3_s1.INIT=1'b0;
   DFFRE cnt_2_s1 (
     .Q(cnt[2]),
     .D(cnt_c_2_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_2_s1.INIT=1'b0;
   DFFRE cnt_1_s1 (
     .Q(cnt[1]),
     .D(cnt_c_1_19),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_1_s1.INIT=1'b0;
   DFFRE cnt_0_s1 (
     .Q(cnt[0]),
-    .D(cnt_c_0_21),
+    .D(cnt_c_0_23),
     .CLK(clk),
-    .CE(n43_16),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_0_s1.INIT=1'b0;
   VCC VCC_cZ (
@@ -1990,188 +1785,160 @@ defparam cnt_0_s1.INIT=1'b0;
 endmodule /* fifo_1 */
 module fifo_2 (
   clk,
-  n33_6,
+  n40_6,
   arbFifoPush1,
   arbFifoPush0,
   arbFifoNotEmpty
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input arbFifoPush1;
 input arbFifoPush0;
 output arbFifoNotEmpty;
 wire fifo_notempty;
 wire n61_5;
 wire cnt_c_3_19;
+wire cnt_c_2_19;
+wire cnt_c_1_19;
+wire cnt_c_0_21;
+wire fifo_notempty_4;
 wire n43_12;
-wire n43_13;
 wire cnt_c_3_20;
-wire cnt_c_3_21;
 wire cnt_c_2_20;
-wire fifo_notempty_6;
-wire fifo_notempty_8;
-wire fifo_notempty_10;
-wire cnt_c_2_23;
-wire n43_17;
-wire cnt_c_1_22;
-wire cnt_c_0_26;
+wire n43_14;
 wire arbFifoNotFull;
 wire [3:0] cnt;
 wire VCC;
 wire GND;
-  LUT2 fifo_notempty_s0 (
+  LUT4 fifo_notempty_s0 (
     .F(fifo_notempty),
-    .I0(fifo_notempty_10),
-    .I1(fifo_notempty_8) 
+    .I0(fifo_notempty_4),
+    .I1(cnt[2]),
+    .I2(cnt[1]),
+    .I3(cnt[3]) 
 );
-defparam fifo_notempty_s0.INIT=4'h7;
-  LUT2 n61_s2 (
+defparam fifo_notempty_s0.INIT=16'hBFFE;
+  LUT4 n61_s2 (
     .F(n61_5),
-    .I0(fifo_notempty_10),
-    .I1(fifo_notempty_8) 
+    .I0(fifo_notempty_4),
+    .I1(cnt[3]),
+    .I2(cnt[1]),
+    .I3(cnt[2]) 
 );
-defparam n61_s2.INIT=4'hB;
+defparam n61_s2.INIT=16'hEFFB;
   LUT4 cnt_c_3_s13 (
     .F(cnt_c_3_19),
-    .I0(n43_12),
-    .I1(cnt_c_3_20),
-    .I2(cnt_c_3_21),
-    .I3(n43_13) 
+    .I0(cnt_c_3_20),
+    .I1(cnt[3]),
+    .I2(arbFifoNotEmpty),
+    .I3(n43_12) 
 );
-defparam cnt_c_3_s13.INIT=16'h2F22;
-  LUT4 n43_s8 (
+defparam cnt_c_3_s13.INIT=16'h0990;
+  LUT4 cnt_c_2_s13 (
+    .F(cnt_c_2_19),
+    .I0(cnt_c_2_20),
+    .I1(cnt[2]),
+    .I2(arbFifoNotEmpty),
+    .I3(n43_12) 
+);
+defparam cnt_c_2_s13.INIT=16'h0990;
+  LUT4 cnt_c_1_s13 (
+    .F(cnt_c_1_19),
+    .I0(arbFifoNotEmpty),
+    .I1(cnt[1]),
+    .I2(cnt[0]),
+    .I3(n43_12) 
+);
+defparam cnt_c_1_s13.INIT=16'h1482;
+  LUT2 cnt_c_0_s15 (
+    .F(cnt_c_0_21),
+    .I0(cnt[0]),
+    .I1(n43_14) 
+);
+defparam cnt_c_0_s15.INIT=4'h4;
+  LUT4 fifo_notempty_s1 (
+    .F(fifo_notempty_4),
+    .I0(arbFifoNotEmpty),
+    .I1(cnt[1]),
+    .I2(cnt[0]),
+    .I3(n43_12) 
+);
+defparam fifo_notempty_s1.INIT=16'hBDDE;
+  LUT3 n43_s8 (
     .F(n43_12),
     .I0(arbFifoPush1),
     .I1(arbFifoPush0),
-    .I2(arbFifoNotEmpty),
-    .I3(arbFifoNotFull) 
+    .I2(arbFifoNotFull) 
 );
-defparam n43_s8.INIT=16'h0E00;
-  LUT4 n43_s9 (
-    .F(n43_13),
-    .I0(arbFifoPush1),
-    .I1(arbFifoPush0),
-    .I2(arbFifoNotFull),
-    .I3(arbFifoNotEmpty) 
-);
-defparam n43_s9.INIT=16'h1F00;
+defparam n43_s8.INIT=8'hE0;
   LUT4 cnt_c_3_s14 (
     .F(cnt_c_3_20),
-    .I0(cnt[2]),
-    .I1(cnt[1]),
-    .I2(cnt[0]),
-    .I3(cnt[3]) 
+    .I0(arbFifoNotEmpty),
+    .I1(cnt[2]),
+    .I2(cnt[1]),
+    .I3(cnt[0]) 
 );
-defparam cnt_c_3_s14.INIT=16'h807F;
-  LUT4 cnt_c_3_s15 (
-    .F(cnt_c_3_21),
-    .I0(cnt[2]),
-    .I1(cnt[1]),
-    .I2(cnt[0]),
-    .I3(cnt[3]) 
-);
-defparam cnt_c_3_s15.INIT=16'h01FE;
+defparam cnt_c_3_s14.INIT=16'hBFFD;
   LUT3 cnt_c_2_s14 (
     .F(cnt_c_2_20),
     .I0(arbFifoNotEmpty),
     .I1(cnt[1]),
     .I2(cnt[0]) 
 );
-defparam cnt_c_2_s14.INIT=8'h17;
-  LUT3 fifo_notempty_s3 (
-    .F(fifo_notempty_6),
-    .I0(cnt[2]),
-    .I1(cnt[1]),
-    .I2(n43_12) 
+defparam cnt_c_2_s14.INIT=8'hBD;
+  LUT4 n43_s9 (
+    .F(n43_14),
+    .I0(arbFifoNotEmpty),
+    .I1(arbFifoPush1),
+    .I2(arbFifoPush0),
+    .I3(arbFifoNotFull) 
 );
-defparam fifo_notempty_s3.INIT=8'h7E;
-  LUT4 fifo_notempty_s4 (
-    .F(fifo_notempty_8),
-    .I0(fifo_notempty_6),
-    .I1(cnt[0]),
-    .I2(n43_12),
-    .I3(n43_13) 
-);
-defparam fifo_notempty_s4.INIT=16'h4441;
-  LUT4 fifo_notempty_s5 (
-    .F(fifo_notempty_10),
-    .I0(n43_12),
-    .I1(n43_13),
-    .I2(cnt[3]),
-    .I3(cnt_c_3_19) 
-);
-defparam fifo_notempty_s5.INIT=16'h00EF;
-  LUT4 cnt_c_2_s16 (
-    .F(cnt_c_2_23),
-    .I0(cnt[2]),
-    .I1(n43_12),
-    .I2(n43_13),
-    .I3(cnt_c_2_20) 
-);
-defparam cnt_c_2_s16.INIT=16'hDAE6;
-  LUT2 n43_s10 (
-    .F(n43_17),
-    .I0(n43_12),
-    .I1(n43_13) 
-);
-defparam n43_s10.INIT=4'hE;
-  LUT4 cnt_c_1_s15 (
-    .F(cnt_c_1_22),
-    .I0(n43_12),
-    .I1(n43_13),
-    .I2(cnt[1]),
-    .I3(cnt[0]) 
-);
-defparam cnt_c_1_s15.INIT=16'hDABC;
-  LUT3 cnt_c_0_s18 (
-    .F(cnt_c_0_26),
-    .I0(n43_12),
-    .I1(n43_13),
-    .I2(cnt[0]) 
-);
-defparam cnt_c_0_s18.INIT=8'h1E;
+defparam n43_s9.INIT=16'h56AA;
   DFFR notfull_s0 (
     .Q(arbFifoNotFull),
     .D(n61_5),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR notempty_s0 (
     .Q(arbFifoNotEmpty),
     .D(fifo_notempty),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE cnt_3_s1 (
     .Q(cnt[3]),
     .D(cnt_c_3_19),
     .CLK(clk),
-    .CE(n43_17),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
 defparam cnt_3_s1.INIT=1'b0;
-  DFFR cnt_2_s2 (
+  DFFRE cnt_2_s1 (
     .Q(cnt[2]),
-    .D(cnt_c_2_23),
+    .D(cnt_c_2_19),
     .CLK(clk),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
-defparam cnt_2_s2.INIT=1'b0;
-  DFFR cnt_1_s2 (
+defparam cnt_2_s1.INIT=1'b0;
+  DFFRE cnt_1_s1 (
     .Q(cnt[1]),
-    .D(cnt_c_1_22),
+    .D(cnt_c_1_19),
     .CLK(clk),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
-defparam cnt_1_s2.INIT=1'b0;
-  DFFR cnt_0_s2 (
+defparam cnt_1_s1.INIT=1'b0;
+  DFFRE cnt_0_s1 (
     .Q(cnt[0]),
-    .D(cnt_c_0_26),
+    .D(cnt_c_0_21),
     .CLK(clk),
-    .RESET(n33_6) 
+    .CE(n43_14),
+    .RESET(n40_6) 
 );
-defparam cnt_0_s2.INIT=1'b0;
+defparam cnt_0_s1.INIT=1'b0;
   VCC VCC_cZ (
     .V(VCC)
 );
@@ -2181,7 +1948,7 @@ defparam cnt_0_s2.INIT=1'b0;
 endmodule /* fifo_2 */
 module datamux2in (
   clk,
-  n33_6,
+  n40_6,
   userResetn,
   rxDataOutValid,
   kbdAsciiDataValid,
@@ -2191,7 +1958,7 @@ module datamux2in (
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input userResetn;
 input rxDataOutValid;
 input kbdAsciiDataValid;
@@ -2202,8 +1969,8 @@ wire popdfifo0;
 wire popdfifo1;
 wire n47_4;
 wire popdfifo0_4;
-wire popdfifo1_4;
 wire popdfifo0_5;
+wire popdfifo1_4;
 wire popdfifo1_5;
 wire arbFifoPush0;
 wire arbFifoPush1;
@@ -2213,18 +1980,22 @@ wire arbFifoNotEmpty;
 wire [1:0] arbCounter;
 wire VCC;
 wire GND;
-  LUT2 popdfifo0_s0 (
+  LUT4 popdfifo0_s0 (
     .F(popdfifo0),
-    .I0(popdfifo0_4),
-    .I1(nedfifo0) 
+    .I0(nedfifo1),
+    .I1(popdfifo0_4),
+    .I2(popdfifo0_5),
+    .I3(nedfifo0) 
 );
-defparam popdfifo0_s0.INIT=4'h8;
-  LUT2 popdfifo1_s0 (
+defparam popdfifo0_s0.INIT=16'h8F00;
+  LUT4 popdfifo1_s0 (
     .F(popdfifo1),
     .I0(popdfifo1_4),
-    .I1(nedfifo1) 
+    .I1(nedfifo0),
+    .I2(popdfifo1_5),
+    .I3(nedfifo1) 
 );
-defparam popdfifo1_s0.INIT=4'h8;
+defparam popdfifo1_s0.INIT=16'h8F00;
   LUT3 n47_s1 (
     .F(n47_4),
     .I0(nedfifo0),
@@ -2234,34 +2005,36 @@ defparam popdfifo1_s0.INIT=4'h8;
 defparam n47_s1.INIT=8'h1F;
   LUT4 popdfifo0_s1 (
     .F(popdfifo0_4),
-    .I0(nedfifo1),
-    .I1(popdfifo0_5),
-    .I2(arbCounter[0]),
-    .I3(arbCounter[1]) 
+    .I0(arbCounter[1]),
+    .I1(arbCounter[0]),
+    .I2(arbFifoPush0),
+    .I3(arbFifoPush1) 
 );
-defparam popdfifo0_s1.INIT=16'h31F3;
+defparam popdfifo0_s1.INIT=16'h0D00;
+  LUT4 popdfifo0_s2 (
+    .F(popdfifo0_5),
+    .I0(arbCounter[1]),
+    .I1(arbCounter[0]),
+    .I2(nedfifo1),
+    .I3(arbFifoPush1) 
+);
+defparam popdfifo0_s2.INIT=16'hBBB0;
   LUT4 popdfifo1_s1 (
     .F(popdfifo1_4),
-    .I0(nedfifo0),
-    .I1(popdfifo1_5),
-    .I2(arbCounter[1]),
-    .I3(arbCounter[0]) 
+    .I0(arbCounter[1]),
+    .I1(arbCounter[0]),
+    .I2(arbFifoPush1),
+    .I3(arbFifoPush0) 
 );
-defparam popdfifo1_s1.INIT=16'h31F3;
-  LUT3 popdfifo0_s2 (
-    .F(popdfifo0_5),
-    .I0(arbFifoPush0),
-    .I1(nedfifo1),
-    .I2(arbFifoPush1) 
-);
-defparam popdfifo0_s2.INIT=8'hBC;
-  LUT3 popdfifo1_s2 (
+defparam popdfifo1_s1.INIT=16'h0B00;
+  LUT4 popdfifo1_s2 (
     .F(popdfifo1_5),
-    .I0(arbFifoPush1),
-    .I1(arbFifoPush0),
-    .I2(nedfifo0) 
+    .I0(arbCounter[0]),
+    .I1(arbCounter[1]),
+    .I2(nedfifo0),
+    .I3(arbFifoPush0) 
 );
-defparam popdfifo1_s2.INIT=8'hBC;
+defparam popdfifo1_s2.INIT=16'hBBB0;
   DFFS arbCounter_0_s0 (
     .Q(arbCounter[0]),
     .D(arbCounter[1]),
@@ -2272,13 +2045,13 @@ defparam popdfifo1_s2.INIT=8'hBC;
     .Q(arbFifoPush0),
     .D(popdfifo0),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR arbFifoPush1_s0 (
     .Q(arbFifoPush1),
     .D(popdfifo1),
     .CLK(clk),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFR arbCounter_1_s0 (
     .Q(arbCounter[1]),
@@ -2300,23 +2073,21 @@ defparam popdfifo1_s2.INIT=8'hBC;
 );
   fifo_0 dfifo0 (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .popdfifo0(popdfifo0),
     .rxDataOutValid(rxDataOutValid),
-    .popdfifo0_4(popdfifo0_4),
     .nedfifo0(nedfifo0)
 );
   fifo_1 dfifo1 (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .popdfifo1(popdfifo1),
     .kbdAsciiDataValid(kbdAsciiDataValid),
-    .popdfifo1_4(popdfifo1_4),
     .nedfifo1(nedfifo1)
 );
   fifo_2 ArbFifo (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .arbFifoPush1(arbFifoPush1),
     .arbFifoPush0(arbFifoPush0),
     .arbFifoNotEmpty(arbFifoNotEmpty)
@@ -2330,7 +2101,7 @@ defparam popdfifo1_s2.INIT=8'hBC;
 endmodule /* datamux2in */
 module uart (
   clk,
-  n33_6,
+  n40_6,
   userResetn,
   UART_RX0_d,
   kbdAsciiDataValid,
@@ -2341,7 +2112,7 @@ module uart (
 )
 ;
 input clk;
-input n33_6;
+input n40_6;
 input userResetn;
 input UART_RX0_d;
 input kbdAsciiDataValid;
@@ -2366,19 +2137,17 @@ wire n496_3;
 wire n497_3;
 wire n244_4;
 wire rxDataReg_7_7;
+wire txClockDividerReg_19_8;
 wire txDataReg_8_7;
 wire rxBitCount_3_8;
+wire uartTxReg_7;
 wire rxClockDividerReg_9_7;
 wire n498_9;
 wire n79_6;
 wire n77_6;
 wire n433_7;
 wire n432_8;
-wire n453_5;
-wire n451_5;
-wire n450_5;
-wire n448_5;
-wire n447_5;
+wire n452_5;
 wire n445_5;
 wire n443_5;
 wire n442_5;
@@ -2418,23 +2187,22 @@ wire n449_6;
 wire n446_6;
 wire n444_6;
 wire n154_6;
-wire n154_7;
 wire n156_5;
 wire n159_5;
-wire n221_8;
-wire n223_7;
 wire n226_7;
 wire rxDataReg_7_8;
 wire txClockDividerReg_19_9;
+wire txClockDividerReg_19_10;
 wire txDataReg_8_8;
 wire n498_10;
-wire n452_6;
+wire n453_6;
+wire n451_6;
+wire n450_6;
 wire n448_6;
 wire n447_6;
 wire n445_6;
 wire n443_6;
-wire n441_6;
-wire n440_6;
+wire n442_6;
 wire n439_6;
 wire n438_6;
 wire n437_6;
@@ -2443,28 +2211,34 @@ wire n227_7;
 wire n224_7;
 wire n219_7;
 wire n218_7;
-wire n217_7;
-wire n215_7;
+wire n216_7;
 wire n213_7;
-wire n212_7;
-wire txClockDividerReg_19_10;
-wire n441_7;
-wire n436_7;
-wire n219_8;
-wire n218_8;
-wire n214_9;
-wire n450_8;
-wire n452_8;
+wire n154_8;
 wire n154_9;
-wire n67_7;
-wire n488_13;
-wire uartTxReg_9;
-wire n454_9;
+wire n156_6;
+wire txClockDividerReg_19_11;
 wire txClockDividerReg_19_12;
-wire n67_9;
+wire n218_8;
+wire n215_8;
+wire n154_10;
+wire n212_9;
+wire n223_9;
+wire n215_10;
 wire n221_10;
+wire n154_12;
+wire n154_14;
+wire n67_7;
+wire n447_8;
+wire n448_8;
+wire n450_8;
+wire n451_8;
+wire n453_8;
+wire n67_9;
+wire n221_12;
 wire uartRxReg;
 wire uartRxR0;
+wire n488_8;
+wire n454_7;
 wire [3:0] rxBitCount;
 wire [3:0] txBitCount;
 wire [8:0] txDataReg;
@@ -2474,15 +2248,15 @@ wire VCC;
 wire GND;
   LUT4 n154_s1 (
     .F(n154_4),
-    .I0(n154_9),
+    .I0(n154_14),
     .I1(n154_6),
-    .I2(n154_7),
+    .I2(n154_12),
     .I3(rxClockDividerReg[10]) 
 );
 defparam n154_s1.INIT=16'h0BB0;
   LUT4 n156_s1 (
     .F(n156_4),
-    .I0(n154_9),
+    .I0(n154_14),
     .I1(n154_6),
     .I2(n156_5),
     .I3(rxClockDividerReg[8]) 
@@ -2490,7 +2264,7 @@ defparam n154_s1.INIT=16'h0BB0;
 defparam n156_s1.INIT=16'h0BB0;
   LUT4 n159_s1 (
     .F(n159_4),
-    .I0(n154_9),
+    .I0(n154_14),
     .I1(n154_6),
     .I2(n159_5),
     .I3(rxClockDividerReg[5]) 
@@ -2499,29 +2273,29 @@ defparam n159_s1.INIT=16'h0BB0;
   LUT3 n164_s1 (
     .F(n164_4),
     .I0(n154_6),
-    .I1(n154_9),
+    .I1(n154_14),
     .I2(rxClockDividerReg[0]) 
 );
 defparam n164_s1.INIT=8'h0D;
   LUT4 n221_s3 (
     .F(n221_6),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(n154_6),
     .I2(rxClockDividerReg[9]),
-    .I3(n221_8) 
+    .I3(n221_10) 
 );
-defparam n221_s3.INIT=16'h0BB0;
+defparam n221_s3.INIT=16'h0BF0;
   LUT4 n223_s3 (
     .F(n223_6),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(n154_6),
-    .I2(n223_7),
+    .I2(n223_9),
     .I3(rxClockDividerReg[7]) 
 );
 defparam n223_s3.INIT=16'h0BB0;
   LUT4 n226_s3 (
     .F(n226_6),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(n154_6),
     .I2(n226_7),
     .I3(rxClockDividerReg[4]) 
@@ -2599,21 +2373,37 @@ defparam n244_s1.INIT=8'h70;
     .I3(rxClockDividerReg_9_7) 
 );
 defparam rxDataReg_7_s4.INIT=16'hD090;
+  LUT4 txClockDividerReg_19_s3 (
+    .F(txClockDividerReg_19_8),
+    .I0(kbdAsciiDataValid),
+    .I1(n351_3),
+    .I2(txClockDividerReg_19_9),
+    .I3(txClockDividerReg_19_10) 
+);
+defparam txClockDividerReg_19_s3.INIT=16'hBFFF;
   LUT4 txDataReg_8_s3 (
     .F(txDataReg_8_7),
-    .I0(txBitCount[3]),
-    .I1(txDataReg_8_8),
-    .I2(userResetn),
-    .I3(txClockDividerReg_19_9) 
+    .I0(txDataReg_8_8),
+    .I1(userResetn),
+    .I2(txClockDividerReg_19_9),
+    .I3(txClockDividerReg_19_10) 
 );
-defparam txDataReg_8_s3.INIT=16'hB000;
+defparam txDataReg_8_s3.INIT=16'h4000;
   LUT3 rxBitCount_2_s5 (
     .F(rxBitCount_3_8),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(uartRxReg),
     .I2(n154_6) 
 );
 defparam rxBitCount_2_s5.INIT=8'h70;
+  LUT4 txBitCount_2_s5 (
+    .F(uartTxReg_7),
+    .I0(n351_3),
+    .I1(kbdAsciiDataValid),
+    .I2(txClockDividerReg_19_9),
+    .I3(txClockDividerReg_19_10) 
+);
+defparam txBitCount_2_s5.INIT=16'hD000;
   LUT4 rxClockDividerReg_10_s4 (
     .F(rxClockDividerReg_9_7),
     .I0(rxBitCount[0]),
@@ -2632,7 +2422,7 @@ defparam n498_s5.INIT=8'hCA;
   LUT2 n79_s2 (
     .F(n79_6),
     .I0(rxBitCount[0]),
-    .I1(n154_9) 
+    .I1(n154_14) 
 );
 defparam n79_s2.INIT=4'h4;
   LUT4 n77_s2 (
@@ -2640,7 +2430,7 @@ defparam n79_s2.INIT=4'h4;
     .I0(rxBitCount[0]),
     .I1(rxBitCount[1]),
     .I2(rxBitCount[2]),
-    .I3(n154_9) 
+    .I3(n154_14) 
 );
 defparam n77_s2.INIT=16'hE100;
   LUT4 n433_s3 (
@@ -2659,117 +2449,91 @@ defparam n433_s3.INIT=16'hF00E;
     .I3(txBitCount[2]) 
 );
 defparam n432_s4.INIT=16'hFC02;
-  LUT3 n453_s1 (
-    .F(n453_5),
-    .I0(txClockDividerReg_19_9),
+  LUT4 n452_s1 (
+    .F(n452_5),
+    .I0(txClockDividerReg[0]),
     .I1(txClockDividerReg[1]),
-    .I2(txClockDividerReg[0]) 
+    .I2(n453_6),
+    .I3(txClockDividerReg[2]) 
 );
-defparam n453_s1.INIT=8'h41;
-  LUT4 n451_s1 (
-    .F(n451_5),
-    .I0(txClockDividerReg[2]),
-    .I1(n452_6),
-    .I2(txClockDividerReg_19_9),
-    .I3(txClockDividerReg[3]) 
-);
-defparam n451_s1.INIT=16'h0B04;
-  LUT3 n450_s1 (
-    .F(n450_5),
-    .I0(txClockDividerReg_19_9),
-    .I1(n450_8),
-    .I2(txClockDividerReg[4]) 
-);
-defparam n450_s1.INIT=8'h14;
-  LUT4 n448_s1 (
-    .F(n448_5),
-    .I0(txClockDividerReg[5]),
-    .I1(n448_6),
-    .I2(txClockDividerReg_19_9),
-    .I3(txClockDividerReg[6]) 
-);
-defparam n448_s1.INIT=16'h0B04;
-  LUT3 n447_s1 (
-    .F(n447_5),
-    .I0(txClockDividerReg_19_9),
-    .I1(n447_6),
-    .I2(txClockDividerReg[7]) 
-);
-defparam n447_s1.INIT=8'h14;
+defparam n452_s1.INIT=16'h0E01;
   LUT4 n445_s1 (
     .F(n445_5),
-    .I0(txClockDividerReg[8]),
-    .I1(n445_6),
-    .I2(txClockDividerReg_19_9),
-    .I3(txClockDividerReg[9]) 
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg[9]),
+    .I2(n445_6),
+    .I3(txClockDividerReg_19_10) 
 );
-defparam n445_s1.INIT=16'h0B04;
-  LUT3 n443_s1 (
+defparam n445_s1.INIT=16'h553C;
+  LUT4 n443_s1 (
     .F(n443_5),
     .I0(txClockDividerReg_19_9),
-    .I1(txClockDividerReg[11]),
-    .I2(n443_6) 
+    .I1(txClockDividerReg[12]),
+    .I2(txClockDividerReg[11]),
+    .I3(n443_6) 
 );
-defparam n443_s1.INIT=8'h14;
-  LUT4 n442_s1 (
+defparam n443_s1.INIT=16'h0DF0;
+  LUT3 n442_s1 (
     .F(n442_5),
-    .I0(txClockDividerReg[11]),
-    .I1(n443_6),
-    .I2(txClockDividerReg_19_9),
-    .I3(txClockDividerReg[12]) 
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg[12]),
+    .I2(n442_6) 
 );
-defparam n442_s1.INIT=16'h0B04;
+defparam n442_s1.INIT=8'h1C;
   LUT3 n441_s1 (
     .F(n441_5),
     .I0(txClockDividerReg_19_9),
-    .I1(n441_6),
-    .I2(txClockDividerReg[13]) 
+    .I1(txClockDividerReg[13]),
+    .I2(txClockDividerReg_19_10) 
 );
-defparam n441_s1.INIT=8'h14;
-  LUT3 n440_s1 (
+defparam n441_s1.INIT=8'h1C;
+  LUT4 n440_s1 (
     .F(n440_5),
     .I0(txClockDividerReg_19_9),
-    .I1(n440_6),
-    .I2(txClockDividerReg[14]) 
+    .I1(txClockDividerReg[13]),
+    .I2(txClockDividerReg_19_10),
+    .I3(txClockDividerReg[14]) 
 );
-defparam n440_s1.INIT=8'h14;
-  LUT4 n439_s1 (
+defparam n440_s1.INIT=16'hCF10;
+  LUT3 n439_s1 (
     .F(n439_5),
-    .I0(n445_6),
-    .I1(n439_6),
-    .I2(txClockDividerReg_19_9),
-    .I3(txClockDividerReg[15]) 
-);
-defparam n439_s1.INIT=16'h0708;
-  LUT3 n438_s1 (
-    .F(n438_5),
     .I0(txClockDividerReg_19_9),
-    .I1(txClockDividerReg[16]),
-    .I2(n438_6) 
+    .I1(txClockDividerReg[15]),
+    .I2(n439_6) 
 );
-defparam n438_s1.INIT=8'h1C;
+defparam n439_s1.INIT=8'h1C;
+  LUT4 n438_s1 (
+    .F(n438_5),
+    .I0(n442_6),
+    .I1(n438_6),
+    .I2(txClockDividerReg[16]),
+    .I3(txClockDividerReg_19_9) 
+);
+defparam n438_s1.INIT=16'h7078;
   LUT4 n437_s1 (
     .F(n437_5),
-    .I0(txClockDividerReg[19]),
-    .I1(txClockDividerReg[18]),
+    .I0(n437_6),
+    .I1(txClockDividerReg_19_10),
     .I2(txClockDividerReg[17]),
-    .I3(n437_6) 
+    .I3(txClockDividerReg_19_9) 
 );
-defparam n437_s1.INIT=16'h0EF0;
-  LUT3 n436_s1 (
+defparam n437_s1.INIT=16'h7078;
+  LUT4 n436_s1 (
     .F(n436_5),
     .I0(txClockDividerReg[19]),
-    .I1(txClockDividerReg[18]),
-    .I2(n436_6) 
+    .I1(n442_6),
+    .I2(n436_6),
+    .I3(txClockDividerReg[18]) 
 );
-defparam n436_s1.INIT=8'h2C;
-  LUT3 n435_s1 (
+defparam n436_s1.INIT=16'h3F80;
+  LUT4 n435_s1 (
     .F(n435_5),
-    .I0(n436_6),
-    .I1(txClockDividerReg[18]),
-    .I2(txClockDividerReg[19]) 
+    .I0(txClockDividerReg[18]),
+    .I1(n442_6),
+    .I2(n436_6),
+    .I3(txClockDividerReg[19]) 
 );
-defparam n435_s1.INIT=8'hD0;
+defparam n435_s1.INIT=16'hBF00;
   LUT2 n490_s2 (
     .F(n490_6),
     .I0(n351_3),
@@ -2778,49 +2542,49 @@ defparam n435_s1.INIT=8'hD0;
 defparam n490_s2.INIT=4'h4;
   LUT2 n208_s1 (
     .F(n208_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[1]) 
 );
 defparam n208_s1.INIT=4'h4;
   LUT2 n207_s1 (
     .F(n207_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[2]) 
 );
 defparam n207_s1.INIT=4'h4;
   LUT2 n206_s1 (
     .F(n206_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[3]) 
 );
 defparam n206_s1.INIT=4'h4;
   LUT2 n205_s1 (
     .F(n205_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[4]) 
 );
 defparam n205_s1.INIT=4'h4;
   LUT2 n204_s1 (
     .F(n204_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[5]) 
 );
 defparam n204_s1.INIT=4'h4;
   LUT2 n203_s1 (
     .F(n203_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[6]) 
 );
 defparam n203_s1.INIT=4'h4;
   LUT2 n202_s1 (
     .F(n202_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(rxDataOut[7]) 
 );
 defparam n202_s1.INIT=4'h4;
   LUT2 n201_s1 (
     .F(n201_5),
-    .I0(n221_10),
+    .I0(n221_12),
     .I1(uartRxReg) 
 );
 defparam n201_s1.INIT=4'h4;
@@ -2856,73 +2620,69 @@ defparam n224_s2.INIT=8'h14;
   LUT3 n219_s2 (
     .F(n219_6),
     .I0(n154_6),
-    .I1(rxClockDividerReg[11]),
-    .I2(n219_7) 
+    .I1(n219_7),
+    .I2(rxClockDividerReg[11]) 
 );
 defparam n219_s2.INIT=8'h14;
-  LUT4 n218_s2 (
+  LUT3 n218_s2 (
     .F(n218_6),
-    .I0(n218_7),
-    .I1(rxClockDividerReg[11]),
-    .I2(n219_7),
-    .I3(rxClockDividerReg[12]) 
-);
-defparam n218_s2.INIT=16'hCF10;
-  LUT3 n217_s2 (
-    .F(n217_6),
     .I0(n154_6),
-    .I1(rxClockDividerReg[13]),
-    .I2(n217_7) 
+    .I1(rxClockDividerReg[12]),
+    .I2(n218_7) 
 );
-defparam n217_s2.INIT=8'h14;
-  LUT4 n216_s2 (
+defparam n218_s2.INIT=8'h14;
+  LUT4 n217_s2 (
+    .F(n217_6),
+    .I0(rxClockDividerReg[12]),
+    .I1(n218_7),
+    .I2(n154_6),
+    .I3(rxClockDividerReg[13]) 
+);
+defparam n217_s2.INIT=16'h0B04;
+  LUT3 n216_s2 (
     .F(n216_6),
-    .I0(rxClockDividerReg[13]),
-    .I1(n217_7),
-    .I2(n154_6),
-    .I3(rxClockDividerReg[14]) 
+    .I0(n154_6),
+    .I1(n216_7),
+    .I2(rxClockDividerReg[14]) 
 );
-defparam n216_s2.INIT=16'h0B04;
-  LUT4 n215_s2 (
+defparam n216_s2.INIT=8'h14;
+  LUT3 n215_s2 (
     .F(n215_6),
-    .I0(n217_7),
-    .I1(n215_7),
-    .I2(n154_6),
-    .I3(rxClockDividerReg[15]) 
+    .I0(n154_6),
+    .I1(rxClockDividerReg[15]),
+    .I2(n215_10) 
 );
-defparam n215_s2.INIT=16'h0708;
+defparam n215_s2.INIT=8'h14;
   LUT4 n214_s2 (
     .F(n214_6),
-    .I0(n217_7),
-    .I1(n214_9),
+    .I0(rxClockDividerReg[15]),
+    .I1(n215_10),
     .I2(n154_6),
     .I3(rxClockDividerReg[16]) 
 );
-defparam n214_s2.INIT=16'h0708;
+defparam n214_s2.INIT=16'h0B04;
   LUT4 n213_s2 (
     .F(n213_6),
-    .I0(n218_7),
-    .I1(n213_7),
-    .I2(n219_7),
-    .I3(rxClockDividerReg[17]) 
+    .I0(rxClockDividerReg[19]),
+    .I1(rxClockDividerReg[18]),
+    .I2(rxClockDividerReg[17]),
+    .I3(n213_7) 
 );
-defparam n213_s2.INIT=16'h3F40;
-  LUT4 n212_s2 (
+defparam n213_s2.INIT=16'h0EF0;
+  LUT3 n212_s2 (
     .F(n212_6),
     .I0(rxClockDividerReg[19]),
-    .I1(n217_7),
-    .I2(n212_7),
-    .I3(rxClockDividerReg[18]) 
+    .I1(rxClockDividerReg[18]),
+    .I2(n212_9) 
 );
-defparam n212_s2.INIT=16'h3F80;
-  LUT4 n211_s2 (
+defparam n212_s2.INIT=8'h2C;
+  LUT3 n211_s2 (
     .F(n211_7),
-    .I0(rxClockDividerReg[18]),
-    .I1(n217_7),
-    .I2(n212_7),
-    .I3(rxClockDividerReg[19]) 
+    .I0(n212_9),
+    .I1(rxClockDividerReg[18]),
+    .I2(rxClockDividerReg[19]) 
 );
-defparam n211_s2.INIT=16'hBF00;
+defparam n211_s2.INIT=8'hD0;
   LUT4 n485_s3 (
     .F(n485_7),
     .I0(txBitCount[0]),
@@ -2935,7 +2695,7 @@ defparam n485_s3.INIT=16'hFE01;
     .F(n179_8),
     .I0(n67_7),
     .I1(rxBitCount[1]),
-    .I2(n154_9),
+    .I2(n154_14),
     .I3(rxBitCount[0]) 
 );
 defparam n179_s4.INIT=16'hC0BA;
@@ -2947,69 +2707,48 @@ defparam n179_s4.INIT=16'hC0BA;
     .I3(rxDataReg_7_8) 
 );
 defparam n177_s5.INIT=16'hC350;
-  LUT2 n449_s2 (
+  LUT3 n449_s2 (
     .F(n449_6),
-    .I0(txClockDividerReg[5]),
-    .I1(n448_6) 
+    .I0(txClockDividerReg[4]),
+    .I1(n450_6),
+    .I2(txClockDividerReg[5]) 
 );
-defparam n449_s2.INIT=4'h6;
-  LUT2 n446_s2 (
+defparam n449_s2.INIT=8'hB4;
+  LUT3 n446_s2 (
     .F(n446_6),
-    .I0(txClockDividerReg[8]),
-    .I1(n445_6) 
+    .I0(txClockDividerReg[7]),
+    .I1(n447_6),
+    .I2(txClockDividerReg[8]) 
 );
-defparam n446_s2.INIT=4'h6;
-  LUT4 n444_s2 (
+defparam n446_s2.INIT=8'hB4;
+  LUT3 n444_s2 (
     .F(n444_6),
-    .I0(txClockDividerReg[8]),
-    .I1(txClockDividerReg[9]),
-    .I2(n445_6),
-    .I3(txClockDividerReg[10]) 
+    .I0(txClockDividerReg[9]),
+    .I1(n445_6),
+    .I2(txClockDividerReg[10]) 
 );
-defparam n444_s2.INIT=16'hEF10;
+defparam n444_s2.INIT=8'hB4;
   LUT4 n154_s3 (
     .F(n154_6),
-    .I0(rxClockDividerReg[11]),
-    .I1(rxClockDividerReg[12]),
-    .I2(n219_7),
-    .I3(n218_7) 
+    .I0(rxClockDividerReg[18]),
+    .I1(rxClockDividerReg[19]),
+    .I2(n156_5),
+    .I3(n154_8) 
 );
 defparam n154_s3.INIT=16'h1000;
-  LUT4 n154_s4 (
-    .F(n154_7),
-    .I0(rxClockDividerReg[7]),
-    .I1(rxClockDividerReg[8]),
-    .I2(rxClockDividerReg[9]),
-    .I3(n223_7) 
-);
-defparam n154_s4.INIT=16'h0100;
-  LUT2 n156_s2 (
+  LUT3 n156_s2 (
     .F(n156_5),
     .I0(rxClockDividerReg[7]),
-    .I1(n223_7) 
+    .I1(n226_7),
+    .I2(n156_6) 
 );
-defparam n156_s2.INIT=4'h4;
+defparam n156_s2.INIT=8'h40;
   LUT2 n159_s2 (
     .F(n159_5),
     .I0(rxClockDividerReg[4]),
     .I1(n226_7) 
 );
 defparam n159_s2.INIT=4'h4;
-  LUT3 n221_s5 (
-    .F(n221_8),
-    .I0(rxClockDividerReg[7]),
-    .I1(rxClockDividerReg[8]),
-    .I2(n223_7) 
-);
-defparam n221_s5.INIT=8'h10;
-  LUT4 n223_s4 (
-    .F(n223_7),
-    .I0(rxClockDividerReg[4]),
-    .I1(rxClockDividerReg[5]),
-    .I2(rxClockDividerReg[6]),
-    .I3(n226_7) 
-);
-defparam n223_s4.INIT=16'h0100;
   LUT4 n226_s4 (
     .F(n226_7),
     .I0(rxClockDividerReg[0]),
@@ -3026,20 +2765,27 @@ defparam n226_s4.INIT=16'h0001;
 defparam rxDataReg_7_s5.INIT=4'h1;
   LUT4 txClockDividerReg_19_s4 (
     .F(txClockDividerReg_19_9),
-    .I0(txClockDividerReg[15]),
-    .I1(txClockDividerReg[16]),
-    .I2(txClockDividerReg_19_10),
-    .I3(n445_6) 
+    .I0(txClockDividerReg[17]),
+    .I1(txClockDividerReg[18]),
+    .I2(txClockDividerReg[19]),
+    .I3(n437_6) 
 );
-defparam txClockDividerReg_19_s4.INIT=16'h1000;
-  LUT4 txDataReg_8_s4 (
+defparam txClockDividerReg_19_s4.INIT=16'h0100;
+  LUT4 txClockDividerReg_19_s5 (
+    .F(txClockDividerReg_19_10),
+    .I0(txClockDividerReg[4]),
+    .I1(txClockDividerReg_19_11),
+    .I2(txClockDividerReg_19_12),
+    .I3(n450_6) 
+);
+defparam txClockDividerReg_19_s5.INIT=16'h4000;
+  LUT3 txDataReg_8_s4 (
     .F(txDataReg_8_8),
     .I0(txBitCount[0]),
     .I1(kbdAsciiDataValid),
-    .I2(txBitCount[1]),
-    .I3(txBitCount[2]) 
+    .I2(n498_10) 
 );
-defparam txDataReg_8_s4.INIT=16'h000B;
+defparam txDataReg_8_s4.INIT=8'hB0;
   LUT3 n498_s6 (
     .F(n498_10),
     .I0(txBitCount[1]),
@@ -3047,89 +2793,92 @@ defparam txDataReg_8_s4.INIT=16'h000B;
     .I2(txBitCount[3]) 
 );
 defparam n498_s6.INIT=8'h01;
-  LUT2 n452_s2 (
-    .F(n452_6),
+  LUT2 n453_s2 (
+    .F(n453_6),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10) 
+);
+defparam n453_s2.INIT=4'h8;
+  LUT3 n451_s2 (
+    .F(n451_6),
     .I0(txClockDividerReg[0]),
-    .I1(txClockDividerReg[1]) 
+    .I1(txClockDividerReg[1]),
+    .I2(txClockDividerReg[2]) 
 );
-defparam n452_s2.INIT=4'h1;
-  LUT4 n448_s2 (
+defparam n451_s2.INIT=8'h01;
+  LUT4 n450_s2 (
+    .F(n450_6),
+    .I0(txClockDividerReg[0]),
+    .I1(txClockDividerReg[1]),
+    .I2(txClockDividerReg[2]),
+    .I3(txClockDividerReg[3]) 
+);
+defparam n450_s2.INIT=16'h0001;
+  LUT3 n448_s2 (
     .F(n448_6),
-    .I0(txClockDividerReg[2]),
-    .I1(txClockDividerReg[3]),
-    .I2(txClockDividerReg[4]),
-    .I3(n452_6) 
+    .I0(txClockDividerReg[4]),
+    .I1(txClockDividerReg[5]),
+    .I2(n450_6) 
 );
-defparam n448_s2.INIT=16'h0100;
-  LUT3 n447_s2 (
+defparam n448_s2.INIT=8'h10;
+  LUT4 n447_s2 (
     .F(n447_6),
-    .I0(txClockDividerReg[5]),
-    .I1(txClockDividerReg[6]),
-    .I2(n448_6) 
+    .I0(txClockDividerReg[4]),
+    .I1(txClockDividerReg[5]),
+    .I2(txClockDividerReg[6]),
+    .I3(n450_6) 
 );
-defparam n447_s2.INIT=8'h10;
-  LUT4 n445_s2 (
+defparam n447_s2.INIT=16'h0100;
+  LUT3 n445_s2 (
     .F(n445_6),
-    .I0(txClockDividerReg[5]),
-    .I1(txClockDividerReg[6]),
-    .I2(txClockDividerReg[7]),
-    .I3(n448_6) 
+    .I0(txClockDividerReg[7]),
+    .I1(txClockDividerReg[8]),
+    .I2(n447_6) 
 );
-defparam n445_s2.INIT=16'h0100;
-  LUT4 n443_s2 (
+defparam n445_s2.INIT=8'h10;
+  LUT2 n443_s2 (
     .F(n443_6),
-    .I0(txClockDividerReg[8]),
-    .I1(txClockDividerReg[9]),
-    .I2(txClockDividerReg[10]),
-    .I3(n445_6) 
+    .I0(txClockDividerReg_19_12),
+    .I1(n447_6) 
 );
-defparam n443_s2.INIT=16'h0100;
-  LUT3 n441_s2 (
-    .F(n441_6),
-    .I0(txClockDividerReg[12]),
-    .I1(n445_6),
-    .I2(n441_7) 
+defparam n443_s2.INIT=4'h8;
+  LUT3 n442_s2 (
+    .F(n442_6),
+    .I0(txClockDividerReg[11]),
+    .I1(txClockDividerReg_19_12),
+    .I2(n447_6) 
 );
-defparam n441_s2.INIT=8'h40;
-  LUT4 n440_s2 (
-    .F(n440_6),
-    .I0(txClockDividerReg[12]),
-    .I1(txClockDividerReg[13]),
-    .I2(n445_6),
-    .I3(n441_7) 
-);
-defparam n440_s2.INIT=16'h1000;
-  LUT4 n439_s2 (
+defparam n442_s2.INIT=8'h40;
+  LUT3 n439_s2 (
     .F(n439_6),
+    .I0(txClockDividerReg[13]),
+    .I1(txClockDividerReg[14]),
+    .I2(txClockDividerReg_19_10) 
+);
+defparam n439_s2.INIT=8'h10;
+  LUT4 n438_s2 (
+    .F(n438_6),
     .I0(txClockDividerReg[12]),
     .I1(txClockDividerReg[13]),
     .I2(txClockDividerReg[14]),
-    .I3(n441_7) 
+    .I3(txClockDividerReg[15]) 
 );
-defparam n439_s2.INIT=16'h0100;
-  LUT3 n438_s2 (
-    .F(n438_6),
-    .I0(txClockDividerReg[15]),
-    .I1(n445_6),
-    .I2(n439_6) 
-);
-defparam n438_s2.INIT=8'h40;
+defparam n438_s2.INIT=16'h0001;
   LUT4 n437_s2 (
     .F(n437_6),
-    .I0(txClockDividerReg[15]),
-    .I1(txClockDividerReg[16]),
-    .I2(n445_6),
-    .I3(n439_6) 
+    .I0(txClockDividerReg[13]),
+    .I1(txClockDividerReg[14]),
+    .I2(txClockDividerReg[15]),
+    .I3(txClockDividerReg[16]) 
 );
-defparam n437_s2.INIT=16'h1000;
-  LUT4 n436_s2 (
+defparam n437_s2.INIT=16'h0001;
+  LUT3 n436_s2 (
     .F(n436_6),
-    .I0(txClockDividerReg[15]),
-    .I1(txClockDividerReg[16]),
-    .I2(n436_7),
-    .I3(n445_6) 
+    .I0(txClockDividerReg[12]),
+    .I1(txClockDividerReg[17]),
+    .I2(n437_6) 
 );
-defparam n436_s2.INIT=16'h1000;
+defparam n436_s2.INIT=8'h10;
   LUT3 n227_s3 (
     .F(n227_7),
     .I0(rxClockDividerReg[0]),
@@ -3146,114 +2895,140 @@ defparam n227_s3.INIT=8'h01;
 defparam n224_s3.INIT=8'h10;
   LUT4 n219_s3 (
     .F(n219_7),
-    .I0(rxClockDividerReg[7]),
-    .I1(rxClockDividerReg[8]),
-    .I2(n219_8),
-    .I3(n223_7) 
+    .I0(rxClockDividerReg[9]),
+    .I1(rxClockDividerReg[10]),
+    .I2(n223_9),
+    .I3(n154_9) 
 );
 defparam n219_s3.INIT=16'h1000;
   LUT4 n218_s3 (
     .F(n218_7),
-    .I0(rxClockDividerReg[13]),
-    .I1(rxClockDividerReg[18]),
-    .I2(rxClockDividerReg[19]),
-    .I3(n218_8) 
+    .I0(n226_7),
+    .I1(n156_6),
+    .I2(n218_8),
+    .I3(n154_9) 
 );
-defparam n218_s3.INIT=16'h0100;
-  LUT3 n217_s3 (
-    .F(n217_7),
-    .I0(rxClockDividerReg[11]),
-    .I1(rxClockDividerReg[12]),
-    .I2(n219_7) 
+defparam n218_s3.INIT=16'h8000;
+  LUT3 n216_s3 (
+    .F(n216_7),
+    .I0(rxClockDividerReg[12]),
+    .I1(rxClockDividerReg[13]),
+    .I2(n218_7) 
 );
-defparam n217_s3.INIT=8'h10;
-  LUT2 n215_s3 (
-    .F(n215_7),
-    .I0(rxClockDividerReg[13]),
-    .I1(rxClockDividerReg[14]) 
-);
-defparam n215_s3.INIT=4'h1;
+defparam n216_s3.INIT=8'h10;
   LUT4 n213_s3 (
     .F(n213_7),
-    .I0(rxClockDividerReg[11]),
-    .I1(rxClockDividerReg[12]),
-    .I2(rxClockDividerReg[16]),
-    .I3(n214_9) 
-);
-defparam n213_s3.INIT=16'h0100;
-  LUT2 n212_s3 (
-    .F(n212_7),
-    .I0(rxClockDividerReg[13]),
-    .I1(n218_8) 
-);
-defparam n212_s3.INIT=4'h4;
-  LUT4 txClockDividerReg_19_s5 (
-    .F(txClockDividerReg_19_10),
-    .I0(txClockDividerReg[17]),
-    .I1(txClockDividerReg[18]),
-    .I2(txClockDividerReg[19]),
-    .I3(n439_6) 
-);
-defparam txClockDividerReg_19_s5.INIT=16'h0100;
-  LUT4 n441_s3 (
-    .F(n441_7),
-    .I0(txClockDividerReg[8]),
-    .I1(txClockDividerReg[9]),
-    .I2(txClockDividerReg[10]),
-    .I3(txClockDividerReg[11]) 
-);
-defparam n441_s3.INIT=16'h0001;
-  LUT2 n436_s3 (
-    .F(n436_7),
-    .I0(txClockDividerReg[17]),
-    .I1(n439_6) 
-);
-defparam n436_s3.INIT=4'h4;
-  LUT2 n219_s4 (
-    .F(n219_8),
-    .I0(rxClockDividerReg[9]),
-    .I1(rxClockDividerReg[10]) 
-);
-defparam n219_s4.INIT=4'h1;
-  LUT4 n218_s4 (
-    .F(n218_8),
-    .I0(rxClockDividerReg[14]),
-    .I1(rxClockDividerReg[15]),
-    .I2(rxClockDividerReg[16]),
-    .I3(rxClockDividerReg[17]) 
-);
-defparam n218_s4.INIT=16'h0001;
-  LUT3 n214_s4 (
-    .F(n214_9),
     .I0(rxClockDividerReg[15]),
+    .I1(rxClockDividerReg[16]),
+    .I2(n215_8),
+    .I3(n218_7) 
+);
+defparam n213_s3.INIT=16'h1000;
+  LUT4 n154_s5 (
+    .F(n154_8),
+    .I0(rxClockDividerReg[8]),
+    .I1(n154_10),
+    .I2(n215_8),
+    .I3(n218_8) 
+);
+defparam n154_s5.INIT=16'h4000;
+  LUT2 n154_s6 (
+    .F(n154_9),
+    .I0(rxClockDividerReg[7]),
+    .I1(rxClockDividerReg[8]) 
+);
+defparam n154_s6.INIT=4'h1;
+  LUT3 n156_s3 (
+    .F(n156_6),
+    .I0(rxClockDividerReg[4]),
+    .I1(rxClockDividerReg[5]),
+    .I2(rxClockDividerReg[6]) 
+);
+defparam n156_s3.INIT=8'h01;
+  LUT4 txClockDividerReg_19_s6 (
+    .F(txClockDividerReg_19_11),
+    .I0(txClockDividerReg[5]),
+    .I1(txClockDividerReg[6]),
+    .I2(txClockDividerReg[11]),
+    .I3(txClockDividerReg[12]) 
+);
+defparam txClockDividerReg_19_s6.INIT=16'h0001;
+  LUT4 txClockDividerReg_19_s7 (
+    .F(txClockDividerReg_19_12),
+    .I0(txClockDividerReg[7]),
+    .I1(txClockDividerReg[8]),
+    .I2(txClockDividerReg[9]),
+    .I3(txClockDividerReg[10]) 
+);
+defparam txClockDividerReg_19_s7.INIT=16'h0001;
+  LUT3 n218_s4 (
+    .F(n218_8),
+    .I0(rxClockDividerReg[9]),
+    .I1(rxClockDividerReg[10]),
+    .I2(rxClockDividerReg[11]) 
+);
+defparam n218_s4.INIT=8'h01;
+  LUT3 n215_s4 (
+    .F(n215_8),
+    .I0(rxClockDividerReg[12]),
     .I1(rxClockDividerReg[13]),
     .I2(rxClockDividerReg[14]) 
 );
-defparam n214_s4.INIT=8'h01;
-  LUT4 n450_s3 (
-    .F(n450_8),
-    .I0(txClockDividerReg[2]),
-    .I1(txClockDividerReg[3]),
-    .I2(txClockDividerReg[0]),
-    .I3(txClockDividerReg[1]) 
+defparam n215_s4.INIT=8'h01;
+  LUT3 n154_s7 (
+    .F(n154_10),
+    .I0(rxClockDividerReg[15]),
+    .I1(rxClockDividerReg[16]),
+    .I2(rxClockDividerReg[17]) 
 );
-defparam n450_s3.INIT=16'h0001;
-  LUT4 n452_s3 (
-    .F(n452_8),
-    .I0(txClockDividerReg_19_9),
-    .I1(txClockDividerReg[2]),
-    .I2(txClockDividerReg[0]),
-    .I3(txClockDividerReg[1]) 
+defparam n154_s7.INIT=8'h01;
+  LUT4 n212_s4 (
+    .F(n212_9),
+    .I0(rxClockDividerReg[7]),
+    .I1(n226_7),
+    .I2(n156_6),
+    .I3(n154_8) 
 );
-defparam n452_s3.INIT=16'h4441;
-  LUT4 n154_s5 (
-    .F(n154_9),
+defparam n212_s4.INIT=16'h4000;
+  LUT4 n223_s5 (
+    .F(n223_9),
+    .I0(n226_7),
+    .I1(rxClockDividerReg[4]),
+    .I2(rxClockDividerReg[5]),
+    .I3(rxClockDividerReg[6]) 
+);
+defparam n223_s5.INIT=16'h0002;
+  LUT4 n215_s5 (
+    .F(n215_10),
+    .I0(rxClockDividerReg[12]),
+    .I1(rxClockDividerReg[13]),
+    .I2(rxClockDividerReg[14]),
+    .I3(n218_7) 
+);
+defparam n215_s5.INIT=16'h0100;
+  LUT3 n221_s6 (
+    .F(n221_10),
+    .I0(n223_9),
+    .I1(rxClockDividerReg[7]),
+    .I2(rxClockDividerReg[8]) 
+);
+defparam n221_s6.INIT=8'h02;
+  LUT4 n154_s8 (
+    .F(n154_12),
+    .I0(rxClockDividerReg[9]),
+    .I1(n223_9),
+    .I2(rxClockDividerReg[7]),
+    .I3(rxClockDividerReg[8]) 
+);
+defparam n154_s8.INIT=16'h0004;
+  LUT4 n154_s9 (
+    .F(n154_14),
     .I0(uartRxReg),
     .I1(rxBitCount[1]),
     .I2(rxBitCount[2]),
     .I3(rxBitCount[3]) 
 );
-defparam n154_s5.INIT=16'h57FC;
+defparam n154_s9.INIT=16'h57FC;
   LUT3 n67_s3 (
     .F(n67_7),
     .I0(rxBitCount[3]),
@@ -3261,36 +3036,46 @@ defparam n154_s5.INIT=16'h57FC;
     .I2(rxBitCount[2]) 
 );
 defparam n67_s3.INIT=8'h01;
-  LUT4 n488_s5 (
-    .F(n488_13),
-    .I0(txBitCount[0]),
-    .I1(n351_3),
-    .I2(kbdAsciiDataValid),
-    .I3(txClockDividerReg_19_9) 
+  LUT4 n447_s3 (
+    .F(n447_8),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10),
+    .I2(txClockDividerReg[7]),
+    .I3(n447_6) 
 );
-defparam n488_s5.INIT=16'h59AA;
-  LUT3 uartTxReg_s5 (
-    .F(uartTxReg_9),
-    .I0(n351_3),
-    .I1(kbdAsciiDataValid),
-    .I2(txClockDividerReg_19_9) 
+defparam n447_s3.INIT=16'h0770;
+  LUT4 n448_s3 (
+    .F(n448_8),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10),
+    .I2(n448_6),
+    .I3(txClockDividerReg[6]) 
 );
-defparam uartTxReg_s5.INIT=8'hD0;
-  LUT4 n454_s4 (
-    .F(n454_9),
-    .I0(n351_3),
-    .I1(kbdAsciiDataValid),
-    .I2(txClockDividerReg_19_9),
+defparam n448_s3.INIT=16'h0770;
+  LUT4 n450_s3 (
+    .F(n450_8),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10),
+    .I2(txClockDividerReg[4]),
+    .I3(n450_6) 
+);
+defparam n450_s3.INIT=16'h0770;
+  LUT4 n451_s3 (
+    .F(n451_8),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10),
+    .I2(n451_6),
+    .I3(txClockDividerReg[3]) 
+);
+defparam n451_s3.INIT=16'h0770;
+  LUT4 n453_s3 (
+    .F(n453_8),
+    .I0(txClockDividerReg_19_9),
+    .I1(txClockDividerReg_19_10),
+    .I2(txClockDividerReg[1]),
     .I3(txClockDividerReg[0]) 
 );
-defparam n454_s4.INIT=16'h20DF;
-  LUT3 txClockDividerReg_19_s6 (
-    .F(txClockDividerReg_19_12),
-    .I0(n351_3),
-    .I1(kbdAsciiDataValid),
-    .I2(txClockDividerReg_19_9) 
-);
-defparam txClockDividerReg_19_s6.INIT=8'hDF;
+defparam n453_s3.INIT=16'h7007;
   LUT4 n67_s4 (
     .F(n67_9),
     .I0(rxBitCount[0]),
@@ -3299,103 +3084,103 @@ defparam txClockDividerReg_19_s6.INIT=8'hDF;
     .I3(rxBitCount[2]) 
 );
 defparam n67_s4.INIT=16'h0002;
-  LUT4 n221_s6 (
-    .F(n221_10),
+  LUT4 n221_s7 (
+    .F(n221_12),
     .I0(rxBitCount[0]),
     .I1(rxBitCount[3]),
     .I2(rxBitCount[1]),
     .I3(rxBitCount[2]) 
 );
-defparam n221_s6.INIT=16'h0001;
+defparam n221_s7.INIT=16'h0001;
   DFFS uartRxReg_s0 (
     .Q(uartRxReg),
     .D(uartRxR0),
     .CLK(clk),
-    .SET(n33_6) 
+    .SET(n40_6) 
 );
   DFFRE rxBitCount_3_s0 (
     .Q(rxBitCount[3]),
     .D(n177_9),
     .CLK(clk),
     .CE(rxBitCount_3_8),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxBitCount_2_s0 (
     .Q(rxBitCount[2]),
     .D(n77_6),
     .CLK(clk),
     .CE(rxBitCount_3_8),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxBitCount_1_s0 (
     .Q(rxBitCount[1]),
     .D(n179_8),
     .CLK(clk),
     .CE(rxBitCount_3_8),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxBitCount_0_s0 (
     .Q(rxBitCount[0]),
     .D(n79_6),
     .CLK(clk),
     .CE(rxBitCount_3_8),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_7_s0 (
     .Q(rxDataOut[7]),
     .D(n201_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_6_s0 (
     .Q(rxDataOut[6]),
     .D(n202_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_5_s0 (
     .Q(rxDataOut[5]),
     .D(n203_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_4_s0 (
     .Q(rxDataOut[4]),
     .D(n204_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_3_s0 (
     .Q(rxDataOut[3]),
     .D(n205_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_2_s0 (
     .Q(rxDataOut[2]),
     .D(n206_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_1_s0 (
     .Q(rxDataOut[1]),
     .D(n207_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxDataReg_0_s0 (
     .Q(rxDataOut[0]),
     .D(n208_5),
     .CLK(clk),
     .CE(rxDataReg_7_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE dataOutRxAvailable_s0 (
     .Q(rxDataOutValid),
@@ -3408,29 +3193,36 @@ defparam n221_s6.INIT=16'h0001;
     .Q(UART_TX0_d),
     .D(n498_9),
     .CLK(clk),
-    .CE(uartTxReg_9),
-    .SET(n33_6) 
+    .CE(uartTxReg_7),
+    .SET(n40_6) 
 );
   DFFRE txBitCount_3_s0 (
     .Q(txBitCount[3]),
     .D(n485_7),
     .CLK(clk),
-    .CE(uartTxReg_9),
-    .RESET(n33_6) 
+    .CE(uartTxReg_7),
+    .RESET(n40_6) 
 );
   DFFRE txBitCount_2_s0 (
     .Q(txBitCount[2]),
     .D(n432_8),
     .CLK(clk),
-    .CE(uartTxReg_9),
-    .RESET(n33_6) 
+    .CE(uartTxReg_7),
+    .RESET(n40_6) 
 );
   DFFRE txBitCount_1_s0 (
     .Q(txBitCount[1]),
     .D(n433_7),
     .CLK(clk),
-    .CE(uartTxReg_9),
-    .RESET(n33_6) 
+    .CE(uartTxReg_7),
+    .RESET(n40_6) 
+);
+  DFFRE txBitCount_0_s0 (
+    .Q(txBitCount[0]),
+    .D(n488_8),
+    .CLK(clk),
+    .CE(uartTxReg_7),
+    .RESET(n40_6) 
 );
   DFFE txDataReg_8_s0 (
     .Q(txDataReg[8]),
@@ -3490,14 +3282,14 @@ defparam n221_s6.INIT=16'h0001;
     .Q(uartRxR0),
     .D(UART_RX0_d),
     .CLK(clk),
-    .SET(n33_6) 
+    .SET(n40_6) 
 );
   DFFRE rxClockDividerReg_10_s1 (
     .Q(rxClockDividerReg[10]),
     .D(n154_4),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam rxClockDividerReg_10_s1.INIT=1'b0;
   DFFRE rxClockDividerReg_8_s1 (
@@ -3505,7 +3297,7 @@ defparam rxClockDividerReg_10_s1.INIT=1'b0;
     .D(n156_4),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam rxClockDividerReg_8_s1.INIT=1'b0;
   DFFRE rxClockDividerReg_5_s1 (
@@ -3513,7 +3305,7 @@ defparam rxClockDividerReg_8_s1.INIT=1'b0;
     .D(n159_4),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam rxClockDividerReg_5_s1.INIT=1'b0;
   DFFRE rxClockDividerReg_0_s1 (
@@ -3521,287 +3313,289 @@ defparam rxClockDividerReg_5_s1.INIT=1'b0;
     .D(n164_4),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
 defparam rxClockDividerReg_0_s1.INIT=1'b0;
   DFFRE txClockDividerReg_19_s1 (
     .Q(txClockDividerReg[19]),
     .D(n435_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_19_s1.INIT=1'b0;
   DFFRE txClockDividerReg_18_s1 (
     .Q(txClockDividerReg[18]),
     .D(n436_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_18_s1.INIT=1'b0;
   DFFRE txClockDividerReg_17_s1 (
     .Q(txClockDividerReg[17]),
     .D(n437_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_17_s1.INIT=1'b0;
   DFFRE txClockDividerReg_16_s1 (
     .Q(txClockDividerReg[16]),
     .D(n438_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_16_s1.INIT=1'b0;
   DFFRE txClockDividerReg_15_s1 (
     .Q(txClockDividerReg[15]),
     .D(n439_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_15_s1.INIT=1'b0;
   DFFRE txClockDividerReg_14_s1 (
     .Q(txClockDividerReg[14]),
     .D(n440_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_14_s1.INIT=1'b0;
   DFFRE txClockDividerReg_13_s1 (
     .Q(txClockDividerReg[13]),
     .D(n441_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_13_s1.INIT=1'b0;
   DFFRE txClockDividerReg_12_s1 (
     .Q(txClockDividerReg[12]),
     .D(n442_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_12_s1.INIT=1'b0;
   DFFRE txClockDividerReg_11_s1 (
     .Q(txClockDividerReg[11]),
     .D(n443_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_11_s1.INIT=1'b0;
   DFFRE txClockDividerReg_10_s1 (
     .Q(txClockDividerReg[10]),
     .D(n444_6),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_10_s1.INIT=1'b0;
   DFFRE txClockDividerReg_9_s1 (
     .Q(txClockDividerReg[9]),
     .D(n445_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_9_s1.INIT=1'b0;
   DFFRE txClockDividerReg_8_s1 (
     .Q(txClockDividerReg[8]),
     .D(n446_6),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_8_s1.INIT=1'b0;
   DFFRE txClockDividerReg_7_s1 (
     .Q(txClockDividerReg[7]),
-    .D(n447_5),
+    .D(n447_8),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_7_s1.INIT=1'b0;
   DFFRE txClockDividerReg_6_s1 (
     .Q(txClockDividerReg[6]),
-    .D(n448_5),
+    .D(n448_8),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_6_s1.INIT=1'b0;
   DFFRE txClockDividerReg_5_s1 (
     .Q(txClockDividerReg[5]),
     .D(n449_6),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_5_s1.INIT=1'b0;
   DFFRE txClockDividerReg_4_s1 (
     .Q(txClockDividerReg[4]),
-    .D(n450_5),
+    .D(n450_8),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_4_s1.INIT=1'b0;
   DFFRE txClockDividerReg_3_s1 (
     .Q(txClockDividerReg[3]),
-    .D(n451_5),
+    .D(n451_8),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_3_s1.INIT=1'b0;
   DFFRE txClockDividerReg_2_s1 (
     .Q(txClockDividerReg[2]),
-    .D(n452_8),
+    .D(n452_5),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_2_s1.INIT=1'b0;
   DFFRE txClockDividerReg_1_s1 (
     .Q(txClockDividerReg[1]),
-    .D(n453_5),
+    .D(n453_8),
     .CLK(clk),
-    .CE(txClockDividerReg_19_12),
-    .RESET(n33_6) 
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
 );
 defparam txClockDividerReg_1_s1.INIT=1'b0;
+  DFFRE txClockDividerReg_0_s1 (
+    .Q(txClockDividerReg[0]),
+    .D(n454_7),
+    .CLK(clk),
+    .CE(txClockDividerReg_19_8),
+    .RESET(n40_6) 
+);
+defparam txClockDividerReg_0_s1.INIT=1'b0;
   DFFRE rxClockDividerReg_19_s1 (
     .Q(rxClockDividerReg[19]),
     .D(n211_7),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_18_s1 (
     .Q(rxClockDividerReg[18]),
     .D(n212_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_17_s1 (
     .Q(rxClockDividerReg[17]),
     .D(n213_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_16_s1 (
     .Q(rxClockDividerReg[16]),
     .D(n214_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_15_s1 (
     .Q(rxClockDividerReg[15]),
     .D(n215_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_14_s1 (
     .Q(rxClockDividerReg[14]),
     .D(n216_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_13_s1 (
     .Q(rxClockDividerReg[13]),
     .D(n217_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_12_s1 (
     .Q(rxClockDividerReg[12]),
     .D(n218_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_11_s1 (
     .Q(rxClockDividerReg[11]),
     .D(n219_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_9_s1 (
     .Q(rxClockDividerReg[9]),
     .D(n221_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_7_s1 (
     .Q(rxClockDividerReg[7]),
     .D(n223_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_6_s1 (
     .Q(rxClockDividerReg[6]),
     .D(n224_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_4_s1 (
     .Q(rxClockDividerReg[4]),
     .D(n226_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_3_s1 (
     .Q(rxClockDividerReg[3]),
     .D(n227_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_2_s1 (
     .Q(rxClockDividerReg[2]),
     .D(n228_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
   DFFRE rxClockDividerReg_1_s1 (
     .Q(rxClockDividerReg[1]),
     .D(n229_6),
     .CLK(clk),
     .CE(rxClockDividerReg_9_7),
-    .RESET(n33_6) 
+    .RESET(n40_6) 
 );
-  DFFR txBitCount_0_s4 (
-    .Q(txBitCount[0]),
-    .D(n488_13),
-    .CLK(clk),
-    .RESET(n33_6) 
+  INV n488_s4 (
+    .O(n488_8),
+    .I(txBitCount[0]) 
 );
-defparam txBitCount_0_s4.INIT=1'b0;
-  DFFR txClockDividerReg_0_s3 (
-    .Q(txClockDividerReg[0]),
-    .D(n454_9),
-    .CLK(clk),
-    .RESET(n33_6) 
+  INV n454_s3 (
+    .O(n454_7),
+    .I(txClockDividerReg[0]) 
 );
-defparam txClockDividerReg_0_s3.INIT=1'b0;
   VCC VCC_cZ (
     .V(VCC)
 );
@@ -3964,10 +3758,9 @@ defparam n10_s.ALU_MODE=0;
 endmodule /* heartbeat */
 module charBufferInit (
   clk,
-  n43_3,
+  n44_3,
   inputCmdScrollUp_r0,
-  n43_4,
-  keyAOut,
+  keyBOut,
   currentScrolledRow,
   charBufferInitInProgress,
   charBufferInitAddr,
@@ -3975,10 +3768,9 @@ module charBufferInit (
 )
 ;
 input clk;
-input n43_3;
+input n44_3;
 input inputCmdScrollUp_r0;
-input n43_4;
-input keyAOut;
+input keyBOut;
 input [4:0] currentScrolledRow;
 output charBufferInitInProgress;
 output [11:0] charBufferInitAddr;
@@ -3991,7 +3783,7 @@ wire n91_4;
 wire n92_4;
 wire n93_4;
 wire n94_4;
-wire n129_4;
+wire n129_5;
 wire n102_5;
 wire initCursorRow_3_6;
 wire n101_7;
@@ -4013,7 +3805,7 @@ wire n95_7;
 wire n91_7;
 wire n82_8;
 wire n121_8;
-wire zeroizeStretched;
+wire sequentialInitStretched;
 wire partLineInitStretched;
 wire enable_r0;
 wire n81_1;
@@ -4032,7 +3824,7 @@ wire VCC;
 wire GND;
   LUT4 n27_s1 (
     .F(n27_4),
-    .I0(n43_3),
+    .I0(n44_3),
     .I1(inputCmdScrollUp_r0),
     .I2(charBufferInitInProgress),
     .I3(enable_r0) 
@@ -4092,21 +3884,19 @@ defparam n93_s1.INIT=16'h3CAA;
     .I3(charBufferInitInProgress) 
 );
 defparam n94_s1.INIT=16'h0F88;
-  LUT4 n129_s1 (
-    .F(n129_4),
-    .I0(inputCmdScrollUp_r0),
-    .I1(n43_4),
-    .I2(keyAOut),
-    .I3(charBufferInitInProgress) 
+  LUT2 n129_s2 (
+    .F(n129_5),
+    .I0(keyBOut),
+    .I1(charBufferInitInProgress) 
 );
-defparam n129_s1.INIT=16'h00EF;
+defparam n129_s2.INIT=4'h1;
   LUT3 n102_s2 (
     .F(n102_5),
-    .I0(zeroizeStretched),
+    .I0(sequentialInitStretched),
     .I1(inputCmdScrollUp_r0),
     .I2(charBufferInitInProgress) 
 );
-defparam n102_s2.INIT=8'hA3;
+defparam n102_s2.INIT=8'h53;
   LUT3 initCursorRow_3_s3 (
     .F(initCursorRow_3_6),
     .I0(partLineInitStretched),
@@ -4341,11 +4131,11 @@ defparam n121_s3.INIT=4'hB;
     .CE(n28_3),
     .SET(n27_4) 
 );
-  DFFRE zeroizeStretched_s0 (
-    .Q(zeroizeStretched),
+  DFFRE sequentialInitStretched_s0 (
+    .Q(sequentialInitStretched),
     .D(VCC),
     .CLK(clk),
-    .CE(n129_4),
+    .CE(n129_5),
     .RESET(n28_3) 
 );
   DFFRE partLineInitStretched_s0 (
@@ -4357,7 +4147,7 @@ defparam n121_s3.INIT=4'hB;
 );
   DFFR enable_r0_s0 (
     .Q(enable_r0),
-    .D(n43_3),
+    .D(n44_3),
     .CLK(clk),
     .RESET(inputCmdScrollUp_r0) 
 );
@@ -4563,11 +4353,10 @@ defparam prom_inst_0.RESET_MODE="SYNC";
 );
 endmodule /* charROM */
 module charBuffer (
-  n513_6,
   n512_6,
   n511_6,
   n510_6,
-  n505_3,
+  n509_6,
   n504_3,
   n503_3,
   n502_3,
@@ -4579,21 +4368,21 @@ module charBuffer (
   n496_3,
   n495_3,
   n494_3,
+  n493_3,
   charBufferWrEn,
   clk,
-  n492_5,
-  n509_6,
-  n508_5,
-  n507_6,
-  n506_5,
+  n491_5,
+  n508_6,
+  n507_5,
+  n506_6,
+  n505_5,
   charBufferRdData
 )
 ;
-input n513_6;
 input n512_6;
 input n511_6;
 input n510_6;
-input n505_3;
+input n509_6;
 input n504_3;
 input n503_3;
 input n502_3;
@@ -4605,13 +4394,14 @@ input n497_3;
 input n496_3;
 input n495_3;
 input n494_3;
+input n493_3;
 input charBufferWrEn;
 input clk;
-input n492_5;
-input n509_6;
-input n508_5;
-input n507_6;
-input n506_5;
+input n491_5;
+input n508_6;
+input n507_5;
+input n506_6;
+input n505_5;
 output [7:0] charBufferRdData;
 wire [31:4] DO;
 wire [31:4] DO_0;
@@ -4619,12 +4409,12 @@ wire VCC;
 wire GND;
   SP sp_inst_0 (
     .DO({DO[31:4],charBufferRdData[3:0]}),
-    .DI({GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,n510_6,n511_6,n512_6,n513_6}),
+    .DI({GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,n509_6,n510_6,n511_6,n512_6}),
     .BLKSEL({GND,GND,GND}),
-    .AD({n494_3,n495_3,n496_3,n497_3,n498_3,n499_3,n500_3,n501_3,n502_3,n503_3,n504_3,n505_3,GND,GND}),
+    .AD({n493_3,n494_3,n495_3,n496_3,n497_3,n498_3,n499_3,n500_3,n501_3,n502_3,n503_3,n504_3,GND,GND}),
     .WRE(charBufferWrEn),
     .CLK(clk),
-    .CE(n492_5),
+    .CE(n491_5),
     .OCE(GND),
     .RESET(GND) 
 );
@@ -4675,12 +4465,12 @@ defparam sp_inst_0.RESET_MODE="SYNC";
 defparam sp_inst_0.WRITE_MODE=2'b10;
   SP sp_inst_1 (
     .DO({DO_0[31:4],charBufferRdData[7:4]}),
-    .DI({GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,n506_5,n507_6,n508_5,n509_6}),
+    .DI({GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,GND,n505_5,n506_6,n507_5,n508_6}),
     .BLKSEL({GND,GND,GND}),
-    .AD({n494_3,n495_3,n496_3,n497_3,n498_3,n499_3,n500_3,n501_3,n502_3,n503_3,n504_3,n505_3,GND,GND}),
+    .AD({n493_3,n494_3,n495_3,n496_3,n497_3,n498_3,n499_3,n500_3,n501_3,n502_3,n503_3,n504_3,GND,GND}),
     .WRE(charBufferWrEn),
     .CLK(clk),
-    .CE(n492_5),
+    .CE(n491_5),
     .OCE(GND),
     .RESET(GND) 
 );
@@ -4738,7 +4528,8 @@ defparam sp_inst_1.WRITE_MODE=2'b10;
 endmodule /* charBuffer */
 module hvsync (
   clk,
-  n762_6,
+  n910_4,
+  inDisplayArea_r0_6,
   debugPixel,
   n116_39,
   inDisplayArea_Z,
@@ -4751,7 +4542,8 @@ module hvsync (
 )
 ;
 input clk;
-input n762_6;
+input n910_4;
+input inDisplayArea_r0_6;
 output debugPixel;
 output n116_39;
 output inDisplayArea_Z;
@@ -4829,7 +4621,7 @@ defparam n69_s1.INIT=16'h8000;
   LUT2 n116_s30 (
     .F(n116_39),
     .I0(counterY[9]),
-    .I1(n762_6) 
+    .I1(n910_4) 
 );
 defparam n116_s30.INIT=4'h1;
   LUT4 counterXMaxxed_s4 (
@@ -4870,14 +4662,13 @@ defparam n69_s3.INIT=16'h1000;
     .I2(counterY[9]) 
 );
 defparam n69_s4.INIT=8'h10;
-  LUT4 inDisplayArea_Z_s0 (
+  LUT3 inDisplayArea_Z_s1 (
     .F(inDisplayArea_Z),
-    .I0(counterX_8),
-    .I1(counterX_7),
-    .I2(counterX_9),
-    .I3(n116_39) 
+    .I0(inDisplayArea_r0_6),
+    .I1(counterY[9]),
+    .I2(n910_4) 
 );
-defparam inDisplayArea_Z_s0.INIT=16'h1F00;
+defparam inDisplayArea_Z_s1.INIT=8'h01;
   DFFR counterX_8_s0 (
     .Q(counterX_8),
     .D(n17_1),
@@ -5206,10 +4997,10 @@ output hsync_d;
 output vsync_d;
 output pixel_d;
 output userResetn;
-wire n38_3;
-wire n43_3;
-wire n75_3;
+wire n39_3;
+wire n44_3;
 wire charBufferWrEn;
+wire n493_3;
 wire n494_3;
 wire n495_3;
 wire n496_3;
@@ -5221,47 +5012,50 @@ wire n501_3;
 wire n502_3;
 wire n503_3;
 wire n504_3;
-wire n505_3;
 wire charBufferRdEn;
-wire n911_3;
-wire n662_3;
-wire n758_3;
-wire n762_4;
+wire n910_3;
+wire n661_3;
+wire n757_3;
 wire n761_4;
-wire inputCmdCMD_BKSP_r0_6;
-wire n622_4;
+wire n760_4;
+wire inputCmdCMD_BKSP_DEL_r0_6;
+wire n621_4;
 wire inDisplayArea_r0_6;
-wire n79_36;
-wire scrollRow_4_9;
-wire n369_8;
-wire n381_8;
-wire n380_8;
-wire n379_8;
-wire n378_8;
-wire n377_10;
-wire n386_9;
-wire n385_9;
-wire n384_9;
-wire n383_9;
-wire n382_12;
-wire n375_8;
-wire n374_8;
-wire n373_8;
-wire n372_8;
-wire n371_8;
-wire n370_10;
-wire n513_6;
+wire n78_36;
+wire currentCursorCol_5_9;
+wire currentCursorRow_4_11;
+wire scrollRow_4_12;
+wire n368_7;
+wire n380_11;
+wire n379_11;
+wire n378_11;
+wire n377_11;
+wire n376_16;
+wire n385_10;
+wire n384_10;
+wire n383_10;
+wire n382_10;
+wire n381_14;
+wire n374_7;
+wire n373_7;
+wire n372_7;
+wire n371_7;
 wire n512_6;
 wire n511_6;
 wire n510_6;
 wire n509_6;
-wire n507_6;
-wire n506_5;
-wire n508_5;
-wire n38_4;
-wire n38_5;
-wire n38_6;
-wire n43_4;
+wire n508_6;
+wire n506_6;
+wire n505_5;
+wire n507_5;
+wire currentCursorCol_5_11;
+wire n331_7;
+wire n330_8;
+wire n39_4;
+wire n39_6;
+wire n44_4;
+wire n74_4;
+wire n493_4;
 wire n494_4;
 wire n495_4;
 wire n496_4;
@@ -5273,119 +5067,128 @@ wire n501_4;
 wire n502_4;
 wire n503_4;
 wire n504_4;
-wire n505_4;
-wire n907_4;
-wire n918_4;
-wire n758_4;
-wire n762_5;
-wire n762_6;
+wire n906_4;
+wire n910_4;
+wire n910_5;
+wire n917_4;
+wire n757_4;
 wire n761_5;
-wire n622_5;
-wire currentCursorCol_5_10;
-wire currentCursorCol_5_11;
-wire scrollRow_4_10;
-wire scrollRow_4_12;
-wire currentCursorRow_4_11;
-wire n369_9;
-wire n369_11;
-wire n369_12;
-wire n381_9;
-wire n378_9;
-wire n377_11;
-wire n386_10;
-wire n386_11;
-wire n385_10;
-wire n385_11;
-wire n385_12;
-wire n384_10;
-wire n384_12;
-wire n384_13;
-wire n383_10;
-wire n383_11;
-wire n383_12;
-wire n382_13;
-wire n382_14;
-wire n382_15;
-wire n375_10;
-wire n375_11;
-wire n374_10;
-wire n373_9;
-wire n373_10;
-wire n372_9;
-wire n372_10;
-wire n372_11;
-wire n371_9;
-wire n371_10;
-wire n370_11;
-wire n370_12;
-wire nextCurrentScanCharRow_4_6;
-wire n38_8;
-wire n38_9;
-wire n38_10;
-wire n43_5;
-wire n907_5;
-wire n918_5;
-wire n758_5;
-wire n758_6;
-wire scrollRow_4_13;
+wire n760_5;
+wire inputCmdCMD_BKSP_DEL_r0_7;
+wire n621_5;
+wire currentCursorCol_5_12;
+wire currentCursorCol_5_13;
 wire currentCursorRow_4_12;
 wire currentCursorRow_4_13;
-wire n369_13;
-wire n369_14;
-wire n369_15;
-wire n369_16;
-wire n381_10;
-wire n386_12;
-wire n386_13;
+wire currentCursorRow_4_14;
+wire scrollRow_4_13;
+wire scrollRow_4_14;
+wire n368_8;
+wire n368_9;
+wire n368_10;
+wire n368_11;
+wire n380_12;
+wire n377_12;
+wire n376_17;
+wire n385_11;
+wire n385_12;
+wire n385_13;
+wire n384_12;
+wire n384_13;
+wire n383_11;
+wire n383_12;
+wire n383_13;
+wire n382_11;
+wire n382_12;
+wire n382_13;
+wire n382_14;
+wire n381_16;
+wire n381_17;
+wire n381_18;
+wire n374_8;
+wire n374_9;
+wire n373_8;
+wire n373_9;
+wire n372_8;
+wire n372_10;
+wire n371_8;
+wire currentCursorCol_5_14;
+wire n331_8;
+wire n331_9;
+wire n331_10;
+wire n330_9;
+wire n330_10;
+wire nextCurrentScanCharRow_4_6;
+wire n39_7;
+wire n39_8;
+wire n39_9;
+wire n44_5;
+wire n906_5;
+wire n757_5;
+wire n757_6;
+wire currentCursorRow_4_15;
+wire currentCursorRow_4_16;
+wire currentCursorRow_4_17;
+wire scrollRow_4_15;
+wire scrollRow_4_16;
+wire n368_12;
+wire n368_13;
+wire n368_14;
+wire n368_15;
+wire n380_13;
 wire n385_14;
-wire n385_15;
 wire n384_14;
 wire n384_15;
 wire n384_16;
-wire n384_17;
-wire n383_13;
 wire n383_14;
 wire n383_15;
-wire n383_16;
 wire n383_17;
+wire n383_18;
+wire n382_15;
 wire n382_16;
 wire n382_17;
 wire n382_18;
-wire n374_11;
+wire n381_19;
+wire n381_20;
+wire n381_21;
+wire n381_22;
+wire n372_11;
 wire n372_12;
-wire n758_7;
-wire currentCursorRow_4_14;
-wire n384_18;
-wire n384_19;
-wire n384_20;
-wire n373_13;
+wire n371_10;
+wire n371_11;
+wire currentCursorCol_5_15;
+wire n331_13;
+wire n330_11;
+wire n330_12;
+wire n757_7;
+wire scrollRow_4_17;
+wire n384_17;
+wire n383_19;
+wire n382_19;
+wire n382_20;
 wire bottomCursor_8;
-wire n375_15;
-wire n38_12;
-wire n385_17;
-wire n382_21;
-wire n384_24;
-wire n369_18;
+wire n383_21;
+wire n381_24;
+wire n384_19;
+wire n39_11;
 wire n371_13;
-wire n374_13;
-wire n375_17;
-wire n375_19;
-wire scrollRow_4_15;
-wire currentCursorRow_4_16;
-wire currentCursorCol_5_13;
-wire n492_5;
+wire n372_14;
+wire n331_15;
+wire n331_17;
+wire n374_12;
+wire n74_6;
+wire n491_5;
+wire nextCharWidthCounter_0_11;
 wire nextCharHeightCounter_1_7;
-wire n606_6;
+wire n605_6;
 wire nextCharHeightCounter_0_8;
-wire nextCurrentScanCharRow_4_9;
-wire n598_7;
-wire nextCurrentScanCharRow_1_8;
 wire nextCurrentScanCharRow_0_9;
-wire n751_7;
+wire n597_7;
+wire n750_7;
 wire inputCmdValid_r0;
 wire inputCmdMemWrEn;
 wire inputCmdScrollUp_r0;
-wire inputCmdCMD_BKSP_r0;
+wire inputCmdCMD_BKSP_DEL_r0;
 wire charROMRdEn;
 wire inDisplayArea_r0;
 wire inDisplayArea_r1;
@@ -5419,6 +5222,8 @@ wire currentScrolledScanRow_1_3;
 wire currentScrolledScanRow_2_3;
 wire currentScrolledScanRow_3_3;
 wire currentScrolledScanRow_4_0_COUT;
+wire n737_1_SUM;
+wire n737_3;
 wire n738_1_SUM;
 wire n738_3;
 wire n739_1_SUM;
@@ -5427,8 +5232,8 @@ wire n740_1_SUM;
 wire n740_3;
 wire n741_1_SUM;
 wire n741_3;
-wire n742_1_SUM;
-wire n742_3;
+wire n743_1_SUM;
+wire n743_3;
 wire n744_1_SUM;
 wire n744_3;
 wire n745_1_SUM;
@@ -5439,12 +5244,9 @@ wire n747_1_SUM;
 wire n747_3;
 wire n748_1_SUM;
 wire n748_3;
-wire n749_1_SUM;
-wire n749_3;
 wire inputCmdMemWrEn_7;
 wire inputCmdScrollUp_r0_7;
-wire n769_5;
-wire nextCharWidthCounter_0_6;
+wire n768_5;
 wire nextCurrentScanCharCol_0_6;
 wire oneSecPulse;
 wire charBufferInitInProgress;
@@ -5453,7 +5255,7 @@ wire n116_39;
 wire inDisplayArea_Z;
 wire [2:1] nextCharWidthCounter;
 wire [3:2] nextCharHeightCounter;
-wire [3:2] nextCurrentScanCharRow;
+wire [4:1] nextCurrentScanCharRow;
 wire [7:0] inputCmdMemWrData;
 wire [2:0] charWidthCounter;
 wire [3:0] charHeightCounter;
@@ -5476,121 +5278,113 @@ wire [9:4] counterX;
 wire [9:1] counterY;
 wire VCC;
 wire GND;
-  LUT4 n38_s0 (
-    .F(n38_3),
-    .I0(n38_4),
-    .I1(n38_5),
-    .I2(n38_6),
-    .I3(n38_12) 
+  LUT4 n39_s0 (
+    .F(n39_3),
+    .I0(inputCmdMemWrData[2]),
+    .I1(n39_4),
+    .I2(n39_11),
+    .I3(n39_6) 
 );
-defparam n38_s0.INIT=16'hF800;
-  LUT4 n43_s0 (
-    .F(n43_3),
-    .I0(n43_4),
+defparam n39_s0.INIT=16'hF400;
+  LUT4 n44_s0 (
+    .F(n44_3),
+    .I0(n44_4),
     .I1(keyAOut),
     .I2(keyBOut),
     .I3(userResetn) 
 );
-defparam n43_s0.INIT=16'h4000;
-  LUT4 n75_s0 (
-    .F(n75_3),
-    .I0(inputCmdMemWrData[0]),
-    .I1(inputCmdMemWrData[1]),
-    .I2(inputCmdMemWrData[2]),
-    .I3(inputCmdMemWrData[3]) 
-);
-defparam n75_s0.INIT=16'h0110;
+defparam n44_s0.INIT=16'h4000;
   LUT3 charBufferWrEn_s0 (
     .F(charBufferWrEn),
-    .I0(inputCmdCMD_BKSP_r0),
+    .I0(inputCmdCMD_BKSP_DEL_r0),
     .I1(charBufferInitInProgress),
     .I2(inputCmdMemWrEn) 
 );
 defparam charBufferWrEn_s0.INIT=8'hFE;
+  LUT3 n493_s0 (
+    .F(n493_3),
+    .I0(currentScanCharCol[6]),
+    .I1(n493_4),
+    .I2(charBufferWrEn) 
+);
+defparam n493_s0.INIT=8'h3A;
   LUT3 n494_s0 (
     .F(n494_3),
-    .I0(currentScanCharCol[6]),
+    .I0(currentScanCharCol[5]),
     .I1(n494_4),
     .I2(charBufferWrEn) 
 );
-defparam n494_s0.INIT=8'hCA;
+defparam n494_s0.INIT=8'h3A;
   LUT3 n495_s0 (
     .F(n495_3),
-    .I0(currentScanCharCol[5]),
+    .I0(currentScanCharCol[4]),
     .I1(n495_4),
     .I2(charBufferWrEn) 
 );
-defparam n495_s0.INIT=8'hCA;
+defparam n495_s0.INIT=8'h3A;
   LUT3 n496_s0 (
     .F(n496_3),
-    .I0(currentScanCharCol[4]),
+    .I0(currentScanCharCol[3]),
     .I1(n496_4),
     .I2(charBufferWrEn) 
 );
-defparam n496_s0.INIT=8'hCA;
+defparam n496_s0.INIT=8'h3A;
   LUT3 n497_s0 (
     .F(n497_3),
-    .I0(currentScanCharCol[3]),
+    .I0(currentScanCharCol[2]),
     .I1(n497_4),
     .I2(charBufferWrEn) 
 );
-defparam n497_s0.INIT=8'hCA;
+defparam n497_s0.INIT=8'h3A;
   LUT3 n498_s0 (
     .F(n498_3),
-    .I0(currentScanCharCol[2]),
+    .I0(currentScanCharCol[1]),
     .I1(n498_4),
     .I2(charBufferWrEn) 
 );
-defparam n498_s0.INIT=8'hCA;
+defparam n498_s0.INIT=8'h3A;
   LUT3 n499_s0 (
     .F(n499_3),
-    .I0(currentScanCharCol[1]),
+    .I0(currentScanCharCol[0]),
     .I1(n499_4),
     .I2(charBufferWrEn) 
 );
-defparam n499_s0.INIT=8'hCA;
+defparam n499_s0.INIT=8'h3A;
   LUT3 n500_s0 (
     .F(n500_3),
-    .I0(currentScanCharCol[0]),
+    .I0(currentScrolledScanRow[4]),
     .I1(n500_4),
     .I2(charBufferWrEn) 
 );
-defparam n500_s0.INIT=8'hCA;
+defparam n500_s0.INIT=8'h3A;
   LUT3 n501_s0 (
     .F(n501_3),
-    .I0(currentScrolledScanRow[4]),
+    .I0(currentScrolledScanRow[3]),
     .I1(n501_4),
     .I2(charBufferWrEn) 
 );
-defparam n501_s0.INIT=8'hCA;
+defparam n501_s0.INIT=8'h3A;
   LUT3 n502_s0 (
     .F(n502_3),
-    .I0(currentScrolledScanRow[3]),
+    .I0(currentScrolledScanRow[2]),
     .I1(n502_4),
     .I2(charBufferWrEn) 
 );
-defparam n502_s0.INIT=8'hCA;
+defparam n502_s0.INIT=8'h3A;
   LUT3 n503_s0 (
     .F(n503_3),
-    .I0(currentScrolledScanRow[2]),
+    .I0(currentScrolledScanRow[1]),
     .I1(n503_4),
     .I2(charBufferWrEn) 
 );
-defparam n503_s0.INIT=8'hCA;
+defparam n503_s0.INIT=8'h3A;
   LUT3 n504_s0 (
     .F(n504_3),
-    .I0(currentScrolledScanRow[1]),
+    .I0(currentScrolledScanRow[0]),
     .I1(n504_4),
     .I2(charBufferWrEn) 
 );
-defparam n504_s0.INIT=8'hCA;
-  LUT3 n505_s0 (
-    .F(n505_3),
-    .I0(currentScrolledScanRow[0]),
-    .I1(n505_4),
-    .I2(charBufferWrEn) 
-);
-defparam n505_s0.INIT=8'hCA;
+defparam n504_s0.INIT=8'h3A;
   LUT4 charBufferRdEn_s0 (
     .F(charBufferRdEn),
     .I0(charWidthCounter[0]),
@@ -5599,59 +5393,59 @@ defparam n505_s0.INIT=8'hCA;
     .I3(inDisplayArea_r0) 
 );
 defparam charBufferRdEn_s0.INIT=16'h0100;
-  LUT4 n911_s0 (
-    .F(n911_3),
-    .I0(charWidthCounter[0]),
-    .I1(charWidthCounter[1]),
-    .I2(charWidthCounter[2]),
-    .I3(inDisplayArea_Z) 
+  LUT4 n910_s0 (
+    .F(n910_3),
+    .I0(inDisplayArea_r0_6),
+    .I1(n910_4),
+    .I2(n910_5),
+    .I3(charWidthCounter[0]) 
 );
-defparam n911_s0.INIT=16'h8000;
-  LUT3 n662_s0 (
-    .F(n662_3),
+defparam n910_s0.INIT=16'h1000;
+  LUT3 n661_s0 (
+    .F(n661_3),
     .I0(charWidthCounter[0]),
     .I1(charWidthCounter[1]),
     .I2(charWidthCounter[2]) 
 );
-defparam n662_s0.INIT=8'h3E;
-  LUT4 n758_s0 (
-    .F(n758_3),
+defparam n661_s0.INIT=8'h3E;
+  LUT4 n757_s0 (
+    .F(n757_3),
     .I0(oneSecPulse),
     .I1(scanningCurrentCursorCell_r2),
-    .I2(n758_4),
+    .I2(n757_4),
     .I3(bottomCursor_r0) 
 );
-defparam n758_s0.INIT=16'h88F0;
-  LUT4 n762_s1 (
-    .F(n762_4),
-    .I0(counterY[2]),
-    .I1(counterY[1]),
-    .I2(n762_5),
-    .I3(n762_6) 
-);
-defparam n762_s1.INIT=16'hBFFF;
+defparam n757_s0.INIT=16'h88F0;
   LUT4 n761_s1 (
     .F(n761_4),
-    .I0(counterX[8]),
-    .I1(counterX[7]),
+    .I0(counterY[2]),
+    .I1(counterY[1]),
     .I2(n761_5),
-    .I3(counterX[9]) 
+    .I3(n910_4) 
 );
 defparam n761_s1.INIT=16'hBFFF;
-  LUT2 inputCmdCMD_BKSP_r0_s2 (
-    .F(inputCmdCMD_BKSP_r0_6),
-    .I0(inputCmdValid_r0),
-    .I1(n38_4) 
+  LUT4 n760_s1 (
+    .F(n760_4),
+    .I0(counterX[8]),
+    .I1(counterX[7]),
+    .I2(n760_5),
+    .I3(counterX[9]) 
 );
-defparam inputCmdCMD_BKSP_r0_s2.INIT=4'h7;
-  LUT4 n622_s1 (
-    .F(n622_4),
-    .I0(n622_5),
+defparam n760_s1.INIT=16'hBFFF;
+  LUT2 inputCmdCMD_BKSP_DEL_r0_s2 (
+    .F(inputCmdCMD_BKSP_DEL_r0_6),
+    .I0(inputCmdValid_r0),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7) 
+);
+defparam inputCmdCMD_BKSP_DEL_r0_s2.INIT=4'h7;
+  LUT4 n621_s1 (
+    .F(n621_4),
+    .I0(n621_5),
     .I1(currentScanCharRow[0]),
     .I2(currentScanCharRow[1]),
-    .I3(n911_3) 
+    .I3(n605_6) 
 );
-defparam n622_s1.INIT=16'h8000;
+defparam n621_s1.INIT=16'h8000;
   LUT3 inDisplayArea_r0_s2 (
     .F(inDisplayArea_r0_6),
     .I0(counterX[8]),
@@ -5659,215 +5453,236 @@ defparam n622_s1.INIT=16'h8000;
     .I2(counterX[9]) 
 );
 defparam inDisplayArea_r0_s2.INIT=8'hE0;
-  LUT3 n79_s24 (
-    .F(n79_36),
+  LUT3 n78_s24 (
+    .F(n78_36),
     .I0(rxDataOut[5]),
     .I1(rxDataOut[6]),
     .I2(rxDataOut[7]) 
 );
-defparam n79_s24.INIT=8'hFE;
-  LUT4 scrollRow_4_s4 (
-    .F(scrollRow_4_9),
-    .I0(scrollRow_4_10),
-    .I1(inputCmdMemWrData[3]),
-    .I2(scrollRow_4_15),
-    .I3(scrollRow_4_12) 
+defparam n78_s24.INIT=8'hFE;
+  LUT4 currentCursorCol_5_s4 (
+    .F(currentCursorCol_5_9),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7),
+    .I2(currentCursorCol_5_12),
+    .I3(currentCursorCol_5_13) 
 );
-defparam scrollRow_4_s4.INIT=16'h4F00;
-  LUT4 n369_s4 (
-    .F(n369_8),
-    .I0(n369_9),
-    .I1(n369_18),
-    .I2(n369_11),
-    .I3(n369_12) 
+defparam currentCursorCol_5_s4.INIT=16'h00BF;
+  LUT4 currentCursorRow_4_s6 (
+    .F(currentCursorRow_4_11),
+    .I0(currentCursorRow_4_12),
+    .I1(currentCursorRow_4_13),
+    .I2(currentCursorCol_5_9),
+    .I3(currentCursorRow_4_14) 
 );
-defparam n369_s4.INIT=16'h4F44;
-  LUT2 n381_s4 (
-    .F(n381_8),
+defparam currentCursorRow_4_s6.INIT=16'hBBB0;
+  LUT4 scrollRow_4_s7 (
+    .F(scrollRow_4_12),
+    .I0(scrollRow_4_13),
+    .I1(n39_11),
+    .I2(currentCursorCol_5_13),
+    .I3(scrollRow_4_14) 
+);
+defparam scrollRow_4_s7.INIT=16'h000D;
+  LUT4 n368_s3 (
+    .F(n368_7),
+    .I0(n368_8),
+    .I1(n368_9),
+    .I2(n368_10),
+    .I3(n368_11) 
+);
+defparam n368_s3.INIT=16'hE0FF;
+  LUT2 n380_s7 (
+    .F(n380_11),
     .I0(scrollRow[0]),
-    .I1(n381_9) 
+    .I1(n380_12) 
 );
-defparam n381_s4.INIT=4'h4;
-  LUT3 n380_s4 (
-    .F(n380_8),
+defparam n380_s7.INIT=4'h4;
+  LUT3 n379_s7 (
+    .F(n379_11),
     .I0(scrollRow[0]),
     .I1(scrollRow[1]),
-    .I2(n381_9) 
+    .I2(n380_12) 
 );
-defparam n380_s4.INIT=8'h60;
-  LUT4 n379_s4 (
-    .F(n379_8),
+defparam n379_s7.INIT=8'h60;
+  LUT4 n378_s7 (
+    .F(n378_11),
     .I0(scrollRow[0]),
     .I1(scrollRow[1]),
     .I2(scrollRow[2]),
-    .I3(n381_9) 
+    .I3(n380_12) 
 );
-defparam n379_s4.INIT=16'h7800;
-  LUT3 n378_s4 (
-    .F(n378_8),
-    .I0(n378_9),
+defparam n378_s7.INIT=16'h7800;
+  LUT3 n377_s7 (
+    .F(n377_11),
+    .I0(n377_12),
     .I1(scrollRow[3]),
-    .I2(n381_9) 
+    .I2(n380_12) 
 );
-defparam n378_s4.INIT=8'h60;
-  LUT3 n377_s6 (
-    .F(n377_10),
-    .I0(n377_11),
+defparam n377_s7.INIT=8'h60;
+  LUT3 n376_s12 (
+    .F(n376_16),
+    .I0(n376_17),
     .I1(scrollRow[4]),
-    .I2(n381_9) 
+    .I2(n380_12) 
 );
-defparam n377_s6.INIT=8'h60;
-  LUT4 n386_s5 (
-    .F(n386_9),
-    .I0(n386_10),
-    .I1(n38_4),
-    .I2(n386_11),
+defparam n376_s12.INIT=8'h60;
+  LUT4 n385_s6 (
+    .F(n385_10),
+    .I0(n385_11),
+    .I1(n385_12),
+    .I2(n385_13),
     .I3(inputCmdValid_r0) 
 );
-defparam n386_s5.INIT=16'hB400;
-  LUT4 n385_s5 (
-    .F(n385_9),
-    .I0(n385_10),
-    .I1(n385_11),
-    .I2(inputCmdCMD_BKSP_r0_6),
-    .I3(n385_12) 
+defparam n385_s6.INIT=16'hF888;
+  LUT3 n384_s6 (
+    .F(n384_10),
+    .I0(n384_19),
+    .I1(n384_12),
+    .I2(n384_13) 
 );
-defparam n385_s5.INIT=16'h8F88;
-  LUT4 n384_s5 (
-    .F(n384_9),
-    .I0(n384_10),
-    .I1(n384_24),
-    .I2(n384_12),
-    .I3(n384_13) 
+defparam n384_s6.INIT=8'hE0;
+  LUT4 n383_s6 (
+    .F(n383_10),
+    .I0(n383_11),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7),
+    .I2(n383_12),
+    .I3(n383_13) 
 );
-defparam n384_s5.INIT=16'h4F00;
-  LUT4 n383_s5 (
-    .F(n383_9),
-    .I0(n383_10),
-    .I1(inputCmdMemWrData[3]),
-    .I2(n383_11),
-    .I3(n383_12) 
+defparam n383_s6.INIT=16'hF400;
+  LUT4 n382_s6 (
+    .F(n382_10),
+    .I0(n382_11),
+    .I1(n382_12),
+    .I2(n382_13),
+    .I3(n382_14) 
 );
-defparam n383_s5.INIT=16'hFFB0;
-  LUT4 n382_s8 (
-    .F(n382_12),
-    .I0(n382_13),
-    .I1(n382_14),
-    .I2(inputCmdCMD_BKSP_r0_6),
-    .I3(n382_15) 
+defparam n382_s6.INIT=16'hD7C0;
+  LUT4 n381_s10 (
+    .F(n381_14),
+    .I0(n381_24),
+    .I1(n381_16),
+    .I2(n381_17),
+    .I3(n381_18) 
 );
-defparam n382_s8.INIT=16'hFF0B;
-  LUT4 n375_s4 (
-    .F(n375_8),
-    .I0(n375_19),
-    .I1(n375_10),
-    .I2(n375_11),
-    .I3(n375_17) 
+defparam n381_s10.INIT=16'hFFB0;
+  LUT4 n374_s3 (
+    .F(n374_7),
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(n374_8),
+    .I2(n374_9),
+    .I3(inputCmdValid_r0) 
 );
-defparam n375_s4.INIT=16'h00F8;
-  LUT4 n374_s4 (
-    .F(n374_8),
-    .I0(n374_13),
-    .I1(n374_10),
-    .I2(currentCursorCol[0]),
-    .I3(currentCursorCol[1]) 
+defparam n374_s3.INIT=16'hF800;
+  LUT4 n373_s3 (
+    .F(n373_7),
+    .I0(scrollRow_4_13),
+    .I1(inputCmdCMD_BKSP_DEL_r0_6),
+    .I2(n373_8),
+    .I3(n373_9) 
 );
-defparam n374_s4.INIT=16'hACCA;
-  LUT4 n373_s4 (
-    .F(n373_8),
-    .I0(n373_9),
-    .I1(currentCursorCol[2]),
-    .I2(n373_10),
-    .I3(n369_12) 
+defparam n373_s3.INIT=16'h03BA;
+  LUT4 n372_s3 (
+    .F(n372_7),
+    .I0(n372_8),
+    .I1(n372_14),
+    .I2(n382_12),
+    .I3(n372_10) 
 );
-defparam n373_s4.INIT=16'h3CAA;
-  LUT4 n372_s4 (
-    .F(n372_8),
-    .I0(n372_9),
-    .I1(n372_10),
-    .I2(n369_18),
-    .I3(n372_11) 
-);
-defparam n372_s4.INIT=16'hFFE0;
-  LUT4 n371_s4 (
-    .F(n371_8),
-    .I0(n371_9),
-    .I1(n371_10),
-    .I2(n371_13),
-    .I3(currentCursorCol[4]) 
-);
-defparam n371_s4.INIT=16'hBAD5;
-  LUT4 n370_s6 (
-    .F(n370_10),
-    .I0(n370_11),
-    .I1(currentCursorCol[5]),
-    .I2(n370_12),
+defparam n372_s3.INIT=16'h44F4;
+  LUT4 n371_s3 (
+    .F(n371_7),
+    .I0(n371_8),
+    .I1(n374_8),
+    .I2(inputCmdCMD_BKSP_DEL_r0_6),
     .I3(n371_13) 
 );
-defparam n370_s6.INIT=16'hBEAA;
-  LUT4 n513_s2 (
-    .F(n513_6),
-    .I0(charBufferInitData[0]),
-    .I1(inputCmdMemWrData[0]),
-    .I2(inputCmdCMD_BKSP_r0),
-    .I3(charBufferInitInProgress) 
-);
-defparam n513_s2.INIT=16'h0A0C;
+defparam n371_s3.INIT=16'hFF0E;
   LUT4 n512_s2 (
     .F(n512_6),
-    .I0(charBufferInitData[1]),
-    .I1(inputCmdMemWrData[1]),
-    .I2(inputCmdCMD_BKSP_r0),
+    .I0(charBufferInitData[0]),
+    .I1(inputCmdMemWrData[0]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
 defparam n512_s2.INIT=16'h0A0C;
   LUT4 n511_s2 (
     .F(n511_6),
-    .I0(charBufferInitData[2]),
-    .I1(inputCmdMemWrData[2]),
-    .I2(inputCmdCMD_BKSP_r0),
+    .I0(charBufferInitData[1]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
 defparam n511_s2.INIT=16'h0A0C;
   LUT4 n510_s2 (
     .F(n510_6),
-    .I0(charBufferInitData[3]),
-    .I1(inputCmdMemWrData[3]),
-    .I2(inputCmdCMD_BKSP_r0),
+    .I0(charBufferInitData[2]),
+    .I1(inputCmdMemWrData[2]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
 defparam n510_s2.INIT=16'h0A0C;
   LUT4 n509_s2 (
     .F(n509_6),
-    .I0(charBufferInitData[4]),
-    .I1(inputCmdMemWrData[4]),
-    .I2(inputCmdCMD_BKSP_r0),
+    .I0(charBufferInitData[3]),
+    .I1(inputCmdMemWrData[3]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
 defparam n509_s2.INIT=16'h0A0C;
-  LUT4 n507_s2 (
-    .F(n507_6),
-    .I0(charBufferInitData[6]),
-    .I1(inputCmdMemWrData[6]),
-    .I2(inputCmdCMD_BKSP_r0),
+  LUT4 n508_s2 (
+    .F(n508_6),
+    .I0(charBufferInitData[4]),
+    .I1(inputCmdMemWrData[4]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
-defparam n507_s2.INIT=16'h0A0C;
-  LUT3 n506_s1 (
-    .F(n506_5),
-    .I0(inputCmdCMD_BKSP_r0),
+defparam n508_s2.INIT=16'h0A0C;
+  LUT4 n506_s2 (
+    .F(n506_6),
+    .I0(charBufferInitData[6]),
+    .I1(inputCmdMemWrData[6]),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
+    .I3(charBufferInitInProgress) 
+);
+defparam n506_s2.INIT=16'h0A0C;
+  LUT3 n505_s1 (
+    .F(n505_5),
+    .I0(inputCmdCMD_BKSP_DEL_r0),
     .I1(charBufferInitInProgress),
     .I2(inputCmdMemWrData[7]) 
 );
-defparam n506_s1.INIT=8'h10;
-  LUT4 n508_s1 (
-    .F(n508_5),
+defparam n505_s1.INIT=8'h10;
+  LUT4 n507_s1 (
+    .F(n507_5),
     .I0(charBufferInitData[5]),
     .I1(inputCmdMemWrData[5]),
-    .I2(inputCmdCMD_BKSP_r0),
+    .I2(inputCmdCMD_BKSP_DEL_r0),
     .I3(charBufferInitInProgress) 
 );
-defparam n508_s1.INIT=16'hFAFC;
+defparam n507_s1.INIT=16'hFAFC;
+  LUT3 currentCursorCol_5_s5 (
+    .F(currentCursorCol_5_11),
+    .I0(currentCursorCol_5_14),
+    .I1(n368_10),
+    .I2(currentCursorCol_5_9) 
+);
+defparam currentCursorCol_5_s5.INIT=8'h70;
+  LUT4 n331_s3 (
+    .F(n331_7),
+    .I0(n331_8),
+    .I1(currentCursorCol[4]),
+    .I2(n331_9),
+    .I3(n331_10) 
+);
+defparam n331_s3.INIT=16'hC100;
+  LUT3 n330_s4 (
+    .F(n330_8),
+    .I0(n330_9),
+    .I1(n330_10),
+    .I2(n331_10) 
+);
+defparam n330_s4.INIT=8'h60;
   LUT2 nextCharWidthCounter_1_s0 (
     .F(nextCharWidthCounter[1]),
     .I0(charWidthCounter[0]),
@@ -5896,6 +5711,12 @@ defparam nextCharHeightCounter_2_s0.INIT=8'h78;
     .I3(charHeightCounter[3]) 
 );
 defparam nextCharHeightCounter_3_s0.INIT=16'h7F80;
+  LUT2 nextCurrentScanCharRow_1_s0 (
+    .F(nextCurrentScanCharRow[1]),
+    .I0(currentScanCharRow[0]),
+    .I1(currentScanCharRow[1]) 
+);
+defparam nextCurrentScanCharRow_1_s0.INIT=4'h6;
   LUT3 nextCurrentScanCharRow_2_s0 (
     .F(nextCurrentScanCharRow[2]),
     .I0(currentScanCharRow[0]),
@@ -5911,459 +5732,515 @@ defparam nextCurrentScanCharRow_2_s0.INIT=8'h78;
     .I3(currentScanCharRow[3]) 
 );
 defparam nextCurrentScanCharRow_3_s0.INIT=16'h7F80;
-  LUT4 n38_s1 (
-    .F(n38_4),
-    .I0(inputCmdMemWrData[4]),
-    .I1(inputCmdMemWrData[5]),
-    .I2(inputCmdMemWrData[6]),
-    .I3(inputCmdMemWrData[7]) 
+  LUT2 nextCurrentScanCharRow_4_s0 (
+    .F(nextCurrentScanCharRow[4]),
+    .I0(nextCurrentScanCharRow_4_6),
+    .I1(currentScanCharRow[4]) 
 );
-defparam n38_s1.INIT=16'h0001;
-  LUT4 n38_s2 (
-    .F(n38_5),
-    .I0(inputCmdMemWrData[2]),
-    .I1(inputCmdMemWrData[0]),
-    .I2(inputCmdMemWrData[1]),
-    .I3(inputCmdMemWrData[3]) 
+defparam nextCurrentScanCharRow_4_s0.INIT=4'h6;
+  LUT4 n39_s1 (
+    .F(n39_4),
+    .I0(inputCmdMemWrData[0]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(inputCmdMemWrData[3]),
+    .I3(inputCmdCMD_BKSP_DEL_r0_7) 
 );
-defparam n38_s2.INIT=16'h1004;
-  LUT4 n38_s3 (
-    .F(n38_6),
-    .I0(currentCursorCol[4]),
-    .I1(currentCursorCol[5]),
-    .I2(currentCursorCol[6]),
-    .I3(n38_8) 
+defparam n39_s1.INIT=16'h4200;
+  LUT2 n39_s3 (
+    .F(n39_6),
+    .I0(currentCursorRow[4]),
+    .I1(n39_9) 
 );
-defparam n38_s3.INIT=16'h1000;
-  LUT4 n43_s1 (
-    .F(n43_4),
-    .I0(rxDataOut[0]),
-    .I1(n79_36),
-    .I2(n43_5),
-    .I3(rxDataOutValid) 
+defparam n39_s3.INIT=4'h8;
+  LUT4 n44_s1 (
+    .F(n44_4),
+    .I0(n78_36),
+    .I1(rxDataOutValid),
+    .I2(rxDataOut[0]),
+    .I3(n44_5) 
 );
-defparam n43_s1.INIT=16'h1000;
-  LUT3 n494_s1 (
-    .F(n494_4),
+defparam n44_s1.INIT=16'h4000;
+  LUT2 n74_s1 (
+    .F(n74_4),
+    .I0(inputCmdMemWrData[0]),
+    .I1(inputCmdMemWrData[1]) 
+);
+defparam n74_s1.INIT=4'h1;
+  LUT3 n493_s1 (
+    .F(n493_4),
     .I0(charBufferInitAddr[11]),
     .I1(currentCursorCol[6]),
     .I2(charBufferInitInProgress) 
 );
-defparam n494_s1.INIT=8'hAC;
-  LUT3 n495_s1 (
-    .F(n495_4),
+defparam n493_s1.INIT=8'h53;
+  LUT3 n494_s1 (
+    .F(n494_4),
     .I0(charBufferInitAddr[10]),
     .I1(currentCursorCol[5]),
     .I2(charBufferInitInProgress) 
 );
-defparam n495_s1.INIT=8'hAC;
-  LUT3 n496_s1 (
-    .F(n496_4),
+defparam n494_s1.INIT=8'h53;
+  LUT3 n495_s1 (
+    .F(n495_4),
     .I0(charBufferInitAddr[9]),
     .I1(currentCursorCol[4]),
     .I2(charBufferInitInProgress) 
 );
-defparam n496_s1.INIT=8'hAC;
-  LUT3 n497_s1 (
-    .F(n497_4),
+defparam n495_s1.INIT=8'h53;
+  LUT3 n496_s1 (
+    .F(n496_4),
     .I0(charBufferInitAddr[8]),
     .I1(currentCursorCol[3]),
     .I2(charBufferInitInProgress) 
 );
-defparam n497_s1.INIT=8'hAC;
-  LUT3 n498_s1 (
-    .F(n498_4),
+defparam n496_s1.INIT=8'h53;
+  LUT3 n497_s1 (
+    .F(n497_4),
     .I0(charBufferInitAddr[7]),
     .I1(currentCursorCol[2]),
     .I2(charBufferInitInProgress) 
 );
-defparam n498_s1.INIT=8'hAC;
-  LUT3 n499_s1 (
-    .F(n499_4),
+defparam n497_s1.INIT=8'h53;
+  LUT3 n498_s1 (
+    .F(n498_4),
     .I0(charBufferInitAddr[6]),
     .I1(currentCursorCol[1]),
     .I2(charBufferInitInProgress) 
 );
-defparam n499_s1.INIT=8'hAC;
-  LUT3 n500_s1 (
-    .F(n500_4),
+defparam n498_s1.INIT=8'h53;
+  LUT3 n499_s1 (
+    .F(n499_4),
     .I0(charBufferInitAddr[5]),
     .I1(currentCursorCol[0]),
     .I2(charBufferInitInProgress) 
 );
-defparam n500_s1.INIT=8'hAC;
-  LUT3 n501_s1 (
-    .F(n501_4),
+defparam n499_s1.INIT=8'h53;
+  LUT3 n500_s1 (
+    .F(n500_4),
     .I0(currentScrolledRow[4]),
     .I1(charBufferInitAddr[4]),
     .I2(charBufferInitInProgress) 
 );
-defparam n501_s1.INIT=8'hCA;
-  LUT3 n502_s1 (
-    .F(n502_4),
+defparam n500_s1.INIT=8'h35;
+  LUT3 n501_s1 (
+    .F(n501_4),
     .I0(currentScrolledRow[3]),
     .I1(charBufferInitAddr[3]),
     .I2(charBufferInitInProgress) 
 );
-defparam n502_s1.INIT=8'hCA;
-  LUT3 n503_s1 (
-    .F(n503_4),
+defparam n501_s1.INIT=8'h35;
+  LUT3 n502_s1 (
+    .F(n502_4),
     .I0(currentScrolledRow[2]),
     .I1(charBufferInitAddr[2]),
     .I2(charBufferInitInProgress) 
 );
-defparam n503_s1.INIT=8'hCA;
-  LUT3 n504_s1 (
-    .F(n504_4),
+defparam n502_s1.INIT=8'h35;
+  LUT3 n503_s1 (
+    .F(n503_4),
     .I0(currentScrolledRow[1]),
     .I1(charBufferInitAddr[1]),
     .I2(charBufferInitInProgress) 
 );
-defparam n504_s1.INIT=8'hCA;
-  LUT3 n505_s1 (
-    .F(n505_4),
+defparam n503_s1.INIT=8'h35;
+  LUT3 n504_s1 (
+    .F(n504_4),
     .I0(currentScrolledRow[0]),
     .I1(charBufferInitAddr[0]),
     .I2(charBufferInitInProgress) 
 );
-defparam n505_s1.INIT=8'hCA;
-  LUT4 n907_s1 (
-    .F(n907_4),
+defparam n504_s1.INIT=8'h35;
+  LUT4 n906_s1 (
+    .F(n906_4),
     .I0(currentScanCharCol[5]),
     .I1(currentScanCharCol[4]),
-    .I2(n907_5),
+    .I2(n906_5),
     .I3(currentScanCharCol[6]) 
 );
-defparam n907_s1.INIT=16'h1000;
-  LUT4 n918_s1 (
-    .F(n918_4),
-    .I0(charHeightCounter[0]),
-    .I1(n918_5),
-    .I2(charHeightCounter[1]),
-    .I3(n907_4) 
-);
-defparam n918_s1.INIT=16'h4000;
-  LUT4 n758_s1 (
-    .F(n758_4),
-    .I0(n758_5),
-    .I1(n758_6),
-    .I2(charHeightCounterBlank_r1),
-    .I3(charWidthCounter_r1[2]) 
-);
-defparam n758_s1.INIT=16'h0C05;
-  LUT3 n762_s2 (
-    .F(n762_5),
-    .I0(counterY[4]),
-    .I1(counterY[9]),
-    .I2(counterY[3]) 
-);
-defparam n762_s2.INIT=8'h10;
-  LUT4 n762_s3 (
-    .F(n762_6),
+defparam n906_s1.INIT=16'h1000;
+  LUT4 n910_s1 (
+    .F(n910_4),
     .I0(counterY[5]),
     .I1(counterY[6]),
     .I2(counterY[7]),
     .I3(counterY[8]) 
 );
-defparam n762_s3.INIT=16'h8000;
+defparam n910_s1.INIT=16'h8000;
+  LUT3 n910_s2 (
+    .F(n910_5),
+    .I0(counterY[9]),
+    .I1(charWidthCounter[2]),
+    .I2(charWidthCounter[1]) 
+);
+defparam n910_s2.INIT=8'h40;
+  LUT4 n917_s1 (
+    .F(n917_4),
+    .I0(charHeightCounter[0]),
+    .I1(charHeightCounter[1]),
+    .I2(charHeightCounter[2]),
+    .I3(charHeightCounter[3]) 
+);
+defparam n917_s1.INIT=16'h4000;
+  LUT4 n757_s1 (
+    .F(n757_4),
+    .I0(n757_5),
+    .I1(n757_6),
+    .I2(charHeightCounterBlank_r1),
+    .I3(charWidthCounter_r1[2]) 
+);
+defparam n757_s1.INIT=16'h0C05;
   LUT3 n761_s2 (
     .F(n761_5),
+    .I0(counterY[4]),
+    .I1(counterY[9]),
+    .I2(counterY[3]) 
+);
+defparam n761_s2.INIT=8'h10;
+  LUT3 n760_s2 (
+    .F(n760_5),
     .I0(counterX[4]),
     .I1(counterX[5]),
     .I2(debugPixel) 
 );
-defparam n761_s2.INIT=8'h7E;
-  LUT4 n622_s2 (
-    .F(n622_5),
+defparam n760_s2.INIT=8'h7E;
+  LUT4 inputCmdCMD_BKSP_DEL_r0_s3 (
+    .F(inputCmdCMD_BKSP_DEL_r0_7),
+    .I0(inputCmdMemWrData[4]),
+    .I1(inputCmdMemWrData[5]),
+    .I2(inputCmdMemWrData[6]),
+    .I3(inputCmdMemWrData[7]) 
+);
+defparam inputCmdCMD_BKSP_DEL_r0_s3.INIT=16'h0001;
+  LUT4 n621_s2 (
+    .F(n621_5),
     .I0(currentScanCharRow[2]),
     .I1(currentScanCharRow[3]),
     .I2(currentScanCharRow[4]),
-    .I3(n918_4) 
+    .I3(n917_4) 
 );
-defparam n622_s2.INIT=16'h8000;
-  LUT4 currentCursorCol_5_s5 (
-    .F(currentCursorCol_5_10),
-    .I0(inputCmdMemWrData[0]),
-    .I1(inputCmdMemWrData[3]),
-    .I2(inputCmdMemWrData[1]),
-    .I3(inputCmdMemWrData[2]) 
+defparam n621_s2.INIT=16'h8000;
+  LUT4 currentCursorCol_5_s6 (
+    .F(currentCursorCol_5_12),
+    .I0(inputCmdMemWrData[2]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(inputCmdMemWrData[0]),
+    .I3(inputCmdValid_r0) 
 );
-defparam currentCursorCol_5_s5.INIT=16'hCC0E;
-  LUT3 currentCursorCol_5_s6 (
-    .F(currentCursorCol_5_11),
+defparam currentCursorCol_5_s6.INIT=16'hD700;
+  LUT3 currentCursorCol_5_s7 (
+    .F(currentCursorCol_5_13),
     .I0(inputCmdValid_r0),
     .I1(keyBOut),
     .I2(keyAOut) 
 );
-defparam currentCursorCol_5_s6.INIT=8'h40;
-  LUT4 scrollRow_4_s5 (
-    .F(scrollRow_4_10),
-    .I0(inputCmdMemWrData[1]),
-    .I1(scrollRow_4_13),
-    .I2(inputCmdMemWrData[2]),
-    .I3(inputCmdMemWrData[0]) 
+defparam currentCursorCol_5_s7.INIT=8'h40;
+  LUT4 currentCursorRow_4_s7 (
+    .F(currentCursorRow_4_12),
+    .I0(n39_11),
+    .I1(inputCmdMemWrData[2]),
+    .I2(n39_6),
+    .I3(currentCursorRow_4_15) 
 );
-defparam scrollRow_4_s5.INIT=16'hFB2F;
-  LUT4 scrollRow_4_s7 (
-    .F(scrollRow_4_12),
-    .I0(n38_4),
-    .I1(scrollRow_4_13),
-    .I2(inputCmdValid_r0),
-    .I3(currentCursorCol_5_11) 
+defparam currentCursorRow_4_s7.INIT=16'h0B00;
+  LUT4 currentCursorRow_4_s8 (
+    .F(currentCursorRow_4_13),
+    .I0(n368_8),
+    .I1(inputCmdMemWrData[2]),
+    .I2(inputCmdMemWrData[0]),
+    .I3(currentCursorRow_4_16) 
 );
-defparam scrollRow_4_s7.INIT=16'h00EF;
-  LUT4 currentCursorRow_4_s6 (
-    .F(currentCursorRow_4_11),
-    .I0(currentCursorRow_4_12),
-    .I1(inputCmdMemWrData[1]),
-    .I2(currentCursorRow_4_13),
-    .I3(inputCmdMemWrData[3]) 
+defparam currentCursorRow_4_s8.INIT=16'hC500;
+  LUT4 currentCursorRow_4_s9 (
+    .F(currentCursorRow_4_14),
+    .I0(currentCursorCol_5_13),
+    .I1(inputCmdMemWrData[0]),
+    .I2(currentCursorRow_4_17),
+    .I3(inputCmdMemWrData[1]) 
 );
-defparam currentCursorRow_4_s6.INIT=16'hBBF0;
-  LUT4 n369_s5 (
-    .F(n369_9),
-    .I0(n369_13),
-    .I1(n369_14),
-    .I2(n372_9),
-    .I3(currentCursorCol[6]) 
+defparam currentCursorRow_4_s9.INIT=16'h1004;
+  LUT2 scrollRow_4_s8 (
+    .F(scrollRow_4_13),
+    .I0(inputCmdValid_r0),
+    .I1(scrollRow_4_15) 
 );
-defparam n369_s5.INIT=16'h0C0B;
-  LUT4 n369_s7 (
-    .F(n369_11),
-    .I0(n38_8),
+defparam scrollRow_4_s8.INIT=4'h2;
+  LUT2 scrollRow_4_s9 (
+    .F(scrollRow_4_14),
+    .I0(scrollRow_4_16),
+    .I1(n380_12) 
+);
+defparam scrollRow_4_s9.INIT=4'h4;
+  LUT4 n368_s4 (
+    .F(n368_8),
+    .I0(n368_12),
+    .I1(currentCursorRow[4]),
+    .I2(n368_13),
+    .I3(n368_14) 
+);
+defparam n368_s4.INIT=16'hD000;
+  LUT4 n368_s5 (
+    .F(n368_9),
+    .I0(currentCursorCol[5]),
     .I1(currentCursorCol[4]),
-    .I2(currentCursorCol[5]),
+    .I2(n368_13),
     .I3(currentCursorCol[6]) 
 );
-defparam n369_s7.INIT=16'h827F;
-  LUT4 n369_s8 (
-    .F(n369_12),
-    .I0(n369_16),
-    .I1(inputCmdMemWrData[3]),
-    .I2(n38_4),
+defparam n368_s5.INIT=16'hEF00;
+  LUT4 n368_s6 (
+    .F(n368_10),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdValid_r0),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7),
+    .I3(n74_4) 
+);
+defparam n368_s6.INIT=16'h8000;
+  LUT4 n368_s7 (
+    .F(n368_11),
+    .I0(n368_15),
+    .I1(scrollRow_4_13),
+    .I2(inputCmdCMD_BKSP_DEL_r0_6),
+    .I3(n374_8) 
+);
+defparam n368_s7.INIT=16'hB0BB;
+  LUT4 n380_s8 (
+    .F(n380_12),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7),
+    .I2(n380_13),
     .I3(inputCmdValid_r0) 
 );
-defparam n369_s8.INIT=16'h4F00;
-  LUT4 n381_s5 (
-    .F(n381_9),
-    .I0(inputCmdMemWrData[2]),
-    .I1(n38_4),
-    .I2(n381_10),
-    .I3(inputCmdValid_r0) 
-);
-defparam n381_s5.INIT=16'h7F00;
-  LUT3 n378_s5 (
-    .F(n378_9),
+defparam n380_s8.INIT=16'h7F00;
+  LUT3 n377_s8 (
+    .F(n377_12),
     .I0(scrollRow[0]),
     .I1(scrollRow[1]),
     .I2(scrollRow[2]) 
 );
-defparam n378_s5.INIT=8'h80;
-  LUT4 n377_s7 (
-    .F(n377_11),
+defparam n377_s8.INIT=8'h80;
+  LUT4 n376_s13 (
+    .F(n376_17),
     .I0(scrollRow[0]),
     .I1(scrollRow[1]),
     .I2(scrollRow[2]),
     .I3(scrollRow[3]) 
 );
-defparam n377_s7.INIT=16'h8000;
-  LUT4 n386_s6 (
-    .F(n386_10),
-    .I0(n386_12),
-    .I1(currentCursorRow[0]),
-    .I2(n386_11),
-    .I3(n381_10) 
-);
-defparam n386_s6.INIT=16'hF53C;
-  LUT4 n386_s7 (
-    .F(n386_11),
-    .I0(n38_12),
-    .I1(currentCursorRow[0]),
-    .I2(n386_13),
-    .I3(n38_6) 
-);
-defparam n386_s7.INIT=16'h0B0C;
-  LUT3 n385_s6 (
-    .F(n385_10),
-    .I0(n385_17),
-    .I1(n38_4),
-    .I2(inputCmdValid_r0) 
-);
-defparam n385_s6.INIT=8'hB0;
-  LUT4 n385_s7 (
+defparam n376_s13.INIT=16'h8000;
+  LUT3 n385_s7 (
     .F(n385_11),
-    .I0(n38_10),
-    .I1(currentCursorRow[0]),
-    .I2(n38_6),
-    .I3(currentCursorRow[1]) 
+    .I0(n385_14),
+    .I1(inputCmdValid_r0),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7) 
 );
-defparam n385_s7.INIT=16'hBFC0;
+defparam n385_s7.INIT=8'h40;
   LUT4 n385_s8 (
     .F(n385_12),
-    .I0(n369_15),
-    .I1(n385_14),
-    .I2(n381_10),
-    .I3(n385_15) 
+    .I0(inputCmdMemWrData[0]),
+    .I1(currentCursorRow[0]),
+    .I2(inputCmdMemWrData[2]),
+    .I3(inputCmdMemWrData[3]) 
 );
-defparam n385_s8.INIT=16'h2F00;
-  LUT3 n384_s6 (
-    .F(n384_10),
-    .I0(n384_14),
-    .I1(currentCursorRow[2]),
-    .I2(n384_15) 
+defparam n385_s8.INIT=16'h31F3;
+  LUT4 n385_s9 (
+    .F(n385_13),
+    .I0(n39_6),
+    .I1(currentCursorRow[0]),
+    .I2(n384_19),
+    .I3(n39_11) 
 );
-defparam n384_s6.INIT=8'hE3;
-  LUT3 n384_s8 (
+defparam n385_s9.INIT=16'h0B0C;
+  LUT4 n384_s8 (
     .F(n384_12),
-    .I0(n385_17),
-    .I1(n384_16),
-    .I2(n384_17) 
+    .I0(n39_6),
+    .I1(currentCursorRow[0]),
+    .I2(n39_11),
+    .I3(currentCursorRow[1]) 
 );
-defparam n384_s8.INIT=8'h4C;
-  LUT3 n384_s9 (
+defparam n384_s8.INIT=16'hBFC0;
+  LUT4 n384_s9 (
     .F(n384_13),
-    .I0(n38_4),
-    .I1(n384_17),
-    .I2(inputCmdValid_r0) 
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(inputCmdMemWrData[1]),
+    .I2(n384_16),
+    .I3(inputCmdValid_r0) 
 );
-defparam n384_s9.INIT=8'hE0;
-  LUT4 n383_s6 (
-    .F(n383_10),
-    .I0(currentCursorRow[4]),
-    .I1(n369_15),
-    .I2(currentCursorRow[3]),
-    .I3(n383_13) 
-);
-defparam n383_s6.INIT=16'h08C0;
+defparam n384_s9.INIT=16'h7D00;
   LUT4 n383_s7 (
     .F(n383_11),
-    .I0(n383_14),
-    .I1(inputCmdCMD_BKSP_r0_6),
+    .I0(inputCmdMemWrData[0]),
+    .I1(n383_14),
+    .I2(currentCursorRow[2]),
+    .I3(n384_15) 
+);
+defparam n383_s7.INIT=16'hBE00;
+  LUT4 n383_s8 (
+    .F(n383_12),
+    .I0(n39_6),
+    .I1(n383_15),
+    .I2(n383_21),
+    .I3(currentCursorRow[2]) 
+);
+defparam n383_s8.INIT=16'h0B0C;
+  LUT4 n383_s9 (
+    .F(n383_13),
+    .I0(n383_17),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7),
+    .I2(n383_18),
+    .I3(inputCmdValid_r0) 
+);
+defparam n383_s9.INIT=16'hBF00;
+  LUT4 n382_s7 (
+    .F(n382_11),
+    .I0(inputCmdMemWrData[0]),
+    .I1(currentCursorRow[3]),
+    .I2(n382_15),
+    .I3(n384_15) 
+);
+defparam n382_s7.INIT=16'hBE00;
+  LUT2 n382_s8 (
+    .F(n382_12),
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(inputCmdValid_r0) 
+);
+defparam n382_s8.INIT=4'h4;
+  LUT4 n382_s9 (
+    .F(n382_13),
+    .I0(n384_14),
+    .I1(n382_16),
+    .I2(n382_17),
+    .I3(n382_12) 
+);
+defparam n382_s9.INIT=16'h03FD;
+  LUT4 n382_s10 (
+    .F(n382_14),
+    .I0(n382_18),
+    .I1(inputCmdMemWrData[2]),
+    .I2(inputCmdMemWrData[3]),
+    .I3(n385_11) 
+);
+defparam n382_s10.INIT=16'h7D00;
+  LUT4 n381_s12 (
+    .F(n381_16),
+    .I0(n381_19),
+    .I1(inputCmdMemWrData[0]),
+    .I2(currentCursorRow[4]),
+    .I3(n384_15) 
+);
+defparam n381_s12.INIT=16'h6D00;
+  LUT4 n381_s13 (
+    .F(n381_17),
+    .I0(n381_20),
+    .I1(n381_21),
+    .I2(n381_22),
+    .I3(n385_11) 
+);
+defparam n381_s13.INIT=16'h0B00;
+  LUT4 n381_s14 (
+    .F(n381_18),
+    .I0(n39_9),
+    .I1(n39_11),
+    .I2(currentCursorRow[4]),
+    .I3(n382_12) 
+);
+defparam n381_s14.INIT=16'hF800;
+  LUT4 n374_s4 (
+    .F(n374_8),
+    .I0(inputCmdMemWrData[2]),
+    .I1(inputCmdMemWrData[0]),
     .I2(inputCmdMemWrData[3]),
     .I3(inputCmdMemWrData[1]) 
 );
-defparam n383_s7.INIT=16'h0230;
-  LUT4 n383_s8 (
-    .F(n383_12),
-    .I0(n385_10),
-    .I1(n383_15),
-    .I2(n383_16),
-    .I3(n383_17) 
+defparam n374_s4.INIT=16'h8F00;
+  LUT4 n374_s5 (
+    .F(n374_9),
+    .I0(currentCursorCol_5_14),
+    .I1(n374_12),
+    .I2(scrollRow_4_15),
+    .I3(currentCursorCol[0]) 
 );
-defparam n383_s8.INIT=16'hF800;
-  LUT4 n382_s9 (
-    .F(n382_13),
-    .I0(n382_16),
-    .I1(n382_17),
-    .I2(currentCursorRow[4]),
-    .I3(n384_24) 
+defparam n374_s5.INIT=16'h004F;
+  LUT4 n373_s4 (
+    .F(n373_8),
+    .I0(currentCursorCol_5_14),
+    .I1(n374_12),
+    .I2(n373_9),
+    .I3(n374_8) 
 );
-defparam n382_s9.INIT=16'h7000;
-  LUT4 n382_s10 (
-    .F(n382_14),
-    .I0(inputCmdMemWrData[3]),
-    .I1(inputCmdMemWrData[1]),
-    .I2(n382_18),
-    .I3(n382_21) 
-);
-defparam n382_s10.INIT=16'h7AC3;
-  LUT4 n382_s11 (
-    .F(n382_15),
-    .I0(n38_6),
-    .I1(n382_21),
-    .I2(currentCursorRow[4]),
-    .I3(n385_10) 
-);
-defparam n382_s11.INIT=16'hF800;
-  LUT4 n375_s6 (
-    .F(n375_10),
-    .I0(inputCmdMemWrData[0]),
-    .I1(inputCmdMemWrData[1]),
-    .I2(n375_15),
-    .I3(inputCmdMemWrData[2]) 
-);
-defparam n375_s6.INIT=16'hCEAF;
-  LUT3 n375_s7 (
-    .F(n375_11),
-    .I0(currentCursorCol[0]),
-    .I1(n38_4),
-    .I2(inputCmdValid_r0) 
-);
-defparam n375_s7.INIT=8'h10;
-  LUT4 n374_s6 (
-    .F(n374_10),
-    .I0(inputCmdMemWrData[3]),
-    .I1(n374_11),
-    .I2(n38_4),
-    .I3(inputCmdValid_r0) 
-);
-defparam n374_s6.INIT=16'h2F00;
-  LUT4 n373_s5 (
+defparam n373_s4.INIT=16'h0FB0;
+  LUT2 n373_s5 (
     .F(n373_9),
-    .I0(n375_15),
-    .I1(n373_13),
-    .I2(n372_9),
-    .I3(n375_19) 
-);
-defparam n373_s5.INIT=16'hF400;
-  LUT2 n373_s6 (
-    .F(n373_10),
     .I0(currentCursorCol[0]),
     .I1(currentCursorCol[1]) 
 );
-defparam n373_s6.INIT=4'h8;
-  LUT2 n372_s5 (
-    .F(n372_9),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[2]) 
+defparam n373_s5.INIT=4'h9;
+  LUT4 n372_s4 (
+    .F(n372_8),
+    .I0(n372_11),
+    .I1(currentCursorCol_5_14),
+    .I2(n372_12),
+    .I3(inputCmdMemWrData[3]) 
 );
-defparam n372_s5.INIT=4'h8;
-  LUT4 n372_s6 (
+defparam n372_s4.INIT=16'hD000;
+  LUT3 n372_s6 (
     .F(n372_10),
-    .I0(currentCursorCol[2]),
-    .I1(n372_12),
-    .I2(n375_15),
-    .I3(currentCursorCol[3]) 
-);
-defparam n372_s6.INIT=16'h0B04;
-  LUT4 n372_s7 (
-    .F(n372_11),
-    .I0(currentCursorCol[2]),
-    .I1(n373_10),
-    .I2(currentCursorCol[3]),
-    .I3(n374_10) 
-);
-defparam n372_s7.INIT=16'h7800;
-  LUT4 n371_s5 (
-    .F(n371_9),
-    .I0(n38_8),
-    .I1(currentCursorCol[4]),
-    .I2(n38_6),
-    .I3(n369_12) 
-);
-defparam n371_s5.INIT=16'h3533;
-  LUT4 n371_s6 (
-    .F(n371_10),
     .I0(currentCursorCol[0]),
     .I1(currentCursorCol[1]),
-    .I2(currentCursorCol[2]),
-    .I3(currentCursorCol[3]) 
+    .I2(currentCursorCol[2]) 
 );
-defparam n371_s6.INIT=16'h0001;
-  LUT4 n370_s7 (
-    .F(n370_11),
-    .I0(currentCursorCol[4]),
-    .I1(n38_8),
+defparam n372_s6.INIT=8'h87;
+  LUT4 n371_s4 (
+    .F(n371_8),
+    .I0(currentCursorCol_5_14),
+    .I1(n368_13),
+    .I2(n371_10),
+    .I3(n374_12) 
+);
+defparam n371_s4.INIT=16'hF400;
+  LUT4 currentCursorCol_5_s8 (
+    .F(currentCursorCol_5_14),
+    .I0(currentCursorRow[4]),
+    .I1(currentCursorCol_5_15),
+    .I2(n368_13),
+    .I3(n368_12) 
+);
+defparam currentCursorCol_5_s8.INIT=16'h4000;
+  LUT4 n331_s4 (
+    .F(n331_8),
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(n74_4),
     .I2(currentCursorCol[5]),
-    .I3(n369_12) 
+    .I3(currentCursorCol[6]) 
 );
-defparam n370_s7.INIT=16'h7800;
-  LUT2 n370_s8 (
-    .F(n370_12),
-    .I0(currentCursorCol[4]),
-    .I1(n371_10) 
+defparam n331_s4.INIT=16'h0708;
+  LUT2 n331_s5 (
+    .F(n331_9),
+    .I0(n331_17),
+    .I1(n331_15) 
 );
-defparam n370_s8.INIT=4'h4;
+defparam n331_s5.INIT=4'h1;
+  LUT4 n331_s6 (
+    .F(n331_10),
+    .I0(inputCmdMemWrData[3]),
+    .I1(n331_13),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7),
+    .I3(inputCmdValid_r0) 
+);
+defparam n331_s6.INIT=16'h2F00;
+  LUT4 n330_s5 (
+    .F(n330_9),
+    .I0(n368_13),
+    .I1(n330_11),
+    .I2(n330_12),
+    .I3(currentCursorCol[4]) 
+);
+defparam n330_s5.INIT=16'h7077;
+  LUT4 n330_s6 (
+    .F(n330_10),
+    .I0(n331_15),
+    .I1(n331_17),
+    .I2(currentCursorCol[4]),
+    .I3(currentCursorCol[5]) 
+);
+defparam n330_s6.INIT=16'hFACF;
   LUT4 nextCurrentScanCharRow_4_s1 (
     .F(nextCurrentScanCharRow_4_6),
     .I0(currentScanCharRow[0]),
@@ -6372,301 +6249,360 @@ defparam n370_s8.INIT=4'h4;
     .I3(currentScanCharRow[3]) 
 );
 defparam nextCurrentScanCharRow_4_s1.INIT=16'h8000;
-  LUT4 n38_s5 (
-    .F(n38_8),
+  LUT4 n39_s4 (
+    .F(n39_7),
     .I0(currentCursorCol[0]),
     .I1(currentCursorCol[1]),
     .I2(currentCursorCol[2]),
     .I3(currentCursorCol[3]) 
 );
-defparam n38_s5.INIT=16'h8000;
-  LUT2 n38_s6 (
-    .F(n38_9),
+defparam n39_s4.INIT=16'h8000;
+  LUT3 n39_s5 (
+    .F(n39_8),
+    .I0(currentCursorCol[4]),
+    .I1(currentCursorCol[5]),
+    .I2(currentCursorCol[6]) 
+);
+defparam n39_s5.INIT=8'h10;
+  LUT4 n39_s6 (
+    .F(n39_9),
     .I0(currentCursorRow[0]),
-    .I1(currentCursorRow[1]) 
+    .I1(currentCursorRow[1]),
+    .I2(currentCursorRow[2]),
+    .I3(currentCursorRow[3]) 
 );
-defparam n38_s6.INIT=4'h8;
-  LUT3 n38_s7 (
-    .F(n38_10),
-    .I0(currentCursorRow[2]),
-    .I1(currentCursorRow[3]),
-    .I2(currentCursorRow[4]) 
-);
-defparam n38_s7.INIT=8'h80;
-  LUT4 n43_s2 (
-    .F(n43_5),
-    .I0(rxDataOut[1]),
+defparam n39_s6.INIT=16'h8000;
+  LUT4 n44_s2 (
+    .F(n44_5),
+    .I0(rxDataOut[2]),
     .I1(rxDataOut[4]),
     .I2(rxDataOut[3]),
-    .I3(rxDataOut[2]) 
+    .I3(rxDataOut[1]) 
 );
-defparam n43_s2.INIT=16'h1000;
-  LUT4 n907_s2 (
-    .F(n907_5),
+defparam n44_s2.INIT=16'h1000;
+  LUT4 n906_s2 (
+    .F(n906_5),
     .I0(currentScanCharCol[3]),
     .I1(currentScanCharCol[2]),
     .I2(currentScanCharCol[1]),
     .I3(currentScanCharCol[0]) 
 );
-defparam n907_s2.INIT=16'h8000;
-  LUT2 n918_s2 (
-    .F(n918_5),
-    .I0(charHeightCounter[2]),
-    .I1(charHeightCounter[3]) 
+defparam n906_s2.INIT=16'h8000;
+  LUT4 n757_s2 (
+    .F(n757_5),
+    .I0(charWidthCounter_r1[0]),
+    .I1(charROMRdData[4]),
+    .I2(n757_7),
+    .I3(charWidthCounter_r1[1]) 
 );
-defparam n918_s2.INIT=4'h8;
-  LUT4 n758_s2 (
-    .F(n758_5),
-    .I0(charROMRdData[4]),
-    .I1(n758_7),
-    .I2(charWidthCounter_r1[1]),
-    .I3(charWidthCounter_r1[0]) 
-);
-defparam n758_s2.INIT=16'h35CF;
-  LUT4 n758_s3 (
-    .F(n758_6),
+defparam n757_s2.INIT=16'hF077;
+  LUT4 n757_s3 (
+    .F(n757_6),
     .I0(charROMRdData[1]),
     .I1(charROMRdData[0]),
     .I2(charWidthCounter_r1[1]),
     .I3(charWidthCounter_r1[0]) 
 );
-defparam n758_s3.INIT=16'h0C0A;
-  LUT2 scrollRow_4_s8 (
-    .F(scrollRow_4_13),
-    .I0(n38_6),
-    .I1(n38_12) 
-);
-defparam scrollRow_4_s8.INIT=4'h8;
-  LUT4 currentCursorRow_4_s7 (
-    .F(currentCursorRow_4_12),
-    .I0(n38_6),
-    .I1(inputCmdMemWrData[2]),
-    .I2(inputCmdMemWrData[0]),
-    .I3(n38_12) 
-);
-defparam currentCursorRow_4_s7.INIT=16'h000B;
-  LUT4 currentCursorRow_4_s8 (
-    .F(currentCursorRow_4_13),
-    .I0(n38_12),
-    .I1(inputCmdMemWrData[1]),
-    .I2(inputCmdMemWrData[2]),
-    .I3(currentCursorRow_4_14) 
-);
-defparam currentCursorRow_4_s8.INIT=16'h0D00;
-  LUT2 n369_s9 (
-    .F(n369_13),
-    .I0(currentCursorRow[4]),
-    .I1(n382_17) 
-);
-defparam n369_s9.INIT=4'h4;
-  LUT3 n369_s10 (
-    .F(n369_14),
-    .I0(currentCursorCol[4]),
-    .I1(currentCursorCol[5]),
-    .I2(n371_10) 
-);
-defparam n369_s10.INIT=8'h10;
-  LUT2 n369_s11 (
-    .F(n369_15),
+defparam n757_s3.INIT=16'h0C0A;
+  LUT2 currentCursorRow_4_s10 (
+    .F(currentCursorRow_4_15),
     .I0(inputCmdMemWrData[0]),
-    .I1(inputCmdMemWrData[2]) 
+    .I1(inputCmdMemWrData[1]) 
 );
-defparam n369_s11.INIT=4'h9;
-  LUT3 n369_s12 (
-    .F(n369_16),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[0]),
-    .I2(inputCmdMemWrData[2]) 
-);
-defparam n369_s12.INIT=8'hD3;
-  LUT2 n381_s6 (
-    .F(n381_10),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[3]) 
-);
-defparam n381_s6.INIT=4'h4;
-  LUT4 n386_s8 (
-    .F(n386_12),
-    .I0(n369_13),
-    .I1(n369_15),
-    .I2(currentCursorRow[0]),
-    .I3(n382_16) 
-);
-defparam n386_s8.INIT=16'h04C0;
-  LUT3 n386_s9 (
-    .F(n386_13),
-    .I0(inputCmdMemWrData[2]),
-    .I1(inputCmdMemWrData[0]),
-    .I2(n38_4) 
-);
-defparam n386_s9.INIT=8'hB0;
-  LUT4 n385_s10 (
-    .F(n385_14),
-    .I0(n384_14),
-    .I1(currentCursorRow[0]),
-    .I2(n382_16),
-    .I3(currentCursorRow[1]) 
-);
-defparam n385_s10.INIT=16'h30EF;
-  LUT4 n385_s11 (
-    .F(n385_15),
+defparam currentCursorRow_4_s10.INIT=4'h4;
+  LUT3 currentCursorRow_4_s11 (
+    .F(currentCursorRow_4_16),
     .I0(inputCmdMemWrData[3]),
-    .I1(inputCmdMemWrData[1]),
-    .I2(currentCursorRow[0]),
-    .I3(currentCursorRow[1]) 
+    .I1(inputCmdValid_r0),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7) 
 );
-defparam n385_s11.INIT=16'h6BB6;
-  LUT3 n384_s10 (
-    .F(n384_14),
-    .I0(currentCursorRow[2]),
-    .I1(currentCursorRow[3]),
-    .I2(currentCursorRow[4]) 
-);
-defparam n384_s10.INIT=8'h01;
-  LUT3 n384_s11 (
-    .F(n384_15),
-    .I0(currentCursorRow[0]),
-    .I1(currentCursorRow[1]),
-    .I2(n382_16) 
-);
-defparam n384_s11.INIT=8'h10;
-  LUT3 n384_s12 (
-    .F(n384_16),
-    .I0(n384_18),
-    .I1(n384_19),
-    .I2(n38_4) 
-);
-defparam n384_s12.INIT=8'h10;
-  LUT4 n384_s13 (
-    .F(n384_17),
-    .I0(n38_10),
-    .I1(n38_6),
-    .I2(n38_9),
-    .I3(currentCursorRow[2]) 
-);
-defparam n384_s13.INIT=16'hBFC0;
-  LUT4 n383_s9 (
-    .F(n383_13),
-    .I0(currentCursorRow[0]),
-    .I1(currentCursorRow[1]),
-    .I2(currentCursorRow[2]),
-    .I3(n382_16) 
-);
-defparam n383_s9.INIT=16'h0100;
-  LUT4 n383_s10 (
-    .F(n383_14),
-    .I0(currentCursorRow[0]),
-    .I1(currentCursorRow[1]),
-    .I2(currentCursorRow[2]),
-    .I3(currentCursorRow[3]) 
-);
-defparam n383_s10.INIT=16'hFE01;
-  LUT4 n383_s11 (
-    .F(n383_15),
-    .I0(currentCursorRow[4]),
-    .I1(n382_21),
-    .I2(currentCursorRow[3]),
-    .I3(n38_6) 
-);
-defparam n383_s11.INIT=16'hBBF0;
-  LUT4 n383_s12 (
-    .F(n383_16),
-    .I0(n382_21),
-    .I1(inputCmdMemWrData[3]),
-    .I2(inputCmdMemWrData[1]),
-    .I3(n38_4) 
-);
-defparam n383_s12.INIT=16'h4100;
-  LUT4 n383_s13 (
-    .F(n383_17),
-    .I0(currentCursorRow[2]),
-    .I1(n38_9),
-    .I2(currentCursorRow[3]),
-    .I3(inputCmdValid_r0) 
-);
-defparam n383_s13.INIT=16'hF800;
-  LUT4 n382_s12 (
-    .F(n382_16),
-    .I0(currentCursorCol[4]),
-    .I1(currentCursorCol[5]),
-    .I2(currentCursorCol[6]),
-    .I3(n371_10) 
-);
-defparam n382_s12.INIT=16'h0100;
-  LUT4 n382_s13 (
-    .F(n382_17),
-    .I0(currentCursorRow[0]),
-    .I1(currentCursorRow[1]),
-    .I2(currentCursorRow[2]),
-    .I3(currentCursorRow[3]) 
-);
-defparam n382_s13.INIT=16'h0001;
-  LUT4 n382_s14 (
-    .F(n382_18),
-    .I0(n382_17),
-    .I1(inputCmdMemWrData[1]),
-    .I2(inputCmdMemWrData[3]),
+defparam currentCursorRow_4_s11.INIT=8'h80;
+  LUT4 currentCursorRow_4_s12 (
+    .F(currentCursorRow_4_17),
+    .I0(n368_12),
+    .I1(n39_9),
+    .I2(inputCmdMemWrData[0]),
     .I3(currentCursorRow[4]) 
 );
-defparam n382_s14.INIT=16'h0BC4;
-  LUT3 n374_s7 (
-    .F(n374_11),
+defparam currentCursorRow_4_s12.INIT=16'hCF05;
+  LUT4 scrollRow_4_s10 (
+    .F(scrollRow_4_15),
+    .I0(n380_13),
+    .I1(inputCmdMemWrData[2]),
+    .I2(inputCmdMemWrData[1]),
+    .I3(inputCmdCMD_BKSP_DEL_r0_7) 
+);
+defparam scrollRow_4_s10.INIT=16'h3500;
+  LUT4 scrollRow_4_s11 (
+    .F(scrollRow_4_16),
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(scrollRow_4_17),
+    .I2(n39_9),
+    .I3(currentCursorRow[4]) 
+);
+defparam scrollRow_4_s11.INIT=16'h7000;
+  LUT4 n368_s8 (
+    .F(n368_12),
+    .I0(currentCursorRow[0]),
+    .I1(currentCursorRow[1]),
+    .I2(currentCursorRow[2]),
+    .I3(currentCursorRow[3]) 
+);
+defparam n368_s8.INIT=16'h0001;
+  LUT4 n368_s9 (
+    .F(n368_13),
+    .I0(currentCursorCol[0]),
+    .I1(currentCursorCol[1]),
+    .I2(currentCursorCol[2]),
+    .I3(currentCursorCol[3]) 
+);
+defparam n368_s9.INIT=16'h0001;
+  LUT4 n368_s10 (
+    .F(n368_14),
+    .I0(inputCmdMemWrData[1]),
+    .I1(currentCursorCol[4]),
+    .I2(currentCursorCol[5]),
+    .I3(currentCursorCol[6]) 
+);
+defparam n368_s10.INIT=16'h0001;
+  LUT4 n368_s11 (
+    .F(n368_15),
+    .I0(n39_7),
+    .I1(currentCursorCol[4]),
+    .I2(currentCursorCol[5]),
+    .I3(currentCursorCol[6]) 
+);
+defparam n368_s11.INIT=16'h827F;
+  LUT3 n380_s9 (
+    .F(n380_13),
+    .I0(inputCmdMemWrData[2]),
+    .I1(inputCmdMemWrData[0]),
+    .I2(inputCmdMemWrData[3]) 
+);
+defparam n380_s9.INIT=8'h40;
+  LUT3 n385_s10 (
+    .F(n385_14),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdMemWrData[3]),
+    .I2(inputCmdMemWrData[2]) 
+);
+defparam n385_s10.INIT=8'h10;
+  LUT2 n384_s10 (
+    .F(n384_14),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdMemWrData[0]) 
+);
+defparam n384_s10.INIT=4'h4;
+  LUT2 n384_s11 (
+    .F(n384_15),
+    .I0(inputCmdMemWrData[2]),
+    .I1(inputCmdMemWrData[3]) 
+);
+defparam n384_s11.INIT=4'h4;
+  LUT4 n384_s12 (
+    .F(n384_16),
+    .I0(inputCmdMemWrData[0]),
+    .I1(n384_17),
+    .I2(inputCmdMemWrData[2]),
+    .I3(inputCmdMemWrData[3]) 
+);
+defparam n384_s12.INIT=16'h3B0C;
+  LUT3 n383_s10 (
+    .F(n383_14),
+    .I0(inputCmdMemWrData[1]),
+    .I1(currentCursorRow[0]),
+    .I2(currentCursorRow[1]) 
+);
+defparam n383_s10.INIT=8'h7E;
+  LUT4 n383_s11 (
+    .F(n383_15),
+    .I0(currentCursorRow[0]),
+    .I1(currentCursorRow[1]),
+    .I2(n39_7),
+    .I3(n39_8) 
+);
+defparam n383_s11.INIT=16'h8000;
+  LUT3 n383_s13 (
+    .F(n383_17),
+    .I0(currentCursorRow[2]),
+    .I1(inputCmdMemWrData[3]),
+    .I2(n383_14) 
+);
+defparam n383_s13.INIT=8'h84;
+  LUT4 n383_s14 (
+    .F(n383_18),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(n383_19),
+    .I3(inputCmdMemWrData[2]) 
+);
+defparam n383_s14.INIT=16'hBBF0;
+  LUT4 n382_s11 (
+    .F(n382_15),
+    .I0(inputCmdMemWrData[1]),
+    .I1(currentCursorRow[0]),
+    .I2(currentCursorRow[1]),
+    .I3(currentCursorRow[2]) 
+);
+defparam n382_s11.INIT=16'h7FFE;
+  LUT4 n382_s12 (
+    .F(n382_16),
+    .I0(n382_19),
+    .I1(n39_7),
+    .I2(n39_8),
+    .I3(currentCursorRow[3]) 
+);
+defparam n382_s12.INIT=16'h007F;
+  LUT4 n382_s13 (
+    .F(n382_17),
+    .I0(currentCursorRow[4]),
+    .I1(n39_9),
+    .I2(n39_7),
+    .I3(n39_8) 
+);
+defparam n382_s13.INIT=16'h4000;
+  LUT4 n382_s14 (
+    .F(n382_18),
+    .I0(n382_15),
+    .I1(n382_20),
+    .I2(inputCmdMemWrData[2]),
+    .I3(currentCursorRow[3]) 
+);
+defparam n382_s14.INIT=16'h53AC;
+  LUT4 n381_s15 (
+    .F(n381_19),
+    .I0(n368_12),
+    .I1(n39_9),
+    .I2(inputCmdMemWrData[0]),
+    .I3(inputCmdMemWrData[1]) 
+);
+defparam n381_s15.INIT=16'h0CFA;
+  LUT3 n381_s16 (
+    .F(n381_20),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdMemWrData[2]),
+    .I2(inputCmdMemWrData[3]) 
+);
+defparam n381_s16.INIT=8'hBD;
+  LUT2 n381_s17 (
+    .F(n381_21),
+    .I0(currentCursorRow[4]),
+    .I1(n368_12) 
+);
+defparam n381_s17.INIT=4'h9;
+  LUT4 n381_s18 (
+    .F(n381_22),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdMemWrData[3]),
+    .I2(currentCursorRow[4]),
+    .I3(n39_9) 
+);
+defparam n381_s18.INIT=16'h9009;
+  LUT4 n372_s7 (
+    .F(n372_11),
+    .I0(currentCursorCol[0]),
+    .I1(currentCursorCol[1]),
+    .I2(currentCursorCol[2]),
+    .I3(n74_4) 
+);
+defparam n372_s7.INIT=16'hE100;
+  LUT4 n372_s8 (
+    .F(n372_12),
+    .I0(inputCmdMemWrData[0]),
+    .I1(n372_10),
+    .I2(inputCmdMemWrData[2]),
+    .I3(inputCmdMemWrData[1]) 
+);
+defparam n372_s8.INIT=16'h4FFD;
+  LUT4 n371_s6 (
+    .F(n371_10),
+    .I0(currentCursorCol[1]),
+    .I1(currentCursorCol[2]),
+    .I2(currentCursorCol[0]),
+    .I3(currentCursorCol[3]) 
+);
+defparam n371_s6.INIT=16'hFE00;
+  LUT3 n371_s7 (
+    .F(n371_11),
+    .I0(currentCursorCol[0]),
+    .I1(currentCursorCol[1]),
+    .I2(currentCursorCol[2]) 
+);
+defparam n371_s7.INIT=8'h80;
+  LUT3 currentCursorCol_5_s9 (
+    .F(currentCursorCol_5_15),
+    .I0(currentCursorCol[4]),
+    .I1(currentCursorCol[5]),
+    .I2(currentCursorCol[6]) 
+);
+defparam currentCursorCol_5_s9.INIT=8'h01;
+  LUT3 n331_s9 (
+    .F(n331_13),
     .I0(inputCmdMemWrData[1]),
     .I1(inputCmdMemWrData[0]),
     .I2(inputCmdMemWrData[2]) 
 );
-defparam n374_s7.INIT=8'h53;
-  LUT2 n372_s8 (
-    .F(n372_12),
-    .I0(currentCursorCol[0]),
-    .I1(currentCursorCol[1]) 
+defparam n331_s9.INIT=8'hCA;
+  LUT4 n330_s7 (
+    .F(n330_11),
+    .I0(currentCursorCol[5]),
+    .I1(currentCursorCol[6]),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7),
+    .I3(n74_4) 
 );
-defparam n372_s8.INIT=4'h1;
-  LUT3 n758_s4 (
-    .F(n758_7),
+defparam n330_s7.INIT=16'h4000;
+  LUT4 n330_s8 (
+    .F(n330_12),
+    .I0(n74_4),
+    .I1(inputCmdCMD_BKSP_DEL_r0_7),
+    .I2(currentCursorCol[5]),
+    .I3(n39_7) 
+);
+defparam n330_s8.INIT=16'h7000;
+  LUT3 n757_s4 (
+    .F(n757_7),
     .I0(charROMRdData[3]),
     .I1(charROMRdData[2]),
     .I2(charWidthCounter_r1[0]) 
 );
-defparam n758_s4.INIT=8'hC5;
-  LUT4 currentCursorRow_4_s9 (
-    .F(currentCursorRow_4_14),
-    .I0(n382_17),
-    .I1(currentCursorRow[4]),
+defparam n757_s4.INIT=8'h35;
+  LUT4 scrollRow_4_s12 (
+    .F(scrollRow_4_17),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdMemWrData[2]),
     .I2(inputCmdMemWrData[0]),
     .I3(inputCmdMemWrData[1]) 
 );
-defparam currentCursorRow_4_s9.INIT=16'h0DF0;
-  LUT4 n384_s14 (
-    .F(n384_18),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[3]),
-    .I2(currentCursorRow[2]),
-    .I3(n38_9) 
-);
-defparam n384_s14.INIT=16'h0990;
-  LUT4 n384_s15 (
-    .F(n384_19),
-    .I0(inputCmdMemWrData[3]),
-    .I1(n384_20),
-    .I2(currentCursorRow[2]),
-    .I3(inputCmdMemWrData[1]) 
-);
-defparam n384_s15.INIT=16'h1400;
-  LUT2 n384_s16 (
-    .F(n384_20),
+defparam scrollRow_4_s12.INIT=16'hF5CF;
+  LUT2 n384_s13 (
+    .F(n384_17),
     .I0(currentCursorRow[0]),
     .I1(currentCursorRow[1]) 
 );
-defparam n384_s16.INIT=4'h1;
-  LUT4 n373_s8 (
-    .F(n373_13),
-    .I0(n369_15),
-    .I1(currentCursorCol[2]),
-    .I2(currentCursorCol[0]),
-    .I3(currentCursorCol[1]) 
+defparam n384_s13.INIT=4'h6;
+  LUT4 n383_s15 (
+    .F(n383_19),
+    .I0(inputCmdMemWrData[1]),
+    .I1(currentCursorRow[0]),
+    .I2(currentCursorRow[2]),
+    .I3(currentCursorRow[1]) 
 );
-defparam n373_s8.INIT=16'h8882;
+defparam n383_s15.INIT=16'h4B2D;
+  LUT3 n382_s15 (
+    .F(n382_19),
+    .I0(currentCursorRow[0]),
+    .I1(currentCursorRow[1]),
+    .I2(currentCursorRow[2]) 
+);
+defparam n382_s15.INIT=8'h80;
+  LUT4 n382_s16 (
+    .F(n382_20),
+    .I0(inputCmdMemWrData[1]),
+    .I1(currentCursorRow[0]),
+    .I2(currentCursorRow[1]),
+    .I3(currentCursorRow[2]) 
+);
+defparam n382_s16.INIT=16'hBFFD;
   LUT4 bottomCursor_s3 (
     .F(bottomCursor_8),
     .I0(charHeightCounter[2]),
@@ -6675,173 +6611,142 @@ defparam n373_s8.INIT=16'h8882;
     .I3(charHeightCounter[1]) 
 );
 defparam bottomCursor_s3.INIT=16'hFBBF;
-  LUT3 n375_s10 (
-    .F(n375_15),
-    .I0(currentCursorRow[4]),
-    .I1(n382_17),
-    .I2(n382_16) 
-);
-defparam n375_s10.INIT=8'h40;
-  LUT4 n38_s8 (
-    .F(n38_12),
-    .I0(n38_9),
-    .I1(currentCursorRow[2]),
-    .I2(currentCursorRow[3]),
-    .I3(currentCursorRow[4]) 
-);
-defparam n38_s8.INIT=16'h8000;
-  LUT4 n385_s12 (
-    .F(n385_17),
-    .I0(inputCmdMemWrData[2]),
+  LUT3 n383_s16 (
+    .F(n383_21),
+    .I0(inputCmdMemWrData[1]),
     .I1(inputCmdMemWrData[0]),
-    .I2(inputCmdMemWrData[1]),
-    .I3(inputCmdMemWrData[3]) 
+    .I2(inputCmdCMD_BKSP_DEL_r0_7) 
 );
-defparam n385_s12.INIT=16'h0400;
-  LUT4 n382_s16 (
-    .F(n382_21),
-    .I0(currentCursorRow[2]),
-    .I1(currentCursorRow[3]),
-    .I2(currentCursorRow[0]),
-    .I3(currentCursorRow[1]) 
-);
-defparam n382_s16.INIT=16'h8000;
-  LUT4 n384_s18 (
-    .F(n384_24),
-    .I0(inputCmdMemWrData[0]),
-    .I1(inputCmdMemWrData[2]),
-    .I2(inputCmdMemWrData[1]),
-    .I3(inputCmdMemWrData[3]) 
-);
-defparam n384_s18.INIT=16'h0900;
-  LUT4 n369_s13 (
-    .F(n369_18),
-    .I0(inputCmdCMD_BKSP_r0_6),
+defparam n383_s16.INIT=8'hB0;
+  LUT3 n381_s19 (
+    .F(n381_24),
+    .I0(inputCmdMemWrData[1]),
     .I1(inputCmdMemWrData[0]),
-    .I2(inputCmdMemWrData[2]),
-    .I3(inputCmdMemWrData[3]) 
+    .I2(n382_17) 
 );
-defparam n369_s13.INIT=16'h4100;
+defparam n381_s19.INIT=8'h40;
+  LUT4 n384_s14 (
+    .F(n384_19),
+    .I0(inputCmdMemWrData[1]),
+    .I1(inputCmdMemWrData[0]),
+    .I2(n384_15),
+    .I3(inputCmdCMD_BKSP_DEL_r0_7) 
+);
+defparam n384_s14.INIT=16'hBF00;
+  LUT4 n39_s7 (
+    .F(n39_11),
+    .I0(n39_7),
+    .I1(currentCursorCol[4]),
+    .I2(currentCursorCol[5]),
+    .I3(currentCursorCol[6]) 
+);
+defparam n39_s7.INIT=16'h0200;
   LUT4 n371_s8 (
     .F(n371_13),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[2]),
-    .I2(n382_16),
-    .I3(n369_18) 
-);
-defparam n371_s8.INIT=16'h0700;
-  LUT4 n374_s8 (
-    .F(n374_13),
-    .I0(n375_15),
-    .I1(inputCmdMemWrData[1]),
-    .I2(inputCmdMemWrData[2]),
-    .I3(n369_18) 
-);
-defparam n374_s8.INIT=16'hD500;
-  LUT4 n375_s11 (
-    .F(n375_17),
-    .I0(inputCmdMemWrData[1]),
-    .I1(inputCmdMemWrData[2]),
-    .I2(inputCmdMemWrData[0]),
-    .I3(currentCursorCol[0]) 
-);
-defparam n375_s11.INIT=16'h7F00;
-  LUT3 n375_s12 (
-    .F(n375_19),
-    .I0(inputCmdValid_r0),
-    .I1(n38_4),
-    .I2(inputCmdMemWrData[3]) 
-);
-defparam n375_s12.INIT=8'h80;
-  LUT4 scrollRow_4_s9 (
-    .F(scrollRow_4_15),
-    .I0(n38_12),
-    .I1(n38_5),
+    .I0(n371_11),
+    .I1(currentCursorCol[3]),
     .I2(inputCmdValid_r0),
-    .I3(n38_4) 
+    .I3(scrollRow_4_15) 
 );
-defparam scrollRow_4_s9.INIT=16'h7000;
-  LUT4 currentCursorRow_4_s10 (
-    .F(currentCursorRow_4_16),
-    .I0(currentCursorRow_4_11),
-    .I1(inputCmdValid_r0),
-    .I2(n38_4),
-    .I3(currentCursorCol_5_11) 
+defparam n371_s8.INIT=16'h0060;
+  LUT4 n372_s9 (
+    .F(n372_14),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(inputCmdValid_r0),
+    .I3(inputCmdCMD_BKSP_DEL_r0_7) 
 );
-defparam currentCursorRow_4_s10.INIT=16'h00BF;
-  LUT4 currentCursorCol_5_s7 (
-    .F(currentCursorCol_5_13),
-    .I0(inputCmdValid_r0),
-    .I1(n38_4),
-    .I2(currentCursorCol_5_10),
-    .I3(currentCursorCol_5_11) 
+defparam n372_s9.INIT=16'hE000;
+  LUT4 n331_s10 (
+    .F(n331_15),
+    .I0(inputCmdCMD_BKSP_DEL_r0_7),
+    .I1(inputCmdMemWrData[0]),
+    .I2(inputCmdMemWrData[1]),
+    .I3(n368_13) 
 );
-defparam currentCursorCol_5_s7.INIT=16'h00F7;
-  LUT4 n492_s1 (
-    .F(n492_5),
-    .I0(inputCmdCMD_BKSP_r0),
+defparam n331_s10.INIT=16'h0200;
+  LUT4 n331_s11 (
+    .F(n331_17),
+    .I0(inputCmdMemWrData[0]),
+    .I1(inputCmdMemWrData[1]),
+    .I2(inputCmdCMD_BKSP_DEL_r0_7),
+    .I3(n39_7) 
+);
+defparam n331_s11.INIT=16'hEF00;
+  LUT3 n374_s7 (
+    .F(n374_12),
+    .I0(inputCmdMemWrData[3]),
+    .I1(inputCmdMemWrData[0]),
+    .I2(inputCmdMemWrData[1]) 
+);
+defparam n374_s7.INIT=8'h02;
+  LUT4 n74_s2 (
+    .F(n74_6),
+    .I0(inputCmdMemWrData[2]),
+    .I1(inputCmdMemWrData[3]),
+    .I2(inputCmdMemWrData[0]),
+    .I3(inputCmdMemWrData[1]) 
+);
+defparam n74_s2.INIT=16'h0006;
+  LUT4 n491_s1 (
+    .F(n491_5),
+    .I0(inputCmdCMD_BKSP_DEL_r0),
     .I1(charBufferInitInProgress),
     .I2(inputCmdMemWrEn),
     .I3(charBufferRdEn) 
 );
-defparam n492_s1.INIT=16'hFFFE;
+defparam n491_s1.INIT=16'hFFFE;
+  LUT4 nextCharWidthCounter_0_s3 (
+    .F(nextCharWidthCounter_0_11),
+    .I0(charWidthCounter[0]),
+    .I1(inDisplayArea_r0_6),
+    .I2(counterY[9]),
+    .I3(n910_4) 
+);
+defparam nextCharWidthCounter_0_s3.INIT=16'hAAA9;
   LUT4 nextCharHeightCounter_1_s2 (
     .F(nextCharHeightCounter_1_7),
     .I0(charHeightCounter[1]),
     .I1(charHeightCounter[0]),
-    .I2(n911_3),
-    .I3(n907_4) 
+    .I2(n910_3),
+    .I3(n906_4) 
 );
 defparam nextCharHeightCounter_1_s2.INIT=16'h6AAA;
-  LUT2 n606_s1 (
-    .F(n606_6),
-    .I0(n911_3),
-    .I1(n907_4) 
+  LUT2 n605_s1 (
+    .F(n605_6),
+    .I0(n910_3),
+    .I1(n906_4) 
 );
-defparam n606_s1.INIT=4'h8;
+defparam n605_s1.INIT=4'h8;
   LUT3 nextCharHeightCounter_0_s3 (
     .F(nextCharHeightCounter_0_8),
     .I0(charHeightCounter[0]),
-    .I1(n911_3),
-    .I2(n907_4) 
+    .I1(n910_3),
+    .I2(n906_4) 
 );
 defparam nextCharHeightCounter_0_s3.INIT=8'h6A;
-  LUT4 nextCurrentScanCharRow_4_s3 (
-    .F(nextCurrentScanCharRow_4_9),
-    .I0(n911_3),
-    .I1(currentScanCharRow[4]),
-    .I2(nextCurrentScanCharRow_4_6),
-    .I3(n918_4) 
-);
-defparam nextCurrentScanCharRow_4_s3.INIT=16'h6CCC;
-  LUT2 n598_s1 (
-    .F(n598_7),
-    .I0(n911_3),
-    .I1(n918_4) 
-);
-defparam n598_s1.INIT=4'h8;
-  LUT4 nextCurrentScanCharRow_1_s2 (
-    .F(nextCurrentScanCharRow_1_8),
-    .I0(n911_3),
-    .I1(n918_4),
-    .I2(currentScanCharRow[1]),
-    .I3(currentScanCharRow[0]) 
-);
-defparam nextCurrentScanCharRow_1_s2.INIT=16'h78F0;
-  LUT3 nextCurrentScanCharRow_0_s3 (
+  LUT4 nextCurrentScanCharRow_0_s3 (
     .F(nextCurrentScanCharRow_0_9),
-    .I0(n911_3),
-    .I1(n918_4),
-    .I2(currentScanCharRow[0]) 
+    .I0(n910_3),
+    .I1(n906_4),
+    .I2(currentScanCharRow[0]),
+    .I3(n917_4) 
 );
-defparam nextCurrentScanCharRow_0_s3.INIT=8'h78;
-  LUT3 n751_s1 (
-    .F(n751_7),
+defparam nextCurrentScanCharRow_0_s3.INIT=16'h78F0;
+  LUT3 n597_s2 (
+    .F(n597_7),
+    .I0(n910_3),
+    .I1(n906_4),
+    .I2(n917_4) 
+);
+defparam n597_s2.INIT=8'h80;
+  LUT3 n750_s1 (
+    .F(n750_7),
     .I0(currentScanCharCol[6]),
     .I1(currentCursorCol[6]),
-    .I2(n749_3) 
+    .I2(n748_3) 
 );
-defparam n751_s1.INIT=8'h09;
+defparam n750_s1.INIT=8'h09;
   DFF inputCmdValid_r0_s0 (
     .Q(inputCmdValid_r0),
     .D(rxDataOutValid),
@@ -6849,7 +6754,7 @@ defparam n751_s1.INIT=8'h09;
 );
   DFFR inputCmdMemWrEn_s0 (
     .Q(inputCmdMemWrEn),
-    .D(n79_36),
+    .D(n78_36),
     .CLK(clk),
     .RESET(inputCmdMemWrEn_7) 
 );
@@ -6895,50 +6800,43 @@ defparam n751_s1.INIT=8'h09;
 );
   DFFR inputCmdScrollUp_r0_s0 (
     .Q(inputCmdScrollUp_r0),
-    .D(n38_3),
+    .D(n39_3),
     .CLK(clk),
     .RESET(inputCmdScrollUp_r0_7) 
 );
-  DFFR inputCmdCMD_BKSP_r0_s0 (
-    .Q(inputCmdCMD_BKSP_r0),
-    .D(n75_3),
+  DFFR inputCmdCMD_BKSP_DEL_r0_s0 (
+    .Q(inputCmdCMD_BKSP_DEL_r0),
+    .D(n74_6),
     .CLK(clk),
-    .RESET(inputCmdCMD_BKSP_r0_6) 
+    .RESET(inputCmdCMD_BKSP_DEL_r0_6) 
 );
   DFFRE charWidthCounter_2_s0 (
     .Q(charWidthCounter[2]),
     .D(nextCharWidthCounter[2]),
     .CLK(clk),
     .CE(inDisplayArea_Z),
-    .RESET(n911_3) 
+    .RESET(n910_3) 
 );
   DFFRE charWidthCounter_1_s0 (
     .Q(charWidthCounter[1]),
     .D(nextCharWidthCounter[1]),
     .CLK(clk),
     .CE(inDisplayArea_Z),
-    .RESET(n911_3) 
-);
-  DFFRE charWidthCounter_0_s0 (
-    .Q(charWidthCounter[0]),
-    .D(nextCharWidthCounter_0_6),
-    .CLK(clk),
-    .CE(inDisplayArea_Z),
-    .RESET(n911_3) 
+    .RESET(n910_3) 
 );
   DFFRE charHeightCounter_3_s0 (
     .Q(charHeightCounter[3]),
     .D(nextCharHeightCounter[3]),
     .CLK(clk),
-    .CE(n606_6),
-    .RESET(n598_7) 
+    .CE(n605_6),
+    .RESET(n597_7) 
 );
   DFFRE charHeightCounter_2_s0 (
     .Q(charHeightCounter[2]),
     .D(nextCharHeightCounter[2]),
     .CLK(clk),
-    .CE(n606_6),
-    .RESET(n598_7) 
+    .CE(n605_6),
+    .RESET(n597_7) 
 );
   DFF charHeightCounter_r0_2_s0 (
     .Q(charHeightCounter_r0[2]),
@@ -6959,64 +6857,78 @@ defparam n751_s1.INIT=8'h09;
     .Q(currentScanCharCol[6]),
     .D(nextCurrentScanCharCol[6]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_5_s0 (
     .Q(currentScanCharCol[5]),
     .D(nextCurrentScanCharCol[5]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_4_s0 (
     .Q(currentScanCharCol[4]),
     .D(nextCurrentScanCharCol[4]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_3_s0 (
     .Q(currentScanCharCol[3]),
     .D(nextCurrentScanCharCol[3]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_2_s0 (
     .Q(currentScanCharCol[2]),
     .D(nextCurrentScanCharCol[2]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_1_s0 (
     .Q(currentScanCharCol[1]),
     .D(nextCurrentScanCharCol[1]),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
 );
   DFFRE currentScanCharCol_0_s0 (
     .Q(currentScanCharCol[0]),
     .D(nextCurrentScanCharCol_0_6),
     .CLK(clk),
-    .CE(n911_3),
-    .RESET(n606_6) 
+    .CE(n910_3),
+    .RESET(n605_6) 
+);
+  DFFRE currentScanCharRow_4_s0 (
+    .Q(currentScanCharRow[4]),
+    .D(nextCurrentScanCharRow[4]),
+    .CLK(clk),
+    .CE(n597_7),
+    .RESET(n621_4) 
 );
   DFFRE currentScanCharRow_3_s0 (
     .Q(currentScanCharRow[3]),
     .D(nextCurrentScanCharRow[3]),
     .CLK(clk),
-    .CE(n598_7),
-    .RESET(n622_4) 
+    .CE(n597_7),
+    .RESET(n621_4) 
 );
   DFFRE currentScanCharRow_2_s0 (
     .Q(currentScanCharRow[2]),
     .D(nextCurrentScanCharRow[2]),
     .CLK(clk),
-    .CE(n598_7),
-    .RESET(n622_4) 
+    .CE(n597_7),
+    .RESET(n621_4) 
+);
+  DFFRE currentScanCharRow_1_s0 (
+    .Q(currentScanCharRow[1]),
+    .D(nextCurrentScanCharRow[1]),
+    .CLK(clk),
+    .CE(n597_7),
+    .RESET(n621_4) 
 );
   DFFR charROMRdEn_s0 (
     .Q(charROMRdEn),
@@ -7082,7 +6994,7 @@ defparam n751_s1.INIT=8'h09;
 );
   DFFR bottomCursor_s0 (
     .Q(bottomCursor),
-    .D(n662_3),
+    .D(n661_3),
     .CLK(clk),
     .RESET(bottomCursor_8) 
 );
@@ -7093,12 +7005,12 @@ defparam n751_s1.INIT=8'h09;
 );
   DFF hsync_r0_s0 (
     .Q(hsync_r0),
-    .D(n761_4),
+    .D(n760_4),
     .CLK(clk) 
 );
   DFF vsync_r0_s0 (
     .Q(vsync_r0),
-    .D(n762_4),
+    .D(n761_4),
     .CLK(clk) 
 );
   DFF hsync_r1_s0 (
@@ -7133,15 +7045,15 @@ defparam n751_s1.INIT=8'h09;
 );
   DFFR pixel_s0 (
     .Q(pixel_d),
-    .D(n758_3),
+    .D(n757_3),
     .CLK(clk),
-    .RESET(n769_5) 
+    .RESET(n768_5) 
 );
   DFFR scanningCurrentCursorCell_r0_s0 (
     .Q(scanningCurrentCursorCell_r0),
-    .D(n751_7),
+    .D(n750_7),
     .CLK(clk),
-    .RESET(n742_3) 
+    .RESET(n741_3) 
 );
   DFF scanningCurrentCursorCell_r1_s0 (
     .Q(scanningCurrentCursorCell_r1),
@@ -7155,139 +7067,132 @@ defparam n751_s1.INIT=8'h09;
 );
   DFFE currentCursorCol_5_s1 (
     .Q(currentCursorCol[5]),
-    .D(n370_10),
+    .D(n330_8),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_11) 
 );
   DFFE currentCursorCol_4_s1 (
     .Q(currentCursorCol[4]),
-    .D(n371_8),
+    .D(n331_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_11) 
 );
   DFFE currentCursorCol_3_s1 (
     .Q(currentCursorCol[3]),
-    .D(n372_8),
+    .D(n371_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_9) 
 );
   DFFE currentCursorCol_2_s1 (
     .Q(currentCursorCol[2]),
-    .D(n373_8),
+    .D(n372_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_9) 
 );
   DFFE currentCursorCol_1_s1 (
     .Q(currentCursorCol[1]),
-    .D(n374_8),
+    .D(n373_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_9) 
 );
   DFFE currentCursorCol_0_s1 (
     .Q(currentCursorCol[0]),
-    .D(n375_8),
+    .D(n374_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_9) 
 );
   DFFE currentCursorRow_4_s1 (
     .Q(currentCursorRow[4]),
-    .D(n382_12),
+    .D(n381_14),
     .CLK(clk),
-    .CE(currentCursorRow_4_16) 
+    .CE(currentCursorRow_4_11) 
 );
   DFFE currentCursorRow_3_s1 (
     .Q(currentCursorRow[3]),
-    .D(n383_9),
+    .D(n382_10),
     .CLK(clk),
-    .CE(currentCursorRow_4_16) 
+    .CE(currentCursorRow_4_11) 
 );
   DFFE currentCursorRow_2_s1 (
     .Q(currentCursorRow[2]),
-    .D(n384_9),
+    .D(n383_10),
     .CLK(clk),
-    .CE(currentCursorRow_4_16) 
+    .CE(currentCursorRow_4_11) 
 );
   DFFE currentCursorRow_1_s1 (
     .Q(currentCursorRow[1]),
-    .D(n385_9),
+    .D(n384_10),
     .CLK(clk),
-    .CE(currentCursorRow_4_16) 
+    .CE(currentCursorRow_4_11) 
 );
   DFFE currentCursorRow_0_s1 (
     .Q(currentCursorRow[0]),
-    .D(n386_9),
+    .D(n385_10),
     .CLK(clk),
-    .CE(currentCursorRow_4_16) 
+    .CE(currentCursorRow_4_11) 
 );
   DFFE scrollRow_4_s1 (
     .Q(scrollRow[4]),
-    .D(n377_10),
+    .D(n376_16),
     .CLK(clk),
-    .CE(scrollRow_4_9) 
+    .CE(scrollRow_4_12) 
 );
   DFFE scrollRow_3_s1 (
     .Q(scrollRow[3]),
-    .D(n378_8),
+    .D(n377_11),
     .CLK(clk),
-    .CE(scrollRow_4_9) 
+    .CE(scrollRow_4_12) 
 );
   DFFE scrollRow_2_s1 (
     .Q(scrollRow[2]),
-    .D(n379_8),
+    .D(n378_11),
     .CLK(clk),
-    .CE(scrollRow_4_9) 
+    .CE(scrollRow_4_12) 
 );
   DFFE scrollRow_1_s1 (
     .Q(scrollRow[1]),
-    .D(n380_8),
+    .D(n379_11),
     .CLK(clk),
-    .CE(scrollRow_4_9) 
+    .CE(scrollRow_4_12) 
 );
   DFFE scrollRow_0_s3 (
     .Q(scrollRow[0]),
-    .D(n381_8),
+    .D(n380_11),
     .CLK(clk),
-    .CE(scrollRow_4_9) 
+    .CE(scrollRow_4_12) 
 );
   DFFE currentCursorCol_6_s1 (
     .Q(currentCursorCol[6]),
-    .D(n369_8),
+    .D(n368_7),
     .CLK(clk),
-    .CE(currentCursorCol_5_13) 
+    .CE(currentCursorCol_5_9) 
 );
+  DFFR charWidthCounter_0_s1 (
+    .Q(charWidthCounter[0]),
+    .D(nextCharWidthCounter_0_11),
+    .CLK(clk),
+    .RESET(n910_3) 
+);
+defparam charWidthCounter_0_s1.INIT=1'b0;
   DFFR charHeightCounter_1_s1 (
     .Q(charHeightCounter[1]),
     .D(nextCharHeightCounter_1_7),
     .CLK(clk),
-    .RESET(n598_7) 
+    .RESET(n597_7) 
 );
 defparam charHeightCounter_1_s1.INIT=1'b0;
   DFFR charHeightCounter_0_s1 (
     .Q(charHeightCounter[0]),
     .D(nextCharHeightCounter_0_8),
     .CLK(clk),
-    .RESET(n598_7) 
+    .RESET(n597_7) 
 );
 defparam charHeightCounter_0_s1.INIT=1'b0;
-  DFFR currentScanCharRow_4_s1 (
-    .Q(currentScanCharRow[4]),
-    .D(nextCurrentScanCharRow_4_9),
-    .CLK(clk),
-    .RESET(n622_4) 
-);
-defparam currentScanCharRow_4_s1.INIT=1'b0;
-  DFFR currentScanCharRow_1_s1 (
-    .Q(currentScanCharRow[1]),
-    .D(nextCurrentScanCharRow_1_8),
-    .CLK(clk),
-    .RESET(n622_4) 
-);
-defparam currentScanCharRow_1_s1.INIT=1'b0;
   DFFR currentScanCharRow_0_s1 (
     .Q(currentScanCharRow[0]),
     .D(nextCurrentScanCharRow_0_9),
     .CLK(clk),
-    .RESET(n622_4) 
+    .RESET(n621_4) 
 );
 defparam currentScanCharRow_0_s1.INIT=1'b0;
   ALU nextCurrentScanCharCol_1_s (
@@ -7434,20 +7339,29 @@ defparam currentScrolledScanRow_3_s.ALU_MODE=0;
     .CIN(currentScrolledScanRow_3_3) 
 );
 defparam currentScrolledScanRow_4_s.ALU_MODE=0;
-  ALU n738_s0 (
-    .SUM(n738_1_SUM),
-    .COUT(n738_3),
+  ALU n737_s0 (
+    .SUM(n737_1_SUM),
+    .COUT(n737_3),
     .I0(currentScanCharRow[0]),
     .I1(currentCursorRow[0]),
     .I3(GND),
     .CIN(GND) 
 );
+defparam n737_s0.ALU_MODE=3;
+  ALU n738_s0 (
+    .SUM(n738_1_SUM),
+    .COUT(n738_3),
+    .I0(currentScanCharRow[1]),
+    .I1(currentCursorRow[1]),
+    .I3(GND),
+    .CIN(n737_3) 
+);
 defparam n738_s0.ALU_MODE=3;
   ALU n739_s0 (
     .SUM(n739_1_SUM),
     .COUT(n739_3),
-    .I0(currentScanCharRow[1]),
-    .I1(currentCursorRow[1]),
+    .I0(currentScanCharRow[2]),
+    .I1(currentCursorRow[2]),
     .I3(GND),
     .CIN(n738_3) 
 );
@@ -7455,8 +7369,8 @@ defparam n739_s0.ALU_MODE=3;
   ALU n740_s0 (
     .SUM(n740_1_SUM),
     .COUT(n740_3),
-    .I0(currentScanCharRow[2]),
-    .I1(currentCursorRow[2]),
+    .I0(currentScanCharRow[3]),
+    .I1(currentCursorRow[3]),
     .I3(GND),
     .CIN(n739_3) 
 );
@@ -7464,35 +7378,35 @@ defparam n740_s0.ALU_MODE=3;
   ALU n741_s0 (
     .SUM(n741_1_SUM),
     .COUT(n741_3),
-    .I0(currentScanCharRow[3]),
-    .I1(currentCursorRow[3]),
+    .I0(currentScanCharRow[4]),
+    .I1(currentCursorRow[4]),
     .I3(GND),
     .CIN(n740_3) 
 );
 defparam n741_s0.ALU_MODE=3;
-  ALU n742_s0 (
-    .SUM(n742_1_SUM),
-    .COUT(n742_3),
-    .I0(currentScanCharRow[4]),
-    .I1(currentCursorRow[4]),
-    .I3(GND),
-    .CIN(n741_3) 
-);
-defparam n742_s0.ALU_MODE=3;
-  ALU n744_s0 (
-    .SUM(n744_1_SUM),
-    .COUT(n744_3),
+  ALU n743_s0 (
+    .SUM(n743_1_SUM),
+    .COUT(n743_3),
     .I0(currentScanCharCol[0]),
     .I1(currentCursorCol[0]),
     .I3(GND),
     .CIN(GND) 
 );
+defparam n743_s0.ALU_MODE=3;
+  ALU n744_s0 (
+    .SUM(n744_1_SUM),
+    .COUT(n744_3),
+    .I0(currentScanCharCol[1]),
+    .I1(currentCursorCol[1]),
+    .I3(GND),
+    .CIN(n743_3) 
+);
 defparam n744_s0.ALU_MODE=3;
   ALU n745_s0 (
     .SUM(n745_1_SUM),
     .COUT(n745_3),
-    .I0(currentScanCharCol[1]),
-    .I1(currentCursorCol[1]),
+    .I0(currentScanCharCol[2]),
+    .I1(currentCursorCol[2]),
     .I3(GND),
     .CIN(n744_3) 
 );
@@ -7500,8 +7414,8 @@ defparam n745_s0.ALU_MODE=3;
   ALU n746_s0 (
     .SUM(n746_1_SUM),
     .COUT(n746_3),
-    .I0(currentScanCharCol[2]),
-    .I1(currentCursorCol[2]),
+    .I0(currentScanCharCol[3]),
+    .I1(currentCursorCol[3]),
     .I3(GND),
     .CIN(n745_3) 
 );
@@ -7509,8 +7423,8 @@ defparam n746_s0.ALU_MODE=3;
   ALU n747_s0 (
     .SUM(n747_1_SUM),
     .COUT(n747_3),
-    .I0(currentScanCharCol[3]),
-    .I1(currentCursorCol[3]),
+    .I0(currentScanCharCol[4]),
+    .I1(currentCursorCol[4]),
     .I3(GND),
     .CIN(n746_3) 
 );
@@ -7518,21 +7432,12 @@ defparam n747_s0.ALU_MODE=3;
   ALU n748_s0 (
     .SUM(n748_1_SUM),
     .COUT(n748_3),
-    .I0(currentScanCharCol[4]),
-    .I1(currentCursorCol[4]),
+    .I0(currentScanCharCol[5]),
+    .I1(currentCursorCol[5]),
     .I3(GND),
     .CIN(n747_3) 
 );
 defparam n748_s0.ALU_MODE=3;
-  ALU n749_s0 (
-    .SUM(n749_1_SUM),
-    .COUT(n749_3),
-    .I0(currentScanCharCol[5]),
-    .I1(currentCursorCol[5]),
-    .I3(GND),
-    .CIN(n748_3) 
-);
-defparam n749_s0.ALU_MODE=3;
   INV inputCmdMemWrEn_s3 (
     .O(inputCmdMemWrEn_7),
     .I(rxDataOutValid) 
@@ -7541,13 +7446,9 @@ defparam n749_s0.ALU_MODE=3;
     .O(inputCmdScrollUp_r0_7),
     .I(inputCmdValid_r0) 
 );
-  INV n769_s2 (
-    .O(n769_5),
+  INV n768_s2 (
+    .O(n768_5),
     .I(inDisplayArea_r2) 
-);
-  INV nextCharWidthCounter_0_s2 (
-    .O(nextCharWidthCounter_0_6),
-    .I(charWidthCounter[0]) 
 );
   INV nextCurrentScanCharCol_0_s2 (
     .O(nextCurrentScanCharCol_0_6),
@@ -7562,10 +7463,9 @@ defparam n749_s0.ALU_MODE=3;
 );
   charBufferInit ucharbufinit (
     .clk(clk),
-    .n43_3(n43_3),
+    .n44_3(n44_3),
     .inputCmdScrollUp_r0(inputCmdScrollUp_r0),
-    .n43_4(n43_4),
-    .keyAOut(keyAOut),
+    .keyBOut(keyBOut),
     .currentScrolledRow(currentScrolledRow[4:0]),
     .charBufferInitInProgress(charBufferInitInProgress),
     .charBufferInitAddr(charBufferInitAddr[11:0]),
@@ -7579,11 +7479,10 @@ defparam n749_s0.ALU_MODE=3;
     .charROMRdData(charROMRdData[4:0])
 );
   charBuffer ucharBuffer (
-    .n513_6(n513_6),
     .n512_6(n512_6),
     .n511_6(n511_6),
     .n510_6(n510_6),
-    .n505_3(n505_3),
+    .n509_6(n509_6),
     .n504_3(n504_3),
     .n503_3(n503_3),
     .n502_3(n502_3),
@@ -7595,18 +7494,20 @@ defparam n749_s0.ALU_MODE=3;
     .n496_3(n496_3),
     .n495_3(n495_3),
     .n494_3(n494_3),
+    .n493_3(n493_3),
     .charBufferWrEn(charBufferWrEn),
     .clk(clk),
-    .n492_5(n492_5),
-    .n509_6(n509_6),
-    .n508_5(n508_5),
-    .n507_6(n507_6),
-    .n506_5(n506_5),
+    .n491_5(n491_5),
+    .n508_6(n508_6),
+    .n507_5(n507_5),
+    .n506_6(n506_6),
+    .n505_5(n505_5),
     .charBufferRdData(charBufferRdData[7:0])
 );
   hvsync uhvsync (
     .clk(clk),
-    .n762_6(n762_6),
+    .n910_4(n910_4),
+    .inDisplayArea_r0_6(inDisplayArea_r0_6),
     .debugPixel(debugPixel),
     .n116_39(n116_39),
     .inDisplayArea_Z(inDisplayArea_Z),
@@ -7663,7 +7564,7 @@ wire clk;
 wire keyAOut;
 wire keyBOut;
 wire kbdAsciiDataValid;
-wire n33_6;
+wire n40_6;
 wire debug0_d_4;
 wire debug1_d_4;
 wire debug2_d_4;
@@ -7749,12 +7650,12 @@ wire GND;
     .KBD_CLK_d(KBD_CLK_d),
     .KBD_DATA_d(KBD_DATA_d),
     .kbdAsciiDataValid(kbdAsciiDataValid),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .kbdAsciiData(kbdAsciiData[6:0])
 );
   datamux2in uarb (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .userResetn(userResetn),
     .rxDataOutValid(rxDataOutValid),
     .kbdAsciiDataValid(kbdAsciiDataValid),
@@ -7764,7 +7665,7 @@ wire GND;
 );
   uart uuart0 (
     .clk(clk),
-    .n33_6(n33_6),
+    .n40_6(n40_6),
     .userResetn(userResetn),
     .UART_RX0_d(UART_RX0_d),
     .kbdAsciiDataValid(kbdAsciiDataValid),

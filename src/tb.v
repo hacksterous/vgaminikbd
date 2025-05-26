@@ -48,59 +48,24 @@ module tb ();
 	end
 
 	reg [7:0] TXCOUNT;
-	initial TXCOUNT = 33;
-	wire [7:0] txString [0:33];
-	//assign txString[0]  = "h";
-	//assign txString[1]  = "e";
-	//assign txString[2]  = "l";
-	//assign txString[3]  = "l";
-	//assign txString[4]  = "o";
-	//assign txString[5]  = ",";
-	//assign txString[6]  = " ";
-	//assign txString[7]  = "w";
-	//assign txString[8]  = "o";
-	//assign txString[9]  = "r";
-	//assign txString[10]  = "l";
-	//assign txString[11] = "d";
-	//assign txString[12] = "!";
-	//assign txString[13] = " ";
+	initial TXCOUNT = 14;
+	wire [7:0] txString [0:13];
+	assign txString[0]  = "h";
+	assign txString[1]  = "e";
+	assign txString[2]  = "l";
+	assign txString[3]  = "l";
+	assign txString[4]  = "o";
+	assign txString[5]  = ",";
+	assign txString[6]  = " ";
+	assign txString[7]  = "w";
+	assign txString[8]  = "o";
+	assign txString[9]  = "r";
+	assign txString[10]  = "l";
+	assign txString[11] = "d";
+	assign txString[12] = "!";
+	assign txString[13] = " ";
 
-	assign txString[0]		= 10;
-	assign txString[1]		= 10;
-	assign txString[2]		= 10;
-	assign txString[3]		= 10;
-	assign txString[4]		= 10;
-	assign txString[5]		= 10;
-	assign txString[6]		= 10;
-	assign txString[7]		= 10;
-	assign txString[8]		= 10;
-	assign txString[9]		= 10;
-	assign txString[10]		= 10;
-	assign txString[11]		= 10;
-	assign txString[12]		= 10;
-	assign txString[13]		= 10;
-	assign txString[14]		= 10;
-	assign txString[15]		= 10;
-	assign txString[16]		= 10;
-	assign txString[17]		= 10;
-	assign txString[18]		= 10;
-	assign txString[19]		= 10;
-	assign txString[20]		= 10;
-	assign txString[21]		= 10;
-	assign txString[22]		= 10;
-	assign txString[23]		= 10;
-	assign txString[24]		= 10;
-	assign txString[25]		= 10;
-	assign txString[26]		= 10;
-	assign txString[27]		= 10;
-	assign txString[28]		= 10;
-	assign txString[29]		= 10;
-	assign txString[30]		= 10;
-	assign txString[31]		= 10;
-	assign txString[32]		= 10;
-	assign txString[33]		= 10;
 	reg [1:0] tbTxState;
-
 	initial begin
 		//f = $fopen ("vgasim.txt", "w");
 		#6000000
@@ -113,12 +78,12 @@ module tb ();
 		$dumpvars;
 	end
 
-	//always @(posedge clk) begin
-	//	$fwrite(f, "%0d ns: %b %b 000 %b 00\n", $time, hsync, vsync, {3{pixel}});
-	//	//if (txStringPtr == TXCOUNT && tbTxState == 2'h0) begin
-	//	//	$finish;
-	//	//end
-	//end
+	always @(posedge clk) begin
+		//$fwrite(f, "%0d ns: %b %b 000 %b 00\n", $time, hsync, vsync, {3{pixel}});
+		if (txStringPtr == TXCOUNT && tbTxState == 2'h0) begin
+			$finish;
+		end
+	end
 
 	wire txBusy;
 	wire [7:0] txData;
@@ -166,12 +131,23 @@ module tb ();
 		.rxBitTick(),
 		.txBitTick());
 
+	reg KBD_CLK;
+	reg KBD_DATA;
+
+	initial KBD_CLK = 0;
+	initial KBD_DATA = 0;
+	always @(KBD_CLK) begin
+		#200 KBD_CLK <= ~KBD_CLK;
+	end
+
 	vgaminikbd uvgaminikbd(
 		.keyA (keyA),
 		.keyB (keyB),
 		.resetn (resetn),
 		.UART_RX0 (tbuartTX),
 		.UART_TX0 (),
+		.KBD_CLK (KBD_CLK),
+		.KBD_DATA (KBD_DATA),
 		.debug0 (),
 		.debug1 (),
 		.debug2 (),

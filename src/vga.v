@@ -160,6 +160,7 @@ module vga(
 
 	reg inputCmdMemWrEn;
 	reg inputCmdValid_r0;
+	reg inputCmdScrollUp_r0;
 	reg [7:0] inputCmdMemWrData;
 	reg [4:0] scrollRow;
 	reg screenEndScrollingStarted;
@@ -187,12 +188,13 @@ module vga(
 	wire inputCmdCMD_CLS	= inputCmdValid & (inputCmdData == 8'd`CMD_CLS);
 	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEndScroll);
 
-	reg inputCmdScrollUp_r0;
+
 	charBufferInit ucharbufinit (
 		.clk (clk),
 		.resetn (resetn),
 		.enable (userResetn & inputKeyA & inputKeyB & ~inputCmdCMD_CLS & ~inputCmdScrollUp_r0),
-		.zeroize (~inputKeyA | inputCmdCMD_CLS | inputCmdScrollUp_r0),
+		//.zeroize (~inputKeyA | inputCmdCMD_CLS | inputCmdScrollUp_r0),
+		.sequentialInit (~inputKeyB),
 		.partLineInit (inputCmdScrollUp_r0),
 		.partLineRow (currentScrolledRow),
 		.partLineCol (7'h0),
@@ -247,6 +249,14 @@ module vga(
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
 							end
+						end
+						4'd`CMD_PGUP: begin
+							currentCursorRow = `DELAY 0;
+							currentCursorCol <= `DELAY 0;
+						end
+						4'd`CMD_PGDN: begin
+							currentCursorRow = `DELAY MAXROW_M_1;
+							currentCursorCol <= `DELAY MAXCOL_M_1;
 						end
 						4'd`CMD_UP: begin
 							if (currentCursorRow != 5'h0) begin

@@ -49,3 +49,5 @@ impl/pnr/vgaminikbd_tr_content.html
 impl/temp/rtl_parser.result
 impl/temp/rtl_parser_arg.json
 impl/gwsynthesis/vgaminikbd.log
+*.xlsx#
+*.swp
