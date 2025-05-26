@@ -501,7 +501,7 @@ module vga(
 					//bottom
 					pixel <= `DELAY scanningCurrentCursorCell_r2 & oneSecPulse; //0 if current scan cell doesn't have cursor
 				end else if (charHeightCounterBlank_r1) begin
-					//height counter value > 7 and < 11
+					//height counter value > 7 and < 15
 					//insert blank line
 					pixel <= `DELAY 1'b0;
 				end else begin
