@@ -292,8 +292,9 @@ for i in range(0, len(font7x5Array), 5):
 #for i in range(0, len(ROM), 7):
 
 if show == False:
-	print("memory_initialization_radix=2;")
-	print("memory_initialization_vector=")
+	print("#File_format=Bin")
+	print("#Address_depth=2040")
+	print("#Data_width=5")
 
 for i in range(0, len(ROM), 8):
 	if show == True:
@@ -319,6 +320,3 @@ for i in range(0, len(ROM), 8):
 		if ((showWhich != 255 and int(i/8) == showWhich) or (showWhich == 255)):
 			print ("---")
 
-	#input("Press Enter to continue...")
-#print("Processed sys.arg = ", end='')
-#print(sys.argv)

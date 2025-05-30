@@ -13,5 +13,5 @@ MEM_FILE=../mem/charBuffer.mi
 RESET_MODE=true
 DEPTH=2560
 READ=0
-WIDTH=8
+WIDTH=7
 WRITE=0

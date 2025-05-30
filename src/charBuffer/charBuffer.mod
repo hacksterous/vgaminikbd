@@ -7,12 +7,12 @@
 
 -mod_name charBuffer
 -file_name charBuffer
--path /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/charBuffer/
+-path /home/oreo/Src/FPGA-Gowin/vgaminikbd-largefont/src/charBuffer/
 -type RAM_SP
 -file_type vlg
 -depth 2560
--width 8
+-width 7
 -read_mode bypass
--write_mode read-before-write
+-write_mode normal
 -reset_mode sync
--init_file /home/oreo/Src/FPGA-Gowin/vgaminikbd/src/mem/charBuffer.mi
+-init_file /home/oreo/Src/FPGA-Gowin/vgaminikbd-largefont/src/mem/charBuffer.mi

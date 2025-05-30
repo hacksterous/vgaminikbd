@@ -2,14 +2,14 @@
 ipc_version=4
 file=charROM
 module=charROM
-target_device=gw1nz1c-000
+target_device=gw1nz1-015
 type=ram_prom
 version=1.0
 
 [Config]
-DEPTH=2040
+DEPTH=1152
 LANG=0
 MEM_FILE=../mem/charROM.mi
 READ=0
 RESET_MODE=true
-WIDTH=5
+WIDTH=8

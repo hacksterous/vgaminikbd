@@ -6,6 +6,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `timescale 1ns/1ps
+`include "keycharcmdcodes.vh"
 `include "vgaminikbd.vh"
   module charBufferInit (
 	input clk,
@@ -68,7 +69,7 @@
 		if (~resetn) begin
 			initCursorRow <= `DELAY 5'h0;
 			initCursorCol <= `DELAY 7'h0;
-			initData <= `DELAY 7'h0;
+			initData <= `DELAY 7'd`CMD_SPC;
 			initState <= `DELAY 1'b0;
 			sequentialInitStretched <= `DELAY 1'b0;
 			partLineInitStretched <= `DELAY 1'b0;
@@ -81,11 +82,11 @@
 			end else if (initStateACTIVE) begin
 				initCursorRow <= `DELAY (initCursorColAtMax & ~partLineInitStretched)? (initCursorRow + 1'b1): initCursorRow;
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);
-				initData <= `DELAY (sequentialInitStretched)? (initData + 1'b1): 7'h0;
+				initData <= `DELAY (sequentialInitStretched)? (initData + 1'b1): 7'd`CMD_SPC;
 			end else begin
 				initCursorCol <= `DELAY 7'h0;
 				initCursorRow <= `DELAY 5'h0;
-				initData <= `DELAY 7'h0;
+				initData <= `DELAY 7'd`CMD_SPC;
 			end
 			initState <= `DELAY nextInitState;
 			sequentialInitStretched <= `DELAY (initStateACTIVE & initAddressAtMax)? 1'b0: (sequentialInit & initStateIDLE)? 1'b1: sequentialInitStretched;

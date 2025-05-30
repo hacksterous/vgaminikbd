@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module name="vgaminikbd" T_Register="282(0)" T_Alu="56(0)" T_Lut="498(0)" T_Bsram="4(0)" T_Ssram="2(0)">
+<Module name="vgaminikbd" T_Register="283(0)" T_Alu="56(0)" T_Lut="485(0)" T_Bsram="4(0)" T_Ssram="2(0)">
  <SubModule name="uclockGen"/>
  <SubModule name="ukdA" Register="2" T_Register="2(2)"/>
  <SubModule name="ukdB" Register="2" T_Register="2(2)"/>
@@ -13,8 +13,8 @@
   <SubModule name="dfifo1" Register="6" Lut="12" T_Register="6(6)" T_Lut="12(12)"/>
   <SubModule name="ArbFifo" Register="6" Lut="11" T_Register="6(6)" T_Lut="11(11)"/>
  </SubModule>
- <SubModule name="uuart0" Register="69" Lut="117" T_Register="69(69)" T_Lut="117(117)"/>
- <SubModule name="uvga" Register="77" Alu="27" Lut="200" T_Register="128(77)" T_Alu="56(27)" T_Lut="245(200)" T_Bsram="3(0)">
+ <SubModule name="uuart0" Register="69" Lut="113" T_Register="69(69)" T_Lut="113(113)"/>
+ <SubModule name="uvga" Register="78" Alu="27" Lut="191" T_Register="129(78)" T_Alu="56(27)" T_Lut="236(191)" T_Bsram="3(0)">
   <SubModule name="uheartbeat" Register="8" Alu="5" Lut="4" T_Register="8(8)" T_Alu="5(5)" T_Lut="4(4)"/>
   <SubModule name="ucharbufinit" Register="23" Alu="6" Lut="30" T_Register="23(23)" T_Alu="6(6)" T_Lut="30(30)"/>
   <SubModule name="ucharROM" Bsram="1" T_Bsram="1(1)"/>
