@@ -394,8 +394,8 @@ module vga(
 	always @(posedge clk) begin
 		if (~resetn) begin
 			charWidthCounter <= `DELAY 3'h0;
-			charHeightCounter <= `DELAY 3'h0;
-			charHeightCounter_r0 <= `DELAY 3'h0;
+			charHeightCounter <= `DELAY 4'h0;
+			charHeightCounter_r0 <= `DELAY 4'h0;
 			currentScanCharCol <= `DELAY 7'h0;
 			currentScanCharRow <= `DELAY 5'h0;
 			charROMRdEn <= `DELAY 1'b0;
@@ -421,7 +421,7 @@ module vga(
 				//line (height) within a character only changes at end of the column currentScanCharCol reaches end
 				if (charWidthCounterMaxxed & currentScanCharColMaxxed) begin
 					if (charHeightCounterMaxxed) begin
-						charHeightCounter <= `DELAY 3'h0;
+						charHeightCounter <= `DELAY 4'h0;
 					end else begin
 						charHeightCounter <= `DELAY nextCharHeightCounter;
 					end
@@ -456,7 +456,7 @@ module vga(
 			bottomCursor <= `DELAY (charHeightCounter[3:2] == 2'b10) & (^charHeightCounter[1:0]) &
 							((~charWidthCounter[2] & |charWidthCounter[1:0]) | (charWidthCounter[2:1] == 2'b10));
 			bottomCursor_r0 <= `DELAY bottomCursor;
-			charHeightCounterBlank_r0 <= `DELAY charHeightCounter[3];//height counter value is > 7 and < 11
+			charHeightCounterBlank_r0 <= `DELAY charHeightCounter[3];//height counter value is > 7
 			charHeightCounterBlank_r1 <= `DELAY charHeightCounterBlank_r0;
 		end
 	end
@@ -501,7 +501,7 @@ module vga(
 					//bottom
 					pixel <= `DELAY scanningCurrentCursorCell_r2 & oneSecPulse; //0 if current scan cell doesn't have cursor
 				end else if (charHeightCounterBlank_r1) begin
-					//height counter value > 7 and < 15
+					//height counter value > 7
 					//insert blank line
 					pixel <= `DELAY 1'b0;
 				end else begin
