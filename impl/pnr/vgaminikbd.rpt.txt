@@ -11,20 +11,20 @@
   <Tool Version>: V1.9.9.02
   <Part Number>: GW1NZ-LV1QN48C6/I5
   <Device>: GW1NZ-1
-  <Created Time>:Fri May 30 18:42:13 2025
+  <Created Time>:Sat May 31 07:26:50 2025
 
 
 2. PnR Details
 
   Running placement:
-    Placement Phase 0: CPU time = 0h 0m 0.445s, Elapsed time = 0h 0m 0.433s
-    Placement Phase 1: CPU time = 0h 0m 0.152s, Elapsed time = 0h 0m 0.146s
-    Placement Phase 2: CPU time = 0h 0m 0.476s, Elapsed time = 0h 0m 0.469s
+    Placement Phase 0: CPU time = 0h 0m 0.44s, Elapsed time = 0h 0m 0.434s
+    Placement Phase 1: CPU time = 0h 0m 0.15s, Elapsed time = 0h 0m 0.146s
+    Placement Phase 2: CPU time = 0h 0m 0.407s, Elapsed time = 0h 0m 0.4s
     Placement Phase 3: CPU time = 0h 0m 8s, Elapsed time = 0h 0m 8s
-    Total Placement: CPU time = 0h 0m 10s, Elapsed time = 0h 0m 9s
+    Total Placement: CPU time = 0h 0m 9s, Elapsed time = 0h 0m 9s
  Running routing:
     Routing Phase 0: CPU time = 0h 0m 0.001s, Elapsed time = 0h 0m 0.001s
-    Routing Phase 1: CPU time = 0h 0m 0.312s, Elapsed time = 0h 0m 0.317s
+    Routing Phase 1: CPU time = 0h 0m 0.31s, Elapsed time = 0h 0m 0.315s
     Routing Phase 2: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
     Routing Phase 3: CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s
     Total Routing: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
@@ -39,15 +39,15 @@
   ----------------------------------------------------------
   Resources                   | Usage
   ----------------------------------------------------------
-  Logic                       | 556/1152  49%
-    --LUT,ALU,ROM16           | 544(477 LUT, 67 ALU, 0 ROM16)
+  Logic                       | 562/1152  49%
+    --LUT,ALU,ROM16           | 550(483 LUT, 67 ALU, 0 ROM16)
     --SSRAM(RAM16)            | 2
   Register                    | 288/957  31%
     --Logic Register as Latch | 0/864  0%
     --Logic Register as FF    | 284/864  33%
     --I/O Register as Latch   | 0/93  0%
     --I/O Register as FF      | 4/93  5%
-  CLS                         | 364/576  64%
+  CLS                         | 365/576  64%
   I/O Port                    | 13
   I/O Buf                     | 13
     --Input Buf               | 6

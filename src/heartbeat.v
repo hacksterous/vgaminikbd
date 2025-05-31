@@ -8,7 +8,6 @@ module heartbeat (
 	input clk,
 	input resetn,
 	input vsync,
-	input inputKey,
 	//remains high forever after deassertion
 	output reg userResetn /* synthesis syn_keep=1 */,
 	output wire cursorBlink);
@@ -31,7 +30,7 @@ module heartbeat (
 		`ifdef SIM_ONLY
 			userResetn <= `DELAY resetn;
 		`else
-			userResetn <= `DELAY (~inputKey)? 1'b0: heartbeatCounter[5]? 1'b1: userResetn;
+			userResetn <= `DELAY heartbeatCounter[5]? 1'b1: userResetn;
 		`endif
 		end
 	end

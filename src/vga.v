@@ -31,7 +31,6 @@ Clock Cycle				Signal
 
 2						currentCursorRow,
 						currentCursorCol,
-						screenEndScrollingStarted,
 						scrollRow
 */
 /*
@@ -158,7 +157,7 @@ module vga(
 	reg inputCmdScrollUp_r0;
 	reg [7:0] inputCmdMemWrData;
 	reg [4:0] scrollRow;
-	reg screenEndScrollingStarted;
+	//reg screenEndScrollingStarted;
 	wire [4:0] currentScrolledRow;
 
 	wire oneSecPulse;
@@ -171,23 +170,20 @@ module vga(
 		.clk (clk),
 		.resetn (resetn),
 		.vsync (vsync),
-		.inputKey (inputKeyB),
 		.userResetn (userResetn),
 		.cursorBlink (oneSecPulse)
 	);
 
 	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
-								((inputCmdMemWrData[3:0] ==4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF)) & 
-								(currentCursorRow == MAXROW_M_1);
-	wire screenEndScroll	= (currentCursorRow == MAXROW_M_1) & (currentCursorCol == MAXCOL_M_1);
-	wire inputCmdCMD_CLS	= inputCmdValid & (inputCmdData == 8'd`CMD_CLS);
-	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEndScroll);
-
+								((inputCmdMemWrData[3:0] ==4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF));
+	wire screenEnd	= (currentCursorCol == MAXCOL_M_1);
+	wire inputCmdCls		= inputCmdValid_r0 & (inputCmdMemWrData == 8'd`CMD_CLS);
+	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEnd) & (currentCursorRow == MAXROW_M_1);
 
 	charBufferInit ucharbufinit (
 		.clk (clk),
 		.resetn (resetn),
-		.enable (userResetn & inputKeyA & inputKeyB & ~inputCmdCMD_CLS & ~inputCmdScrollUp_r0),
+		.enable (userResetn & inputKeyA & inputKeyB & ~inputCmdCls & ~inputCmdScrollUp_r0),
 		.sequentialInit (~inputKeyB),
 		.partLineInit (inputCmdScrollUp_r0),
 		.partLineRow (currentScrolledRow),
@@ -209,7 +205,6 @@ module vga(
 			inputCmdMemWrEn <= `DELAY 1'b0;
 			inputCmdMemWrData <= `DELAY 8'h0;
 			scrollRow <= `DELAY 5'h0;
-			screenEndScrollingStarted <= `DELAY 1'b0;
 			inputCmdScrollUp_r0 <= `DELAY 1'b0;
 			inputCmdCMD_BKSP_DEL_r0 <= `DELAY 1'b0;
 		end else begin
@@ -270,7 +265,7 @@ module vga(
 							if (currentCursorCol == MAXCOL_M_1) begin
 								//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 								if (currentCursorRow == MAXROW_M_1) begin
-									screenEndScrollingStarted <= `DELAY 1'b1;
+									//screenEndScrollingStarted <= `DELAY 1'b1;
 									scrollRow <= `DELAY (scrollRow + 1'b1);
 								end else begin
 									currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
@@ -291,7 +286,7 @@ module vga(
 							currentCursorCol <= `DELAY 7'h0;
 							currentCursorRow <= `DELAY 7'h0;
 							scrollRow <= `DELAY 5'h0;
-							screenEndScrollingStarted <= `DELAY 1'b0;
+							//screenEndScrollingStarted <= `DELAY 1'b0;
 						end
 					endcase
 				end else begin
@@ -300,7 +295,7 @@ module vga(
 						currentCursorCol <= `DELAY 5'h0;
 						//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 						if (currentCursorRow == MAXROW_M_1) begin
-							screenEndScrollingStarted <= `DELAY 1'b1;
+							//screenEndScrollingStarted <= `DELAY 1'b1;
 							scrollRow <= `DELAY (scrollRow + 1'b1);
 							//erase previous line
 						end else begin
@@ -315,7 +310,7 @@ module vga(
 				currentCursorCol	<= `DELAY 7'h0;
 				currentCursorRow	<= `DELAY 5'h0;
 				scrollRow			<= `DELAY 5'h0;
-				screenEndScrollingStarted	<= `DELAY 1'b0;
+				//screenEndScrollingStarted	<= `DELAY 1'b0;
 			end
 		end
 	end

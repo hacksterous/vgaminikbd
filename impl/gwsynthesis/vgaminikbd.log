@@ -37,10 +37,10 @@ Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":3)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'
-Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":82)
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":81)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":81)
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":82)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":82)
-Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":83)
-Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":83)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)
@@ -56,7 +56,7 @@ Compiling module 'datamux2in'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/d
 Compiling module 'fifo(DEPTH=2)'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":7)
 Extracting RAM for identifier 'array'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":93)
 Compiling module 'uart'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":4)
-Compiling module 'vga'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":85)
+Compiling module 'vga'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":84)
 Compiling module 'heartbeat'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v":7)
 Compiling module 'charBufferInit'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":11)
 Compiling module 'charROM'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v":9)
