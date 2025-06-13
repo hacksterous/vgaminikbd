@@ -12,3 +12,4 @@ impl/temp/*
 *.xlsx#
 *.sw*
 scripts/__pycache__/*
+src/charROM/charROM_tmp.v

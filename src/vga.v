@@ -121,6 +121,7 @@ module vga(
 	wire [11:0] charBufferRdAddr;
 	wire [6:0] charBufferWrData;
 	wire [6:0] charBufferRdData;
+	wire	   charBufferRdDataColor;
 	wire charBufferWrEn;
 	wire charBufferRdEn;
 	wire inDisplayArea;
@@ -355,7 +356,7 @@ module vga(
 
 	charBuffer ucharBuffer (
 		//using single port RAM -- write has higher priority on the address bus
-	    .dout (charBufferRdData),
+	    .dout ({charBufferRdDataColor, charBufferRdData}),
         .clk (clk),
         .oce (1'b0), //unused in ucharBuffer's non-pipeline (aka bypass) mode
         .ce (charBufferRdEn | charBufferWrEn),
@@ -496,7 +497,7 @@ module vga(
 									//Make first pixel a blank one -- workaround for 
 									//leftmost pixel column shift to rightmost column.
 									//The shift still happens, but it is now a blank pixel.
-									3'h0: pixel <= `DELAY 1'b0; 
+									3'h0: pixel <= `DELAY 1'b0;
 									3'h1: pixel <= `DELAY charROMRdData[6];
 									3'h2: pixel <= `DELAY charROMRdData[5];
 									3'h3: pixel <= `DELAY charROMRdData[4];

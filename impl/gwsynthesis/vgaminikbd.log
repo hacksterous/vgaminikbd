@@ -61,6 +61,7 @@ Compiling module 'heartbeat'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/he
 Compiling module 'charBufferInit'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":11)
 Compiling module 'charROM'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v":9)
 Compiling module 'charBuffer'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v":10)
+WARN  (EX3670) : Actual bit length 8 differs from formal bit length 7 for port 'dout'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":359)
 Compiling module 'hvsync'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v":25)
 NOTE  (EX0101) : Current top module is "vgaminikbd"
 [5%] Running netlist conversion ...
