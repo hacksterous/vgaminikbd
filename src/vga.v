@@ -363,7 +363,7 @@ module vga(
         .reset (~resetn),
         .wre (charBufferWrEn),
         .ad (charBufferWrEn? charBufferWrAddr: charBufferRdAddr),
-        .din (inputCmdCMD_BKSP_DEL_r0? 7'd`CMD_SPC: charBufferWrData));
+        .din (inputCmdCMD_BKSP_DEL_r0? {1'b0, 7'd`CMD_SPC}: {1'b0, charBufferWrData}));
 
 	//https://ktln2.org/2018/01/23/implementing-vga-in-verilog/
 	hvsync uhvsync(

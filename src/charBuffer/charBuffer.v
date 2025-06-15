@@ -2,24 +2,23 @@
 //All rights reserved.
 //File Title: IP file
 //Tool Version: V1.9.9.02
-//Part Number: GW1NZ-LV1QN48A3
+//Part Number: GW1NZ-LV1QN48C6/I5
 //Device: GW1NZ-1
-//Device Version: C
-//Created Time: Tue May 27 19:19:11 2025
+//Created Time: Sun Jun 15 21:02:37 2025
 
 module charBuffer (dout, clk, oce, ce, reset, wre, ad, din);
 
-output [6:0] dout;
+output [7:0] dout;
 input clk;
 input oce;
 input ce;
 input reset;
 input wre;
 input [11:0] ad;
-input [6:0] din;
+input [7:0] din;
 
 wire [27:0] sp_inst_0_dout_w;
-wire [28:0] sp_inst_1_dout_w;
+wire [27:0] sp_inst_1_dout_w;
 wire gw_gnd;
 
 assign gw_gnd = 1'b0;
@@ -83,7 +82,7 @@ defparam sp_inst_0.INIT_RAM_26 = 256'h000000000000000000000000000000000000000000
 defparam sp_inst_0.INIT_RAM_27 = 256'h0000000000000000000000000000000000000000000000000000000000000000;
 
 SP sp_inst_1 (
-    .DO({sp_inst_1_dout_w[28:0],dout[6:4]}),
+    .DO({sp_inst_1_dout_w[27:0],dout[7:4]}),
     .CLK(clk),
     .OCE(oce),
     .CE(ce),
@@ -91,7 +90,7 @@ SP sp_inst_1 (
     .WRE(wre),
     .BLKSEL({gw_gnd,gw_gnd,gw_gnd}),
     .AD({ad[11:0],gw_gnd,gw_gnd}),
-    .DI({gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,din[6:4]})
+    .DI({gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,gw_gnd,din[7:4]})
 );
 
 defparam sp_inst_1.READ_MODE = 1'b0;
