@@ -15,4 +15,4 @@
 -width 8
 -read_mode bypass
 -reset_mode sync
--init_file /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/mem/charROM.mi
+-init_file /home/oreo/DriveD/Git/vgaminikbd/src/mem/charROM.mi

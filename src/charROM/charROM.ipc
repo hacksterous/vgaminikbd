@@ -9,7 +9,7 @@ version=1.0
 [Config]
 DEPTH=1152
 LANG=0
-MEM_FILE=../mem/charROM.mi
+MEM_FILE=/home/oreo/DriveD/Git/vgaminikbd/src/mem/charROM.mi
 READ=0
 RESET_MODE=true
 WIDTH=8

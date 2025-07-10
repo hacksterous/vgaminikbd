@@ -1,5 +1,10 @@
 GowinSynthesis start
 Running parser ...
+Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v'
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v":21)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v":21)
+Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v":22)
+Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v":22)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v'
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v'
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keycharcmdcodes.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":9)
@@ -56,6 +61,7 @@ Compiling module 'datamux2in'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/d
 Compiling module 'fifo(DEPTH=2)'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":7)
 Extracting RAM for identifier 'array'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v":93)
 Compiling module 'uart'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v":4)
+Compiling module 'ansiescape'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v":24)
 Compiling module 'vga'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":84)
 Compiling module 'heartbeat'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v":7)
 Compiling module 'charBufferInit'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v":11)
@@ -79,6 +85,7 @@ Running technical mapping ...
 [75%] Tech-Mapping Phase 2 completed
 [80%] Tech-Mapping Phase 3 completed
 [90%] Tech-Mapping Phase 4 completed
+WARN  (NL0002) : The module "ansiescape" instantiated to "uansiesc" is swept in optimizing("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":165)
 [95%] Generate netlist file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg" completed
 [100%] Generate report file "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd_syn.rpt.html" completed
 GowinSynthesis finish

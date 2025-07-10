@@ -2,6 +2,10 @@
  "Device" : "GW1NZ-1",
  "Files" : [
   {
+   "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v",
+   "Type" : "verilog"
+  },
+  {
    "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v",
    "Type" : "verilog"
   },

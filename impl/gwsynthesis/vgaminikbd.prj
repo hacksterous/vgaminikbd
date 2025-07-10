@@ -4,6 +4,7 @@
     <Version>beta</Version>
     <Device id="GW1NZ-1" package="QFN48" speed="6" partNumber="GW1NZ-LV1QN48C6/I5"/>
     <FileList>
+        <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v" type="verilog"/>

@@ -116,16 +116,19 @@ Note!
 	wire dataArbDoutValid;
 	wire oneSecPulse;
 
+	wire serialANSIDataValid;
+	wire [7:0] serialANSIData;
+
 	datamux2in uarb (
-		.debug0 (debug0), //green
+		.debug0 (), //green
 		.debug1 (debug1), //red
 		.debug2 (debug2), //blue
 		.clk (clk),
 		.resetn (userResetn),
-		.d0 (rxDataOut),
-		.d0v (rxDataOutValid),
+		.d0 (serialANSIData), //FIXME: replace with serialANSIData
+		.d0v (serialANSIDataValid), //FIXME: replace with serialANSIDataValid
 		.d1 (kbdAsciiData),
-		.d1v (kbdAsciiDataValid),
+		.d1v (1'b0), //kbdAsciiDataValid),
 		.error (dataArbError),
 		.od (dataArbDout),
 		.odv (dataArbDoutValid));
@@ -153,18 +156,26 @@ Note!
 		.rxBitTick(),
 		.txBitTick());
 
+	ansiescape uansiesc (
+		.clk (clk),
+		.resetn (userResetn),
+		.rxDataInValid (rxDataOutValid),
+		.rxDataIn (rxDataOut),
+		.rxANSIDataOutValid (serialANSIDataValid),
+		.rxANSIDataOut (serialANSIData));
+
 	vga uvga(
 		.resetn (resetn),
-		//.inputCmdData (dataArbDout),
-		//.inputCmdValid (dataArbDoutValid),
-		.inputCmdData (rxDataOut),
-		.inputCmdValid (rxDataOutValid),
+		//.inputCmdData (dataArbDout), //FIXME: uncomment
+		//.inputCmdValid (dataArbDoutValid), //FIXME: remove
+		.inputCmdData (rxDataOut), //FIXME: remove
+		.inputCmdValid (rxDataOutValid), //FIXME: remove
 		.inputKeyA (keyAOut),
 		.inputKeyB (keyBOut),
 		.debug (1'b0),
 		.clk (clk),
 		.userResetn (userResetn),
-		.debug0 (), //green
+		.debug0 (debug0), //green
 		.debug1 (), //red
 		.debug2 (),	//blue
 		.pixel (pixel),

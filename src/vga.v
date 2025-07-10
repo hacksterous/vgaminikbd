@@ -158,7 +158,6 @@ module vga(
 	reg inputCmdScrollUp_r0;
 	reg [7:0] inputCmdMemWrData;
 	reg [4:0] scrollRow;
-	//reg screenEndScrollingStarted;
 	wire [4:0] currentScrolledRow;
 
 	wire oneSecPulse;
@@ -175,8 +174,10 @@ module vga(
 		.cursorBlink (oneSecPulse)
 	);
 
+	//toggle cursor visibility
+	wire inputCmdCMD_CURTOG = (inputCmdMemWrData[7:4] == 4'h0) & (inputCmdMemWrData[3:0] == 4'd`CMD_CURTOG);
 	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
-								((inputCmdMemWrData[3:0] ==4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF));
+								((inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF));
 	wire screenEnd	= (currentCursorCol == MAXCOL_M_1);
 	wire inputCmdCls		= inputCmdValid_r0 & (inputCmdMemWrData == 8'd`CMD_CLS);
 	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEnd) & (currentCursorRow == MAXROW_M_1);
@@ -194,12 +195,14 @@ module vga(
 		.initData (charBufferInitData)
 		);
 
+	reg cursorVisible;
 	reg inputCmdCMD_BKSP_DEL_r0;
 	wire inputCmdCMD_BKSP_DEL = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) &
 							((inputCmdMemWrData[3:0] == 4'd`CMD_BKSP) | (inputCmdMemWrData[3:0] == 4'd`CMD_DEL));
 
 	always @(posedge clk) begin
 		if (~resetn) begin
+			cursorVisible <= `DELAY 1'b1; //0 means cursor is invisible
 			currentCursorCol <= `DELAY 7'h0;
 			currentCursorRow <= `DELAY 5'h0;
 			inputCmdValid_r0 <= `DELAY 1'b0;
@@ -209,6 +212,8 @@ module vga(
 			inputCmdScrollUp_r0 <= `DELAY 1'b0;
 			inputCmdCMD_BKSP_DEL_r0 <= `DELAY 1'b0;
 		end else begin
+			//0 means cursor is invisible
+			cursorVisible <= `DELAY (inputCmdCMD_CURTOG)? ~cursorVisible: cursorVisible; //toggle
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
 			inputCmdMemWrEn <= `DELAY inputCmdValid & (inputCmdData >= 8'd32);
 			inputCmdMemWrData <= `DELAY inputCmdData;
@@ -221,9 +226,7 @@ module vga(
 						4'd`CMD_CRLF: begin
 							//Return is CMD_HOME + CMD_DOWN
 							currentCursorCol <= `DELAY 7'h0;
-							//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 							if (currentCursorRow == MAXROW_M_1) begin
-								//screenEndScrollingStarted <= `DELAY 1'b1;
 								scrollRow <= `DELAY (scrollRow + 1'b1);
 								//erase previous line
 							end else begin
@@ -233,9 +236,7 @@ module vga(
 						4'd`CMD_DOWN: begin
 							//same as LF
 							//remain on row MAXROW_M_1
-							//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 							if (currentCursorRow == MAXROW_M_1) begin
-								//screenEndScrollingStarted <= `DELAY 1'b1;
 								scrollRow <= `DELAY (scrollRow + 1'b1);
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
@@ -264,9 +265,7 @@ module vga(
 						end
 						4'd`CMD_RIGHT, 8'd`CMD_TAB: begin
 							if (currentCursorCol == MAXCOL_M_1) begin
-								//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 								if (currentCursorRow == MAXROW_M_1) begin
-									//screenEndScrollingStarted <= `DELAY 1'b1;
 									scrollRow <= `DELAY (scrollRow + 1'b1);
 								end else begin
 									currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
@@ -287,16 +286,13 @@ module vga(
 							currentCursorCol <= `DELAY 7'h0;
 							currentCursorRow <= `DELAY 7'h0;
 							scrollRow <= `DELAY 5'h0;
-							//screenEndScrollingStarted <= `DELAY 1'b0;
 						end
 					endcase
 				end else begin
 					//printable character > ASCII 31
 					if (currentCursorCol == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 5'h0;
-						//if ((currentCursorRow == MAXROW_M_1) | screenEndScrollingStarted) begin
 						if (currentCursorRow == MAXROW_M_1) begin
-							//screenEndScrollingStarted <= `DELAY 1'b1;
 							scrollRow <= `DELAY (scrollRow + 1'b1);
 							//erase previous line
 						end else begin
@@ -311,22 +307,19 @@ module vga(
 				currentCursorCol	<= `DELAY 7'h0;
 				currentCursorRow	<= `DELAY 5'h0;
 				scrollRow			<= `DELAY 5'h0;
-				//screenEndScrollingStarted	<= `DELAY 1'b0;
 			end
 		end
 	end
 
-	assign debug0 = userResetn; //green
+	assign debug0 = 1'b1; //green
 	assign debug1 = 1'b1;//userResetn; //red
 	assign debug2 = 1'b1; //blue
 
-	//wire descendingHeightCounter = (charHeightCounter_r0[3:0] >= 4'd9);
 	wire [4:0] shiftedHeightCounter = ({1'b0, charHeightCounter_r0[3:0]} - 5'd9);
 	//bit[4] set means charHeightCounter_r0 is < 9, so use charHeightCounter in ROM address
 	wire [3:0] heightCounterAdjusted = (shiftedHeightCounter[4])? charHeightCounter_r0[3:0]:
 									shiftedHeightCounter[3:0];
 
-	//assign charROMRdAddr = {charHeightCounter_r0[3:0], charBufferRdData[6:0]};
 	assign charROMRdAddr = {heightCounterAdjusted[3:0], charBufferRdData[6:0]};
 
 	charROM ucharROM (
@@ -337,7 +330,7 @@ module vga(
 		.reset (~resetn),
 		.dout (charROMRdData));
 
-	//pseudo-dual port RAM to update/read out character (data = ASCII value)
+	//single port RAM to update/read out character (data = ASCII value)
 	//32 rows x 80 columns
 	//depth = total characters on screen = 2560
 	//data width = 8 --> points to one of the 255 characters of charROM
@@ -530,7 +523,7 @@ module vga(
 									default: pixel <= `DELAY 1'b0;
 								endcase
 							end
-							4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & oneSecPulse;
+							4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & oneSecPulse & cursorVisible;
 							default: pixel <= `DELAY 1'b0;
 						endcase
 					end

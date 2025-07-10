@@ -5,6 +5,7 @@
     <Version>5</Version>
     <Device name="GW1NZ-1" pn="GW1NZ-LV1QN48C6/I5">gw1nz1-015</Device>
     <FileList>
+        <File path="src/ansiescape.v" type="file.verilog" enable="1"/>
         <File path="src/charBuffer/charBuffer.v" type="file.verilog" enable="1"/>
         <File path="src/charROM/charROM.v" type="file.verilog" enable="1"/>
         <File path="src/charbufferinit.v" type="file.verilog" enable="1"/>
