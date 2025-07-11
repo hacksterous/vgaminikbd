@@ -13,3 +13,5 @@ impl/temp/*
 *.sw*
 scripts/__pycache__/*
 src/charROM/charROM_tmp.v
+src/vga.v.0
+*.0

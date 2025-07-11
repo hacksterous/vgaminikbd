@@ -48,22 +48,25 @@ module tb ();
 	end
 
 	reg [7:0] TXCOUNT;
-	initial TXCOUNT = 14;
+	//initial TXCOUNT = 14;
+	initial TXCOUNT = 2;
 	wire [7:0] txString [0:13];
-	assign txString[0]  = "h";
-	assign txString[1]  = "e";
-	assign txString[2]  = "l";
-	assign txString[3]  = "l";
-	assign txString[4]  = "o";
-	assign txString[5]  = ",";
-	assign txString[6]  = " ";
-	assign txString[7]  = "w";
-	assign txString[8]  = "o";
-	assign txString[9]  = "r";
-	assign txString[10]  = "l";
-	assign txString[11] = "d";
-	assign txString[12] = "!";
-	assign txString[13] = " ";
+	//assign txString[0]  = "h";
+	//assign txString[1]  = "e";
+	//assign txString[2]  = "l";
+	//assign txString[3]  = "l";
+	//assign txString[4]  = "o";
+	//assign txString[5]  = ",";
+	//assign txString[6]  = " ";
+	//assign txString[7]  = "w";
+	//assign txString[8]  = "o";
+	//assign txString[9]  = "r";
+	//assign txString[10]  = "l";
+	//assign txString[11] = "d";
+	//assign txString[12] = "!";
+	//assign txString[13] = " ";
+	assign txString[0] = "a";
+	assign txString[1] = 8;
 
 	reg [1:0] tbTxState;
 	initial begin
@@ -81,6 +84,7 @@ module tb ();
 	always @(posedge clk) begin
 		//$fwrite(f, "%0d ns: %b %b 000 %b 00\n", $time, hsync, vsync, {3{pixel}});
 		if (txStringPtr == TXCOUNT && tbTxState == 2'h0) begin
+			#600000
 			$finish;
 		end
 	end
@@ -96,7 +100,7 @@ module tb ();
 		//$monitor ("Time: %d -- txData: %h", $time, txData);
 		if (~resetn) begin
 			tbTxState <= #1 2'h0;
-		end else if ($time > 400000) begin
+		end else if ($time > 40000) begin
 			if (tbTxState == 2'h0) begin
 				if (~txBusy & (txStringPtr <= TXCOUNT)) tbTxState <= #1 2'h1;
 			end else if (tbTxState == 2'h1) begin

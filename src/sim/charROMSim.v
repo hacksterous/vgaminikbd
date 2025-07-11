@@ -25,20 +25,20 @@
 //5 bits data out is a scan line for character
 module charROM (dout, clk, oce, ce, reset, ad);
 
-	output [4:0] dout;
+	output [7:0] dout;
 	input clk;
 	input oce; //unused
 	input ce;
 	input reset;
 	input [10:0] ad;
 
-	reg [4:0] memory [0:2039];
-	reg [4:0] memrddata;
+	reg [7:0] memory [0:1151];
+	reg [7:0] memrddata;
 
 	initial $readmemb("./charROM.readmemb", memory);
 
 	always @(posedge clk) begin
-		if (reset) memrddata <= #1 5'h0;		
+		if (reset) memrddata <= #1 8'h0;		
 		else if (ce) memrddata <= #1 memory[ad];
 	end
 

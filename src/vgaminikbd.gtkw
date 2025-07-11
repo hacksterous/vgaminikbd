@@ -1,43 +1,52 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Fri May  2 17:14:35 2025
+[*] Fri Jul 11 12:05:04 2025
 [*]
-[dumpfile] "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.vcd"
-[dumpfile_mtime] "Fri May  2 17:12:43 2025"
-[dumpfile_size] 259146138
-[savefile] "/home/oreo/Src/FPGA-Gowin/vgaminikbd/src/vgaminikbd.gtkw"
-[timestart] 9987300000
+[dumpfile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.fst"
+[dumpfile_mtime] "Fri Jul 11 12:03:03 2025"
+[dumpfile_size] 43096
+[savefile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.gtkw"
+[timestart] 50905810
 [size] 1920 947
 [pos] -1 -1
-*-23.129625 10005235000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-13.980288 50935000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.uvgaminikbd.
-[treeopen] tb.uvgaminikbd.uvga.
-[sst_width] 254
-[signals_width] 349
+[sst_width] 342
+[signals_width] 312
 [sst_expanded] 1
-[sst_vpaned_height] 544
+[sst_vpaned_height] 264
 @28
-tb.uvgaminikbd.clk
-tb.uvgaminikbd.uvga.uheartbeat.userResetn
+tb.uvgaminikbd.UART_RX0
 @22
-tb.uvgaminikbd.uvga.ucharbufinit.initData[6:0]
+tb.uvgaminikbd.uvga.inputCmdData[7:0]
 @28
-tb.uvgaminikbd.uvga.ucharbufinit.initStateACTIVE
+tb.uvgaminikbd.uvga.inputCmdValid
+tb.uvgaminikbd.uvga.inputCmdDown
 @22
-tb.uvgaminikbd.uvga.ucharbufinit.initAddress[11:0]
+tb.uvgaminikbd.uvga.currentCursorCol[6:0]
 @28
-tb.uvgaminikbd.uvga.ucharbufinit.zeroize
+tb.uvgaminikbd.uvga.rowDMAState[1:0]
+@24
+tb.uvgaminikbd.uvga.rowDMAWrCol[6:0]
+tb.uvgaminikbd.uvga.rowDMARdCol[6:0]
+@28
+tb.uvgaminikbd.uvga.charBufferWrEn
 @22
-tb.uvgaminikbd.uvga.ucharbufinit.initCursorRow[4:0]
+tb.uvgaminikbd.uvga.charBufferRdCol[6:0]
+tb.uvgaminikbd.uvga.charBufferRdRow[4:0]
 @28
-tb.uvgaminikbd.uvga.ucharbufinit.zeroizeStretched
-@29
-tb.uvgaminikbd.uvga.ucharbufinit.initCursorColAtMax
+tb.uvgaminikbd.uvga.charBufferRdEn
+tb.uvgaminikbd.uvga.rowDMARdEn
+tb.uvgaminikbd.uvga.rowDMAWrEn
+tb.uvgaminikbd.uvga.rowDMAWrEnLast
+@24
+tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+@25
+tb.uvgaminikbd.uvga.charBufferWrData[7:0]
 @28
-tb.uvgaminikbd.uvga.ucharbufinit.initWrEn
-tb.uvgaminikbd.uvga.ucharbufinit.initAddressAtMax
-tb.uvgaminikbd.uvga.ucharbufinit.initStateIDLE
-tb.uvgaminikbd.uvga.ucharbufinit.enableRiseEdge
+tb.uvgaminikbd.uvga.charBufferInitInProgress
+@22
+tb.uvgaminikbd.uvga.charBufferWrAddr[11:0]
 [pattern_trace] 1
 [pattern_trace] 0
