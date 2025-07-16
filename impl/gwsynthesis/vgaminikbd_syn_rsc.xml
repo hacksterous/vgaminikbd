@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module name="vgaminikbd" T_Register="291(0)" T_Alu="56(0)" T_Lut="583(0)" T_Bsram="4(0)" T_Ssram="2(0)">
+<Module name="vgaminikbd" T_Register="291(0)" T_Alu="56(0)" T_Lut="556(0)" T_Bsram="4(0)" T_Ssram="2(0)">
  <SubModule name="uclockGen"/>
  <SubModule name="ukdA" Register="2" T_Register="2(2)"/>
  <SubModule name="ukdB" Register="2" T_Register="2(2)"/>
- <SubModule name="ukbd" Register="13" Lut="48" T_Register="59(13)" T_Lut="89(48)" T_Bsram="1(0)" T_Ssram="2(0)">
+ <SubModule name="ukbd" Register="13" Lut="49" T_Register="59(13)" T_Lut="90(49)" T_Bsram="1(0)" T_Ssram="2(0)">
   <SubModule name="ukbdrom" Bsram="1" T_Bsram="1(1)"/>
   <SubModule name="kbdfifo" Register="19" Lut="25" Ssram="2" T_Register="19(19)" T_Lut="25(25)" T_Ssram="2(2)"/>
   <SubModule name="ps2kbd" Register="27" Lut="16" T_Register="27(27)" T_Lut="16(16)"/>
  </SubModule>
- <SubModule name="uarb" Register="4" Lut="9" T_Register="21(4)" T_Lut="46(9)">
-  <SubModule name="dfifo0" Register="6" Lut="16" T_Register="6(6)" T_Lut="16(16)"/>
+ <SubModule name="uarb" Register="4" Lut="8" T_Register="21(4)" T_Lut="38(8)">
+  <SubModule name="dfifo0" Register="6" Lut="12" T_Register="6(6)" T_Lut="12(12)"/>
   <SubModule name="dfifo1" Register="5" Lut="7" T_Register="5(5)" T_Lut="7(7)"/>
-  <SubModule name="ArbFifo" Register="6" Lut="14" T_Register="6(6)" T_Lut="14(14)"/>
+  <SubModule name="ArbFifo" Register="6" Lut="11" T_Register="6(6)" T_Lut="11(11)"/>
  </SubModule>
- <SubModule name="uuart0" Register="69" Lut="116" T_Register="69(69)" T_Lut="116(116)"/>
- <SubModule name="uvga" Register="87" Alu="27" Lut="289" T_Register="138(87)" T_Alu="56(27)" T_Lut="332(289)" T_Bsram="3(0)">
+ <SubModule name="uuart0" Register="69" Lut="114" T_Register="69(69)" T_Lut="114(114)"/>
+ <SubModule name="uvga" Register="87" Alu="27" Lut="271" T_Register="138(87)" T_Alu="56(27)" T_Lut="314(271)" T_Bsram="3(0)">
   <SubModule name="uheartbeat" Register="8" Alu="5" Lut="2" T_Register="8(8)" T_Alu="5(5)" T_Lut="2(2)"/>
   <SubModule name="ucharbufinit" Register="23" Alu="6" Lut="30" T_Register="23(23)" T_Alu="6(6)" T_Lut="30(30)"/>
   <SubModule name="ucharROM" Bsram="1" T_Bsram="1(1)"/>

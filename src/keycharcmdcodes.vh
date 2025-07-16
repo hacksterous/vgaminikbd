@@ -29,4 +29,7 @@
 `define CMD_RIGHT 14
 `define CMD_END 15
 `define CMD_SPC 32
+`define CMD_ABS_ROW_7_5 3'b111
+`define CMD_ABS_ROW_6_5 2'b11
+`define CMD_ABS_COL_7_7 1'b1
 `endif

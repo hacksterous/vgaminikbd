@@ -175,7 +175,6 @@ module vga(
 		.cursorBlink (cursorBlink)
 	);
 
-	//toggle cursor visibility
 	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
 								((inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF));
 	wire screenEnd	= (currentCursorCol == MAXCOL_M_1);
@@ -201,6 +200,21 @@ module vga(
 	wire inputCmdCMD_DEL = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & 
 							(inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
 	
+	//command to move to absolute row number specified -- bits [7:5] should be 111
+	wire inputCmdAbsRow = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == `CMD_ABS_ROW_7_5);
+	wire [4:0] inputValueAbsRow = inputCmdMemWrData[4:0];
+	
+	//command to move to absolute column number specified bit [7] 
+	//should be 1 but bits [6:5] should not be 11
+	wire inputCmdAbsCol = inputCmdValid_r0 
+							& (inputCmdMemWrData[7] == `CMD_ABS_COL_7_7)
+							& (inputCmdMemWrData[6:5] != `CMD_ABS_ROW_6_5);
+	//note: col value must not be above 79, or it could mess up the logic
+	wire [6:0] inputValueAbsCol = inputCmdMemWrData[6:0]; 
+
+	wire isPrintableChar = inputCmdValid_r0 & (|inputCmdMemWrData[7:5]); //inputCmdMemWrData[7:0] > 31
+	//TODO: rowDMA when isPrintableChar = 1
+	//TODO: rowDMA when currentCursorColNotZero = 0
 	reg [6:0] rowDMARdCol;
 	reg [6:0] nextRowDMARdCol;
 	//row DMA is to handle backspace and delete
@@ -323,6 +337,7 @@ module vga(
 							end
 						end
 						4'd`CMD_LEFT, 8'd`CMD_BKSP: begin
+						//4'd`CMD_LEFT: begin //backspace on column 0 doesn't make cursor go back one row
 							if (currentCursorCol != 7'h0) begin
 								currentCursorCol <= `DELAY (currentCursorCol - 1'b1);
 							end else if (currentCursorRow != 5'h0) begin
@@ -355,13 +370,17 @@ module vga(
 							scrollRow <= `DELAY 5'h0;
 						end
 					endcase
+				end else if (inputCmdAbsRow) begin
+					currentCursorRow <= ` DELAY inputValueAbsRow;
+				end else if (inputCmdAbsCol) begin
+					currentCursorCol <= ` DELAY inputValueAbsCol;
 				end else begin
 					//printable character > ASCII 31
 					if (currentCursorCol == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 5'h0;
 						if (currentCursorRow == MAXROW_M_1) begin
 							scrollRow <= `DELAY (scrollRow + 1'b1);
-							//erase previous line
+							//previous line gets erased
 						end else begin
 							currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
 						end
@@ -421,7 +440,8 @@ module vga(
 
 	wire [4:0] currentScrolledScanRow = currentScanCharRow + scrollRow;
 	wire [6:0] charBufferRdCol = (rowDMARdEn)? rowDMARdCol[6:0]: currentScanCharCol[6:0];
-	wire [4:0] charBufferRdRow = (rowDMARdEn)? currentCursorRow[4:0]: currentScrolledScanRow[4:0];
+	//wire [4:0] charBufferRdRow = (rowDMARdEn)? currentCursorRow[4:0]: currentScrolledScanRow[4:0];
+	wire [4:0] charBufferRdRow = (rowDMARdEn)? currentScrolledRow[4:0]: currentScrolledScanRow[4:0];
 	assign charBufferRdAddr = {charBufferRdCol[6:0], charBufferRdRow[4:0]};
 	assign charBufferRdEn = ((charWidthCounter == 3'h0) & inDisplayArea_r0) 
 								| rowDMARdEn;
