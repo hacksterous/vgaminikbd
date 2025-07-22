@@ -30,7 +30,7 @@ module heartbeat (
 		`ifdef SIM_ONLY
 			userResetn <= `DELAY resetn;
 		`else
-			userResetn <= `DELAY heartbeatCounter[5]? 1'b1: userResetn;
+			userResetn <= `DELAY heartbeatCounter[1]? 1'b1: userResetn;
 		`endif
 		end
 	end

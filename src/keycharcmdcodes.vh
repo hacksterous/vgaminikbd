@@ -8,16 +8,15 @@
 
 `ifndef __KEYCHARCMDCODES__
 `define __KEYCHARCMDCODES__
+`define CHAR_NUL 0
 `define CMD_NUL 0
 `define CMD_CRLF 1
 `define CMD_UP 2
-//CMD_CURTOG: toggle cursor enable
-`define CMD_CURTOG 3
+`define CMD_SCROLL_UP 3
 `define CMD_DEL 4
 `define CMD_PGUP 5
 `define CMD_PGDN 6
-//CMD_CHRTOG: toggle character mode for codes 0-15
-`define CMD_CHRTOG 7
+//code 7 is available
 `define CMD_BKSP 8
 `define CMD_TAB 9
 `define CMD_LF 10
@@ -28,8 +27,12 @@
 `define CMD_HOME 13
 `define CMD_RIGHT 14
 `define CMD_END 15
-`define CMD_SPC 32
-`define CMD_ABS_ROW_7_5 3'b111
-`define CMD_ABS_ROW_6_5 2'b11
-`define CMD_ABS_COL_7_7 1'b1
+`define CMD_ERASE_SOL 16
+`define CMD_ERASE_EOL 17
+`define CMD_ERASE_LINE 18
+//CMD_CURTOG: toggle cursor enable
+`define CMD_CURTOG 19
+//CMD_CHRTOG: toggle character mode for codes 0-31
+`define CMD_CHRTOG 20
+`define CHAR_SPC 32
 `endif

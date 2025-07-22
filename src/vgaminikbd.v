@@ -125,8 +125,8 @@ Note!
 		.debug2 (debug2), //blue
 		.clk (clk),
 		.resetn (userResetn),
-		.d0 (serialANSIData), //FIXME: replace with serialANSIData
-		.d0v (serialANSIDataValid), //FIXME: replace with serialANSIDataValid
+		.d0 (serialANSIData), 
+		.d0v (serialANSIDataValid), 
 		.d1 (kbdAsciiData),
 		.d1v (1'b0), //kbdAsciiDataValid),
 		.error (dataArbError),

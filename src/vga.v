@@ -98,7 +98,9 @@ module vga(
 	output reg hsync,
 	output reg vsync);
 
+	localparam TABLEN = 4'd8; //tab is 8 space wide
 	localparam MAXCOL_M_1 = 79;
+	localparam MAXCOL_M_TABLEN_1 = 71;
 	localparam MAXROW_M_1 = 31;
 	localparam MAXCHARWIDTH_M_1 = 7;	//1 blank pixel + 7 pixels
 	localparam MAXCHARHEIGHT_M_1 = 14;	//9 lines + 1 blank line + 2 cursor lines + 3 interrow blank lines
@@ -156,7 +158,9 @@ module vga(
 
 	reg inputCmdMemWrEn;
 	reg inputCmdValid_r0;
-	reg inputCmdScrollUp_r0;
+	//reg inputCmdScrollUp_r0;
+	//reg inputCmdEraseEOL_r0;
+	//reg inputCmdEraseLine_r0;
 	reg [7:0] inputCmdMemWrData;
 	reg [4:0] scrollRow;
 	wire [4:0] currentScrolledRow;
@@ -172,100 +176,97 @@ module vga(
 		.resetn (resetn),
 		.vsync (vsync),
 		.userResetn (userResetn),
-		.cursorBlink (cursorBlink)
-	);
+		.cursorBlink (cursorBlink));
 
 	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
-								((inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF));
-	wire screenEnd	= (currentCursorCol == MAXCOL_M_1);
-	wire inputCmdCls		= inputCmdValid_r0 & (inputCmdMemWrData == 8'd`CMD_CLS);
-	wire inputCmdCursorToggle = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & (inputCmdMemWrData[3:0] == 4'd`CMD_CURTOG);
-	wire inputCmdScrollUp	= inputCmdValid_r0 & (inputCmdDown | screenEnd) & (currentCursorRow == MAXROW_M_1);
+								((inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) 
+									| (inputCmdMemWrData == 4'd`CMD_CRLF));
+	wire inputCmdCls		= inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & 
+										(inputCmdMemWrData == 4'd`CMD_CLS);
+	wire inputCmdCursorToggle = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) 
+								& (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
+	wire inputCmdScrollUp	= inputCmdValid_r0 & inputCmdDown & (currentCursorRow == MAXROW_M_1);
 
-	charBufferInit ucharbufinit (
-		.clk (clk),
-		.resetn (resetn),
-		.enable (userResetn & inputKeyA & inputKeyB & ~inputCmdCls & ~inputCmdScrollUp_r0),
-		.sequentialInit (~inputKeyB),
-		.partLineInit (inputCmdScrollUp_r0),
-		.partLineRow (currentScrolledRow),
-		.partLineCol (7'h0),
-		.initWrEn (charBufferInitInProgress),
-		.initAddress (charBufferInitAddr),
-		.initData (charBufferInitData)
-		);
-
-	wire inputCmdCMD_BKSP = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & 
+	wire inputCmdCMD_BKSP = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4] & 
 							(inputCmdMemWrData[3:0] == 4'd`CMD_BKSP);
-	wire inputCmdCMD_DEL = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & 
+	wire inputCmdCMD_DEL = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4] & 
 							(inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
 	
-	//command to move to absolute row number specified -- bits [7:5] should be 111
-	wire inputCmdAbsRow = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == `CMD_ABS_ROW_7_5);
-	wire [4:0] inputValueAbsRow = inputCmdMemWrData[4:0];
-	
-	//command to move to absolute column number specified bit [7] 
-	//should be 1 but bits [6:5] should not be 11
-	wire inputCmdAbsCol = inputCmdValid_r0 
-							& (inputCmdMemWrData[7] == `CMD_ABS_COL_7_7)
-							& (inputCmdMemWrData[6:5] != `CMD_ABS_ROW_6_5);
-	//note: col value must not be above 79, or it could mess up the logic
-	wire [6:0] inputValueAbsCol = inputCmdMemWrData[6:0]; 
+	//erase to start of line (move char at current char to column 0 with the rest of characters following)
+	wire inputCmdEraseSOL = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
+							(inputCmdMemWrData[4:0] == `CMD_ERASE_SOL);
 
-	wire isPrintableChar = inputCmdValid_r0 & (|inputCmdMemWrData[7:5]); //inputCmdMemWrData[7:0] > 31
+	//erase to end of line and erase line -- for these two, make use of charBufferInit logic
+	wire inputCmdEraseEOL = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
+							(inputCmdMemWrData[4:0] == `CMD_ERASE_EOL);
+	wire inputCmdEraseLine = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
+							 & (inputCmdMemWrData[4:0] == `CMD_ERASE_LINE);
+
+	wire isPrintableChar = inputCmdValid_r0 & |inputCmdMemWrData[7:5] & ~inputCmdMemWrData[7];
 	//TODO: rowDMA when isPrintableChar = 1
-	//TODO: rowDMA when currentCursorColNotZero = 0
 	reg [6:0] rowDMARdCol;
 	reg [6:0] nextRowDMARdCol;
 	//row DMA is to handle backspace and delete
 	reg [1:0] nextRowDMAState;
 	reg [1:0] rowDMAState;
-	wire currentCursorColNotZero = |currentCursorCol[6:0];
-	localparam LDMA0 = 0;
-	localparam LDMA1 = 1;
-	localparam LDMA2 = 3;
-	localparam LDMA3 = 2;
-	//LDMA0 - idle, on backspace or delete, go to 1
-	//LDMA1 - read, go to 2
-	//LDMA2 - write, if currentScanCharCol == 79 got to 3, else go to 1
-	//LDMA3 - column 79, write space, go to 0
+	localparam LDMA_IDLE = 0;
+	localparam LDMA_READ = 1;
+	localparam LDMA_WRITE = 3;
+	localparam LDMA_LASTWRITE = 2;
+	//LDMA_IDLE - idle, on backspace or delete, go to 1
+	//LDMA_READ - read, go to 2
+	//LDMA_WRITE - write, if currentScanCharCol == 79 got to 3, else go to 1
+	//LDMA_LASTWRITE - column 79, write space, go to 0
 	//note: charBuffer is single-port RAM
-	//read happens in states LDMA1
-	//write to previous location happens in states LDMA2
-	wire rowDMARdEn = (rowDMAState == LDMA1);
-	wire rowDMAWrEn =  (rowDMAState == LDMA2);
-	wire rowDMAWrEnLast = (rowDMAState == LDMA3);
-	wire rowDMARdColMaxxed = (rowDMARdCol == 7'd79);
-	wire rowDMAIDLE = (rowDMAState == LDMA0);
+	//read happens in states LDMA_READ
+	//write to previous location happens in states LDMA_WRITE
+	wire rowDMAIdle = (rowDMAState == LDMA_IDLE);
+	wire rowDMARdEn = (rowDMAState == LDMA_READ);
+	wire rowDMAWrEn =  (rowDMAState == LDMA_WRITE);
+	wire rowDMAWrEnLast = (rowDMAState == LDMA_LASTWRITE);
+	wire rowDMARdColMaxxed = (rowDMARdCol == MAXCOL_M_1);
+	wire rowDMAWrColMaxxed = (rowDMAWrCol == MAXCOL_M_1);
+	wire rowDMAIDLE = (rowDMAState == LDMA_IDLE);
+	wire bkspAtColZero = inputCmdCMD_BKSP & ~|currentCursorCol[6:0];
+
+	wire nextEraseToSOLInProgress = (rowDMAWrEnLast & rowDMAWrColMaxxed)? 1'b0:
+									(rowDMAIdle & inputCmdEraseSOL)? 1'b1:
+									eraseToSOLInProgress;
+
+	reg eraseToSOLInProgress;
 	always @(*) begin
 		nextRowDMAState = rowDMAState;
 		nextRowDMARdCol = rowDMARdCol;
 		case (rowDMAState)
-			LDMA0: begin
-				if (inputCmdCMD_BKSP & currentCursorColNotZero | inputCmdCMD_DEL) begin
-					nextRowDMAState = LDMA1;
-					//the DMA read address -- this is always 1 more than DMA write address
-					nextRowDMARdCol = (inputCmdCMD_DEL)? (currentCursorCol + 1'b1): currentCursorCol;
+			LDMA_IDLE: begin
+				if (inputCmdCMD_BKSP | inputCmdCMD_DEL | inputCmdEraseSOL) begin
+					nextRowDMAState = LDMA_READ;
+					//the DMA read address -- this is always 1 more than DMA write address except in erase to SOL case
+					//nextRowDMARdCol = (inputCmdCMD_DEL | bkspAtColZero)? (currentCursorCol + 1'b1):
+					nextRowDMARdCol = (inputCmdCMD_DEL)? (currentCursorCol + 1'b1):
+										currentCursorCol;
 				end
 			end
-			LDMA1: begin
+			LDMA_READ: begin
 				//read from column rowDMARdCol
-				nextRowDMAState = LDMA2;
+				nextRowDMAState = LDMA_WRITE;
 			end
-			LDMA2: begin
-				//write to column (rowDMARdCol - 1) with the data read in state LDMA1
-				nextRowDMAState = rowDMARdColMaxxed? LDMA3: LDMA1;
-				//if read to column 79 has happened in state LDMA1, then increment read column to 80
-				//but exit to state LDMA3
-				nextRowDMARdCol = rowDMARdCol + 1'b1;
+			LDMA_WRITE: begin
+				//write to column (rowDMARdCol - 1) with the data read in state LDMA_READ
+				nextRowDMAState = (rowDMARdColMaxxed)? LDMA_LASTWRITE: LDMA_READ;
+				//if read to column 79 has happened in state LDMA_READ, then increment read column to 80
+				//but exit to state LDMA_LASTWRITE
+				//reuse rowDMARdCol counter for rowDMAWrCol, so capture the current rowDMAWrCol value
+				nextRowDMARdCol = (rowDMARdColMaxxed)? (rowDMAWrCol + 1'b1): (rowDMARdCol + 1'b1);
 			end
-			LDMA3: begin
-				//write to column (rowDMARdCol - 1), which now equals 79, but write data is space char (value 32)
-				nextRowDMAState = LDMA0;
-				nextRowDMARdCol = 7'h0;
+			LDMA_LASTWRITE: begin
+				//write to column (rowDMARdCol - 1), which now equals 79, but write data is null char
+				//for erase to SOL, stay in this state
+				nextRowDMAState = (rowDMAWrColMaxxed)? LDMA_IDLE: LDMA_LASTWRITE;
+				nextRowDMARdCol = (rowDMAWrColMaxxed)? 7'h0: (rowDMARdCol + 1'b1);
 			end
 			default: begin
-				nextRowDMAState = LDMA0;
+				nextRowDMAState = LDMA_IDLE;
 				nextRowDMARdCol = 7'h0;
 			end
 		endcase
@@ -275,11 +276,31 @@ module vga(
 		if (~resetn) begin
 			rowDMAState <= `DELAY 2'h0;
 			rowDMARdCol <= `DELAY 7'h0;
+			eraseToSOLInProgress <= `DELAY 1'b0;
 		end else begin
 			rowDMAState <= `DELAY nextRowDMAState;
 			rowDMARdCol <= `DELAY nextRowDMARdCol;
+			eraseToSOLInProgress <= `DELAY nextEraseToSOLInProgress;
 		end
 	end
+
+	charBufferInit ucharbufinit (
+		.clk (clk),
+		.resetn (userResetn),
+		.enable (userResetn & inputKeyA & inputKeyB 
+					& ~inputCmdCls 
+					& ~inputCmdScrollUp 
+					& ~inputCmdEraseEOL
+					& ~inputCmdEraseLine),
+		.sequential (~inputKeyB),
+		.initRowOnly (inputCmdScrollUp 
+						| inputCmdEraseEOL 
+						| inputCmdEraseLine),
+		.rowInitRow (currentScrolledRow),
+		.rowInitCol ((inputCmdEraseEOL)? currentCursorCol: 7'h0),
+		.initWrEn (charBufferInitInProgress),
+		.initAddress (charBufferInitAddr),
+		.initData (charBufferInitData));
 
 	reg cursorInvisible;
 	always @(posedge clk) begin
@@ -291,19 +312,27 @@ module vga(
 			inputCmdMemWrEn <= `DELAY 1'b0;
 			inputCmdMemWrData <= `DELAY 8'h0;
 			scrollRow <= `DELAY 5'h0;
-			inputCmdScrollUp_r0 <= `DELAY 1'b0;
+			//inputCmdScrollUp_r0 <= `DELAY 1'b0;
+			//inputCmdEraseEOL_r0 <= `DELAY 1'b0;
+			//inputCmdEraseLine_r0 <= `DELAY 1'b0;
 		end else begin
 			//1 means cursor is invisible
 			//during backspace or delete operation, make cursor invisible
 			cursorInvisible <= `DELAY (inputCmdCursorToggle)? ~cursorInvisible: cursorInvisible; 
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
-			inputCmdMemWrEn <= `DELAY inputCmdValid & (inputCmdData >= 8'd32);
+			inputCmdMemWrEn <= `DELAY inputCmdValid & (inputCmdData >= 8'd32) & ~inputCmdData[7];
 			inputCmdMemWrData <= `DELAY inputCmdData;
-			inputCmdScrollUp_r0 <= `DELAY inputCmdScrollUp;
+			//inputCmdScrollUp_r0 <= `DELAY inputCmdScrollUp;
+			//inputCmdEraseEOL_r0 <= `DELAY inputCmdEraseEOL;
+			//inputCmdEraseLine_r0 <= `DELAY inputCmdEraseLine;
 			//character at current cursor is stored at (MAXROW_M_1 + 1) * currentCursorCol + currentCursorRow
 			if (inputCmdValid_r0) begin
 				if (inputCmdMemWrData[7:4] == 4'h0) begin
 					case (inputCmdMemWrData[3:0])
+						4'd`CMD_SCROLL_UP: begin
+							//EXPERIMENTAL
+							scrollRow <= `DELAY (scrollRow - 1'b1);
+						end
 						4'd`CMD_CRLF: begin
 							//Return is CMD_HOME + CMD_DOWN
 							currentCursorCol <= `DELAY 7'h0;
@@ -325,11 +354,14 @@ module vga(
 						end
 						4'd`CMD_PGUP: begin
 							currentCursorRow = `DELAY 0;
-							currentCursorCol <= `DELAY 0;
 						end
 						4'd`CMD_PGDN: begin
 							currentCursorRow = `DELAY MAXROW_M_1;
-							currentCursorCol <= `DELAY MAXCOL_M_1;
+						end
+						4'd`CMD_TAB: begin
+							if (currentCursorCol <= MAXCOL_M_TABLEN_1) begin
+								currentCursorCol <= `DELAY currentCursorCol + TABLEN;
+							end
 						end
 						4'd`CMD_UP: begin
 							if (currentCursorRow != 5'h0) begin
@@ -337,23 +369,12 @@ module vga(
 							end
 						end
 						4'd`CMD_LEFT, 8'd`CMD_BKSP: begin
-						//4'd`CMD_LEFT: begin //backspace on column 0 doesn't make cursor go back one row
 							if (currentCursorCol != 7'h0) begin
 								currentCursorCol <= `DELAY (currentCursorCol - 1'b1);
-							end else if (currentCursorRow != 5'h0) begin
-									currentCursorCol <= `DELAY MAXCOL_M_1;
-									currentCursorRow <= `DELAY (currentCursorRow - 1'b1);
 							end
 						end
-						4'd`CMD_RIGHT, 8'd`CMD_TAB: begin
-							if (currentCursorCol == MAXCOL_M_1) begin
-								if (currentCursorRow == MAXROW_M_1) begin
-									scrollRow <= `DELAY (scrollRow + 1'b1);
-								end else begin
-									currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
-								end
-								currentCursorCol <= `DELAY 7'h0;
-							end else begin
+						4'd`CMD_RIGHT: begin
+							if (currentCursorCol != MAXCOL_M_1) begin
 								currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
 							end
 						end
@@ -370,12 +391,8 @@ module vga(
 							scrollRow <= `DELAY 5'h0;
 						end
 					endcase
-				end else if (inputCmdAbsRow) begin
-					currentCursorRow <= ` DELAY inputValueAbsRow;
-				end else if (inputCmdAbsCol) begin
-					currentCursorCol <= ` DELAY inputValueAbsCol;
-				end else begin
-					//printable character > ASCII 31
+				end else if ((inputCmdMemWrData[6:0] >= 7'd`CHAR_SPC) & ~inputCmdMemWrData[7]) begin
+					//printable character > ASCII 31 < 128
 					if (currentCursorCol == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 5'h0;
 						if (currentCursorRow == MAXROW_M_1) begin
@@ -387,6 +404,14 @@ module vga(
 					end else begin
 						currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
 					end
+				end
+			end else if (eraseToSOLInProgress & rowDMAWrColMaxxed & rowDMAWrEnLast) begin
+				currentCursorCol <= `DELAY 7'h0;
+			end else if (inputCmdMemWrData[7]) begin
+				if (inputCmdMemWrData[6:0] <= MAXCOL_M_1) begin
+					currentCursorCol <= `DELAY inputCmdMemWrData[6:0];
+				end else if (inputCmdMemWrData[6:0] >= 96) begin
+					currentCursorRow <= `DELAY inputCmdMemWrData[4:0];
 				end
 			end else if (~inputKeyB | ~inputKeyA) begin
 				//key presses will initialize cursor
@@ -421,7 +446,12 @@ module vga(
 	//depth = total characters on screen = 2560
 	//data width = 8 --> points to one of the 255 characters of charROM
 
-	wire [6:0] rowDMAWrCol = (rowDMARdCol - 1'b1);
+	//There is only one counter for rowDMARdCol, once read column has reached MAXCOL_M_1,
+	//reuse the counter for write column.
+	//currentCursorCol does not change while eraseToSOL operation is in progress
+	wire [6:0] rowDMAWrCol = (rowDMAWrEnLast)? rowDMARdCol:
+							 (eraseToSOLInProgress)? (rowDMARdCol - currentCursorCol):
+							 (rowDMARdCol - 1'b1);
 	assign currentScrolledRow = currentCursorRow + scrollRow;
 	assign charBufferWrAddr =	(charBufferInitInProgress)?	charBufferInitAddr[11:0]:
 								(rowDMAWrEn | rowDMAWrEnLast)? {rowDMAWrCol[6:0], currentScrolledRow[4:0]}:
@@ -429,18 +459,17 @@ module vga(
 
 	assign charBufferWrData =	(charBufferInitInProgress)?	charBufferInitData[6:0]:
 								(rowDMAWrEn)? {charBufferRdDataColor, charBufferRdData[6:0]}:
-								//for the last column, write with space
-								(rowDMAWrEnLast)? {charBufferRdDataColor, 7'd32}:
+								//for the last column, write with null
+								(rowDMAWrEnLast)? {charBufferRdDataColor, 7'd0}:
 								{charBufferRdDataColor, inputCmdMemWrData[6:0]};
 
 	//backspace writes a space character one clock after the cursor is moved left
 	//delete just writes a space character without moving the cursor
-	assign charBufferWrEn = charBufferInitInProgress | inputCmdMemWrEn
+	assign charBufferWrEn = charBufferInitInProgress | inputCmdMemWrEn 
 							| rowDMAWrEn | rowDMAWrEnLast;
 
 	wire [4:0] currentScrolledScanRow = currentScanCharRow + scrollRow;
 	wire [6:0] charBufferRdCol = (rowDMARdEn)? rowDMARdCol[6:0]: currentScanCharCol[6:0];
-	//wire [4:0] charBufferRdRow = (rowDMARdEn)? currentCursorRow[4:0]: currentScrolledScanRow[4:0];
 	wire [4:0] charBufferRdRow = (rowDMARdEn)? currentScrolledRow[4:0]: currentScrolledScanRow[4:0];
 	assign charBufferRdAddr = {charBufferRdCol[6:0], charBufferRdRow[4:0]};
 	assign charBufferRdEn = ((charWidthCounter == 3'h0) & inDisplayArea_r0) 
@@ -464,8 +493,7 @@ module vga(
 		.debugPixel(debugPixel),
 		.HSync(hsyncGen),
 		.VSync(vsyncGen),
-		.inDisplayArea(inDisplayArea)
-	 );
+		.inDisplayArea(inDisplayArea));
 
 	wire [2:0] nextCharWidthCounter = (charWidthCounter + 1'b1);
 	wire [3:0] nextCharHeightCounter = (charHeightCounter + 1'b1);

@@ -41,7 +41,7 @@ module tb ();
 	initial keyB = 1'b1;
 	
 	initial	begin
-		#10000001 keyA = 1'b0;
+		#10001 keyA = 1'b0;
 		#105 keyA = 1'b1;
 		#10001 keyB = 1'b0;
 		#75 keyB = 1'b1;
