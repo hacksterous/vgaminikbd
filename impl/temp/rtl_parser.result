@@ -133,7 +133,7 @@
     "SubInsts" : [
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 171,
+      "InstLine" : 177,
       "InstName" : "uheartbeat",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v",
       "ModuleLine" : 7,
@@ -141,7 +141,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 297,
+      "InstLine" : 302,
       "InstName" : "ucharbufinit",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
       "ModuleLine" : 11,
@@ -149,7 +149,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 446,
+      "InstLine" : 454,
       "InstName" : "ucharROM",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
       "ModuleLine" : 9,
@@ -157,7 +157,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 488,
+      "InstLine" : 496,
       "InstName" : "ucharBuffer",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v",
       "ModuleLine" : 9,
@@ -165,7 +165,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 500,
+      "InstLine" : 508,
       "InstName" : "uhvsync",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v",
       "ModuleLine" : 25,

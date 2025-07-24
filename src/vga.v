@@ -157,12 +157,18 @@ module vga(
 
 	reg inputCmdMemWrEn;
 	reg inputCmdValid_r0;
+	reg inputCmdScrollUp_r0;
 	reg [7:0] inputCmdMemWrData/*synthesis syn_ preserve =1*/;
 
 	reg [4:0] scrollRow;
 	wire [4:0] currentScrolledRow;
 
 	wire cursorBlink;
+
+	reg cursorInvisible;
+	reg pendingSetCol;
+	reg pendingSetRow;
+	reg insertMode;
 
 	//The heartbeat module takes in the VSync pulse
 	//and generates user reset that remains active low
@@ -175,41 +181,40 @@ module vga(
 		.userResetn (userResetn),
 		.cursorBlink (cursorBlink));
 
-	wire inputCmdDown		= (inputCmdMemWrData[7:4] == 4'h0) & 
-								((inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) 
-									| (inputCmdMemWrData == 4'd`CMD_CRLF));
-	wire inputCmdCls		= inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0) & 
-										(inputCmdMemWrData == 4'd`CMD_CLS);
-	wire inputCmdCursorToggle = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) 
-								& (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
-	wire inputCmdScrollUp	= inputCmdValid_r0 & inputCmdDown & (currentCursorRow == MAXROW_M_1);
+	wire inputCmdDownCode = (inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF);
 
-	wire inputCmdCMD_BKSP = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4] & 
-							(inputCmdMemWrData[3:0] == 4'd`CMD_BKSP);
-	wire inputCmdCMD_DEL = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4] & 
-							(inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
+	wire screenEnd = (currentCursorCol == MAXCOL_M_1);
+
+	//wire inputCmdLow16 = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0);
+	wire inputCmdLow16 = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4];
+	wire inputCmdCls		= inputCmdLow16 & (inputCmdMemWrData == 4'd`CMD_CLS);
+
+	wire inputCmdCMD_BKSP = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_BKSP);
+	wire inputCmdCMD_DEL = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
 	
+	wire inputCmdLow32 = inputCmdValid_r0 & ~|inputCmdMemWrData[7:5];
+
+	wire isPrintableChar = inputCmdMemWrEn;
+
+	wire inputCmdInsertToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_INSTOG);
+
+	wire inputCmdScrollUp	= (inputCmdLow16 & inputCmdDownCode 
+								| inputCmdValid_r0 & screenEnd & isPrintableChar & ~insertMode)
+								& (currentCursorRow == MAXROW_M_1);
+
+	wire inputCmdCursorToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
 	//erase to start of line (move char at current char to column 0 with the rest of characters following)
-	wire inputCmdEraseSOL = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
-							(inputCmdMemWrData[4:0] == `CMD_ERASE_SOL);
+	wire inputCmdEraseSOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_SOL);
 
 	//erase to end of line and erase line -- for these two, make use of charBufferInit logic
-	wire inputCmdEraseEOL = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
-							(inputCmdMemWrData[4:0] == `CMD_ERASE_EOL);
-	wire inputCmdEraseLine = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
-							 & (inputCmdMemWrData[4:0] == `CMD_ERASE_LINE);
+	wire inputCmdEraseEOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_EOL);
+	wire inputCmdEraseLine = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_LINE);
 
-	wire inputCmdSetCol = inputCmdValid_r0 & (inputCmdMemWrData[7:5] == 3'h0) & 
-							 & (inputCmdMemWrData[4:0] == `CMD_SETCOL);
+	wire inputCmdSetCol = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETCOL);
+	wire inputCmdSetRow = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETROW);
 
-	//cursor commands above 8'd15
-	wire isOtherCursorCommand = inputCmdCMD_DEL | inputCmdEraseSOL | inputCmdEraseEOL
-								| inputCmdEraseLine | inputCmdSetCol | inputCmdCursorToggle;
-
-	wire isPrintableChar = inputCmdValid_r0 & |inputCmdMemWrData[7:5] & ~inputCmdMemWrData[7];
 	//TODO: rowDMA when isPrintableChar = 1
 
-	reg inputCmdScrollUp_r0;
 	reg [6:0] rowDMARdCol;
 	reg [6:0] nextRowDMARdCol;
 	//row DMA is to handle backspace and delete
@@ -314,12 +319,12 @@ module vga(
 
 	assign debugUARTTxData = {1'b0, inputCmdMemWrData[7:1]};
 	assign debugUARTTxDataValid = inputCmdValid_r0;
-	reg cursorInvisible;
-	reg pendingSetCol;
 	always @(posedge clk) begin
 		if (~resetn) begin
 			inputCmdScrollUp_r0 <= `DELAY 5'h0;
+			insertMode <= `DELAY 1'b0;
 			pendingSetCol <= `DELAY 1'b0; //1 means next input byte will set the column
+			pendingSetRow <= `DELAY 1'b0; //1 means next input byte will set the column
 			cursorInvisible <= `DELAY 1'b0; //1 means cursor is invisible
 			currentCursorCol <= `DELAY 7'h0;
 			currentCursorRow <= `DELAY 5'h0;
@@ -330,14 +335,19 @@ module vga(
 		end else begin
 			inputCmdScrollUp_r0 <= `DELAY inputCmdScrollUp;
 			pendingSetCol <= `DELAY (inputCmdSetCol)? 1'b1: pendingSetCol; 
+			pendingSetRow <= `DELAY (inputCmdSetRow)? 1'b1: pendingSetRow; 
 			//1 means cursor is invisible
 			//during backspace or delete operation, make cursor invisible
 			cursorInvisible <= `DELAY (inputCmdCursorToggle)? ~cursorInvisible: cursorInvisible; 
+			insertMode <= `DELAY (inputCmdInsertToggle)? ~insertMode: insertMode;
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
-			inputCmdMemWrEn <= `DELAY inputCmdValid & (inputCmdData[6:0] >= 7'd`CHAR_SPC) & ~inputCmdData[7];
+			inputCmdMemWrEn <= `DELAY inputCmdValid & |inputCmdData[6:5] & ~inputCmdData[7] & ~pendingSetCol & ~pendingSetRow;
 			inputCmdMemWrData <= `DELAY inputCmdData;
 			//character at current cursor is stored at (MAXROW_M_1 + 1) * currentCursorCol + currentCursorRow
-			if (pendingSetCol) begin
+			if (pendingSetRow & inputCmdValid_r0) begin
+				currentCursorRow <= `DELAY inputCmdMemWrData[4:0];
+				pendingSetRow <= `DELAY 1'b0;
+			end else if (pendingSetCol & inputCmdValid_r0) begin
 				currentCursorCol <= `DELAY inputCmdMemWrData[6:0];
 				pendingSetCol <= `DELAY 1'b0;
 			end else if (eraseToSOLInProgress & rowDMAWrColMaxxed & rowDMAWrEnLast) begin
@@ -412,7 +422,7 @@ module vga(
 							scrollRow <= `DELAY 5'h0;
 						end
 					endcase
-				end else if (~inputCmdMemWrData[7] & ~isOtherCursorCommand) begin
+				end else if (isPrintableChar) begin
 					//printable character > ASCII 31 < 128
 					if (currentCursorCol == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 7'h0;
@@ -425,8 +435,6 @@ module vga(
 					end else begin
 						currentCursorCol <= `DELAY (currentCursorCol + 1'b1);
 					end
-				end else if (~isOtherCursorCommand)begin
-					currentCursorRow <= `DELAY inputCmdMemWrData[4:0];
 				end
 			end //if inputCmdValid_r0
 		end //else ~resetn
