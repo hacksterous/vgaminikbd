@@ -75,7 +75,23 @@
    },
    {
     "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 122,
+    "InstLine" : 126,
+    "InstName" : "uuart0",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v",
+    "ModuleLine" : 4,
+    "ModuleName" : "uart"
+   },
+   {
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 147,
+    "InstName" : "uansiesc",
+    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v",
+    "ModuleLine" : 24,
+    "ModuleName" : "ansiescape"
+   },
+   {
+    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
+    "InstLine" : 155,
     "InstName" : "uarb",
     "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
     "ModuleLine" : 7,
@@ -109,31 +125,15 @@
    },
    {
     "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 138,
-    "InstName" : "uuart0",
-    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v",
-    "ModuleLine" : 4,
-    "ModuleName" : "uart"
-   },
-   {
-    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 159,
-    "InstName" : "uansiesc",
-    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v",
-    "ModuleLine" : 24,
-    "ModuleName" : "ansiescape"
-   },
-   {
-    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 167,
+    "InstLine" : 169,
     "InstName" : "uvga",
     "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-    "ModuleLine" : 85,
+    "ModuleLine" : 83,
     "ModuleName" : "vga",
     "SubInsts" : [
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 174,
+      "InstLine" : 171,
       "InstName" : "uheartbeat",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v",
       "ModuleLine" : 7,
@@ -141,7 +141,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 287,
+      "InstLine" : 297,
       "InstName" : "ucharbufinit",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
       "ModuleLine" : 11,
@@ -149,7 +149,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 436,
+      "InstLine" : 446,
       "InstName" : "ucharROM",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
       "ModuleLine" : 9,
@@ -157,7 +157,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 478,
+      "InstLine" : 488,
       "InstName" : "ucharBuffer",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v",
       "ModuleLine" : 9,
@@ -165,7 +165,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 490,
+      "InstLine" : 500,
       "InstName" : "uhvsync",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v",
       "ModuleLine" : 25,

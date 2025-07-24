@@ -1,4 +1,4 @@
-//Copyright (C)2014-2024 Gowin Semiconductor Corporation.
+//Copyright (C)2014-2025 Gowin Semiconductor Corporation.
 //All rights reserved.
 
 
@@ -8,89 +8,78 @@
   <Design File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg
   <Physical Constraints File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.cst
   <Timing Constraints File>: /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.sdc
-  <Tool Version>: V1.9.9.02
+  <Tool Version>: V1.9.11.03
   <Part Number>: GW1NZ-LV1QN48C6/I5
   <Device>: GW1NZ-1
-  <Created Time>:Tue Jul 22 19:12:11 2025
+  <Created Time>:Thu Jul 24 21:53:43 2025
 
 
 2. PnR Details
 
   Running placement:
-    Placement Phase 0: CPU time = 0h 0m 0.52s, Elapsed time = 0h 0m 0.513s
-    Placement Phase 1: CPU time = 0h 0m 0.161s, Elapsed time = 0h 0m 0.157s
-    Placement Phase 2: CPU time = 0h 0m 0.549s, Elapsed time = 0h 0m 0.542s
-    Placement Phase 3: CPU time = 0h 0m 9s, Elapsed time = 0h 0m 9s
-    Total Placement: CPU time = 0h 0m 10s, Elapsed time = 0h 0m 10s
+    Placement Phase 0: CPU time = 0h 0m 0.085s, Elapsed time = 0h 0m 0.081s
+    Placement Phase 1: CPU time = 0h 0m 0.038s, Elapsed time = 0h 0m 0.036s
+    Placement Phase 2: CPU time = 0h 0m 0.103s, Elapsed time = 0h 0m 0.1s
+    Placement Phase 3: CPU time = 0h 0m 1s, Elapsed time = 0h 0m 1s
+    Total Placement: CPU time = 0h 0m 1s, Elapsed time = 0h 0m 1s
  Running routing:
-    Routing Phase 0: CPU time = 0h 0m 0.002s, Elapsed time = 0h 0m 0.002s
-    Routing Phase 1: CPU time = 0h 0m 0.341s, Elapsed time = 0h 0m 0.348s
-    Routing Phase 2: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
+    Routing Phase 0: CPU time = 0h 0m 0.001s, Elapsed time = 0h 0m 0.001s
+    Routing Phase 1: CPU time = 0h 0m 0.051s, Elapsed time = 0h 0m 0.058s
+    Routing Phase 2: CPU time = 0h 0m 0.691s, Elapsed time = 0h 0m 0.682s
     Routing Phase 3: CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s
-    Total Routing: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s
+    Total Routing: CPU time = 0h 0m 0.743s, Elapsed time = 0h 0m 0.741s
  Generate output files:
-    CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s
+    CPU time = 0h 0m 0.284s, Elapsed time = 0h 0m 0.344s
 
- Total Time and Memory Usage: CPU time = 0h 0m 15s, Elapsed time = 0h 0m 15s, Peak memory usage = 328MB
+ Total Time and Memory Usage: CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s, Peak memory usage = 503MB
 
 
 3. Resource Usage Summary
 
-  ----------------------------------------------------------
-  Resources                   | Usage
-  ----------------------------------------------------------
-  Logic                       | 650/1152  57%
-    --LUT,ALU,ROM16           | 638(576 LUT, 62 ALU, 0 ROM16)
-    --SSRAM(RAM16)            | 2
-  Register                    | 294/957  31%
-    --Logic Register as Latch | 0/864  0%
-    --Logic Register as FF    | 290/864  34%
-    --I/O Register as Latch   | 0/93  0%
-    --I/O Register as FF      | 4/93  5%
-  CLS                         | 392/576  69%
-  I/O Port                    | 13
-  I/O Buf                     | 13
-    --Input Buf               | 6
-    --Output Buf              | 7
-    --Inout Buf               | 0
-  IOLOGIC                     | 0%
-  BSRAM                       | 100%
+  --------------------------------------------------------------------------------
+  Resources                   | Usage                               | Utilization
+  --------------------------------------------------------------------------------
+  Logic                       | 690/1152                            |  60%
+    --LUT,ALU,ROM16           | 678(616 LUT, 62 ALU, 0 ROM16)       | -
+    --SSRAM(RAM16)            | 2                                   | -
+  Register                    | 294/957                             |  31%
+    --Logic Register as Latch | 0/864                               |  0%
+    --Logic Register as FF    | 290/864                             |  34%
+    --I/O Register as Latch   | 0/93                                |  0%
+    --I/O Register as FF      | 4/93                                |  5%
+  CLS                         | 418/576                             |  73%
+  I/O Port                    | 13/41                               |  32%
+  I/O Buf                     | 13                                  | -
+    --Input Buf               | 6                                   | -
+    --Output Buf              | 7                                   | -
+    --Inout Buf               | 0                                   | -
+  BSRAM                       | 4/4                                 | 100%
     --SP                      | 2
     --pROM                    | 2
-  PLL                         | 1/1  100%
-  DCS                         | 0/4  0%
-  DQCE                        | 0/12  0%
-  OSC                         | 0/1  0%
-  User Flash                  | 0/1  0%
-  CLKDIV                      | 0/4  0%
-  DLLDLY                      | 0/4  0%
-  DHCEN                       | 0/8  0%
-  ==========================================================
+  ================================================================================
 
 
 
 4. I/O Bank Usage Summary
 
-  -----------------------
-  I/O Bank  | Usage       
-  -----------------------
-  bank 0   | 2/18(11%)   
-  bank 1   | 11/23(47%)  
-  =======================
+  --------------------------------------
+  I/O Bank  | Usage       | Utilization 
+  --------------------------------------
+  bank 0   | 2/18        | 12%         
+  bank 1   | 11/23       | 48%         
+  ======================================
 
 
-5. Global Clock Usage Summary
+5. Clock Resource Usage Summary
 
-  -------------------------------
-  Global Clock  | Usage       
-  -------------------------------
-  PRIMARY       | 1/8(13%)
-  LW            | 1/8(13%)
-  GCLK_PIN      | 1/3(34%)
-  PLL           | 1/1(100%)
-  CLKDIV        | 0/4(0%)
-  DLLDLY        | 0/4(0%)
-  ===============================
+  ------------------------------------------
+  Clock Resource| Usage         | Utilization 
+  ------------------------------------------
+  PRIMARY       | 1/8           | 13%
+  LW            | 1/8           | 13%
+  GCLK_PIN      | 1/3           | 34%
+  rPLL          | 1/1           | 100%
+  ==========================================
 
 
 6. Global Clock Signals
@@ -100,28 +89,28 @@
   -------------------------------------------
   clk            | PRIMARY        |  LEFT RIGHT
   userResetn     | LW             |  -
-  clkin_d        | HCLK           | RIGHT[0]
+  clkin_d        | HCLK           | BANK2_BANK3_HCLK0
   ===========================================
 
 
 7. Pinout by Port Name
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Port Name  | Diff Pair | Loc./Bank     | Constraint | Dir.  | Site     | IO Type    | Drive | Pull Mode | PCI Clamp | Hysteresis | Open Drain | BankVccio 
+Port Name  | Diff Pair | Loc./Bank     | Constraint | Dir.  | Site     | CFG             | IO Type    | Drive | Pull Mode | PCI Clamp | Hysteresis | Open Drain | BankVccio 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-keyA       |           | 13/1          | Y          | in    | IOR10[B] | LVTTL33    | NA    | NONE      | ON        | NONE       | NA         | 3.3       
-keyB       |           | 44/0          | Y          | in    | IOT13[A] | LVTTL33    | NA    | NONE      | ON        | NONE       | NA         | 3.3       
-KBD_CLK    |           | 29/1          | Y          | in    | IOR6[E]  | LVTTL33    | NA    | UP        | ON        | NONE       | NA         | 3.3       
-KBD_DATA   |           | 19/1          | Y          | in    | IOR6[J]  | LVTTL33    | NA    | UP        | ON        | NONE       | NA         | 3.3       
-UART_RX0   |           | 16/1          | Y          | in    | IOR6[F]  | LVTTL33    | NA    | UP        | ON        | NONE       | NA         | 3.3       
-clkin      |           | 47/0          | Y          | in    | IOT10[A] | LVCMOS33   | NA    | NONE      | ON        | NONE       | NA         | 3.3       
-UART_TX0   |           | 17/1          | Y          | out   | IOR6[G]  | LVTTL33    | 8     | UP        | NA        | NA         | OFF        | 3.3       
-debug0     |           | 11/1          | Y          | out   | IOR3[A]  | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
-debug1     |           | 9/1           | Y          | out   | IOR2[A]  | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
-debug2     |           | 10/1          | Y          | out   | IOR2[B]  | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
-pixel      |           | 23/1          | Y          | out   | IOR8[B]  | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
-hsync      |           | 22/1          | Y          | out   | IOR9[A]  | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
-vsync      |           | 18/1          | Y          | out   | IOR6[H]  | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
+keyA       | -         | 13/1          | Y          | in    | IOR10[B] | -               | LVTTL33    | NA    | NONE      | NA        | NONE       | NA         | 3.3       
+keyB       | -         | 44/0          | Y          | in    | IOT13[A] | JTAGSEL_N       | LVTTL33    | NA    | NONE      | NA        | NONE       | NA         | 3.3       
+KBD_CLK    | -         | 29/1          | Y          | in    | IOR6[E]  | FASTRD_N/D3     | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
+KBD_DATA   | -         | 19/1          | Y          | in    | IOR6[J]  | DOUT/WE_N       | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
+UART_RX0   | -         | 16/1          | Y          | in    | IOR6[F]  | -               | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
+clkin      | -         | 47/0          | Y          | in    | IOT10[A] | GCLKT_0         | LVCMOS33   | NA    | NONE      | NA        | NONE       | NA         | 3.3       
+UART_TX0   | -         | 17/1          | Y          | out   | IOR6[G]  | -               | LVTTL33    | 8     | UP        | NA        | NA         | OFF        | 3.3       
+debug0     | -         | 11/1          | Y          | out   | IOR3[A]  | -               | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
+debug1     | -         | 9/1           | Y          | out   | IOR2[A]  | -               | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
+debug2     | -         | 10/1          | Y          | out   | IOR2[B]  | -               | LVTTL33    | 8     | NONE      | NA        | NA         | OFF        | 3.3       
+pixel      | -         | 23/1          | Y          | out   | IOR8[B]  | -               | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
+hsync      | -         | 22/1          | Y          | out   | IOR9[A]  | SI/D2           | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
+vsync      | -         | 18/1          | Y          | out   | IOR6[H]  | -               | LVTTL33    | 16    | NONE      | NA        | NA         | OFF        | 3.3       
 ===================================================================================================================================================================
 
 
@@ -130,52 +119,52 @@ vsync      |           | 18/1          | Y          | out   | IOR6[H]  | LVTTL33
 8. All Package Pins
 
 ---------------------------------------------------------------------------------------------------------------------------------------
-Loc./Bank| Signal    | Dir.  | Site     | IO Type  | Drive | Pull Mode | PCI Clamp | Hysteresis | Open Drain | Bank Vccio
+Loc./Bank| Signal    | Dir.  | Site     | CFG             | IO Type  | Drive | Pull Mode | PCI Clamp | Hysteresis | Open Drain | Bank Vccio
 ---------------------------------------------------------------------------------------------------------------------------------------
-4/0      | -         | in    | IOT7[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-3/0      | -         | in    | IOT7[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-5/0      | -         | in    | IOT8[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-7/0      | -         | out   | IOT8[B]  | LVCMOS18 | 8     | UP        | NA        | NA         | OFF        | 3.3  
-6/0      | -         | in    | IOT9[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-48/0     | -         | in    | IOT9[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-47/0     | clkin     | in    | IOT10[A] | LVCMOS33 | NA    | NONE      | ON        | NONE       | NA         | 3.3  
-8/0      | -         | in    | IOT10[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-46/0     | -         | in    | IOT12[A] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-45/0     | -         | in    | IOT12[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-44/0     | keyB      | in    | IOT13[A] | LVTTL33  | NA    | NONE      | ON        | NONE       | NA         | 3.3  
-43/0     | -         | in    | IOT14[A] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-42/0     | -         | in    | IOT14[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-41/0     | -         | in    | IOT15[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-40/0     | -         | in    | IOT16[A] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-39/0     | -         | in    | IOT16[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-38/0     | -         | in    | IOT17[A] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-35/0     | -         | in    | IOT17[B] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
+4/0      | -         | in    | IOT7[A]  | TMS/SPMI_SDATA  | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+3/0      | -         | in    | IOT7[B]  | TCK/SPMI_EN/VCCEN | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+5/0      | -         | in    | IOT8[A]  | TDI/SPMI_SCLK   | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+7/0      | -         | out   | IOT8[B]  | TDO             | LVCMOS33 | 8     | UP        | NA        | NA         | OFF        | 3.3  
+6/0      | -         | in    | IOT9[A]  | SCLK/SPMI_CLK   | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+48/0     | -         | in    | IOT9[B]  | RECONFIG_N      | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+47/0     | clkin     | in    | IOT10[A] | GCLKT_0         | LVCMOS33 | NA    | NONE      | NA        | NONE       | NA         | 3.3  
+8/0      | -         | in    | IOT10[B] | GCLKC_0         | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+46/0     | -         | in    | IOT12[A] | DONE            | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+45/0     | -         | in    | IOT12[B] | READY           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+44/0     | keyB      | in    | IOT13[A] | JTAGSEL_N       | LVTTL33  | NA    | NONE      | NA        | NONE       | NA         | 3.3  
+43/0     | -         | in    | IOT14[A] | MODE0           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+42/0     | -         | in    | IOT14[B] | MODE1           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+41/0     | -         | in    | IOT15[B] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+40/0     | -         | in    | IOT16[A] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+39/0     | -         | in    | IOT16[B] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+38/0     | -         | in    | IOT17[A] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+35/0     | -         | in    | IOT17[B] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
 ---------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------
-9/1      | debug1    | out   | IOR2[A]  | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
-10/1     | debug2    | out   | IOR2[B]  | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
-11/1     | debug0    | out   | IOR3[A]  | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
-34/1     | -         | in    | IOR3[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-33/1     | -         | in    | IOR5[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-32/1     | -         | in    | IOR5[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-31/1     | -         | in    | IOR6[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-14/1     | -         | in    | IOR6[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-30/1     | -         | in    | IOR6[C]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-15/1     | -         | in    | IOR6[D]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-29/1     | KBD_CLK   | in    | IOR6[E]  | LVTTL33  | NA    | UP        | ON        | NONE       | NA         | 3.3  
-16/1     | UART_RX0  | in    | IOR6[F]  | LVTTL33  | NA    | UP        | ON        | NONE       | NA         | 3.3  
-17/1     | UART_TX0  | out   | IOR6[G]  | LVTTL33  | 8     | UP        | NA        | NA         | OFF        | 3.3  
-18/1     | vsync     | out   | IOR6[H]  | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
-28/1     | -         | in    | IOR6[I]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-19/1     | KBD_DATA  | in    | IOR6[J]  | LVTTL33  | NA    | UP        | ON        | NONE       | NA         | 3.3  
-27/1     | -         | in    | IOR7[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-21/1     | -         | in    | IOR7[B]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-24/1     | -         | in    | IOR8[A]  | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-23/1     | pixel     | out   | IOR8[B]  | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
-22/1     | hsync     | out   | IOR9[A]  | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
-20/1     | -         | in    | IOR10[A] | LVCMOS18 | NA    | UP        | ON        | NONE       | NA         | 3.3  
-13/1     | keyA      | in    | IOR10[B] | LVTTL33  | NA    | NONE      | ON        | NONE       | NA         | 3.3  
+9/1      | debug1    | out   | IOR2[A]  | -               | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
+10/1     | debug2    | out   | IOR2[B]  | -               | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
+11/1     | debug0    | out   | IOR3[A]  | -               | LVTTL33  | 8     | NONE      | NA        | NA         | OFF        | 3.3  
+34/1     | -         | in    | IOR3[B]  | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+33/1     | -         | in    | IOR5[A]  | GCLKT_2/RPLL_T_in | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+32/1     | -         | in    | IOR5[B]  | GCLKC_2/RPLL_C_in | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+31/1     | -         | in    | IOR6[A]  | MI/D7           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+14/1     | -         | in    | IOR6[B]  | MO/D6           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+30/1     | -         | in    | IOR6[C]  | MCS_N/D5        | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+15/1     | -         | in    | IOR6[D]  | MCLK/D4         | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+29/1     | KBD_CLK   | in    | IOR6[E]  | FASTRD_N/D3     | LVTTL33  | NA    | UP        | NA        | NONE       | NA         | 3.3  
+16/1     | UART_RX0  | in    | IOR6[F]  | -               | LVTTL33  | NA    | UP        | NA        | NONE       | NA         | 3.3  
+17/1     | UART_TX0  | out   | IOR6[G]  | -               | LVTTL33  | 8     | UP        | NA        | NA         | OFF        | 3.3  
+18/1     | vsync     | out   | IOR6[H]  | -               | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
+28/1     | -         | in    | IOR6[I]  | DIN/CLKHOLD_N   | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+19/1     | KBD_DATA  | in    | IOR6[J]  | DOUT/WE_N       | LVTTL33  | NA    | UP        | NA        | NONE       | NA         | 3.3  
+27/1     | -         | in    | IOR7[A]  | GCLKT_3/SSPI_CS_N/D0 | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+21/1     | -         | in    | IOR7[B]  | GCLKC_3         | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+24/1     | -         | in    | IOR8[A]  | SO/D1           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+23/1     | pixel     | out   | IOR8[B]  | -               | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
+22/1     | hsync     | out   | IOR9[A]  | SI/D2           | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
+20/1     | -         | in    | IOR10[A] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
+13/1     | keyA      | in    | IOR10[B] | -               | LVTTL33  | NA    | NONE      | NA        | NONE       | NA         | 3.3  
 ---------------------------------------------------------------------------------------------------------------------------------------
 =======================================================================================================================================
 

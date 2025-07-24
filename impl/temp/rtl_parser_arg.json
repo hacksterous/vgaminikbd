@@ -10,11 +10,11 @@
    "Type" : "verilog"
   },
   {
-   "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
+   "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
    "Type" : "verilog"
   },
   {
-   "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
+   "Path" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
    "Type" : "verilog"
   },
   {

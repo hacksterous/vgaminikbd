@@ -58,11 +58,6 @@
 	reg [1:0] initState;
 	wire [1:0] nextInitState;
 
-	//initRowOnly and enable have to be delayed so that the
-	//update in currentScrolledRow is captured.
-	reg enable_r0;
-	reg initRowOnly_r0;
-
 	wire initAddressAtMax = (initAddress == MAXCHARS_M_1);
 	wire initCursorColAtMax = (initCursorCol == MAXCOL_M_1);
 	wire initStateIDLE = (initState == INIT_STATE_IDLE);
@@ -74,23 +69,18 @@
 	wire rowInitDone = initStateACTIVE_ROW & initCursorColAtMax;
 	wire initDone = fullScreenInitDone | rowInitDone;
 
-	assign nextInitState =  (~enable_r0 & initStateIDLE & sequential & ~initRowOnly_r0)?
+	assign nextInitState =  (~enable & initStateIDLE & sequential & ~initRowOnly)?
 								INIT_STATE_ACTIVE_SEQ:
-							(~enable_r0 & initStateIDLE & ~sequential & ~initRowOnly_r0)?
+							(~enable & initStateIDLE & ~sequential & ~initRowOnly)?
 								INIT_STATE_ACTIVE_ZERO:
-							(~enable_r0 & initStateIDLE & initRowOnly_r0)?
+							(~enable & initStateIDLE & initRowOnly)?
 								INIT_STATE_ACTIVE_ROW:
-							(initDone & enable_r0)?
+							(initDone & enable)?
 								INIT_STATE_IDLE:
 								initState;
 	
 	assign initWrEn = ~initStateIDLE;
 	assign initAddress = {initCursorCol[6:0], initCursorRow[4:0]};
-
-	always @(posedge clk) begin
-		initRowOnly_r0 <= `DELAY initRowOnly;
-		enable_r0 <= `DELAY enable;
-	end
 
 	always @(posedge clk) begin
 		if (~resetn) begin
@@ -99,13 +89,12 @@
 			initData <= `DELAY 7'd`CHAR_NUL;
 			initState <= `DELAY 1'b0;
 		end else begin
-			if (initStateIDLE & initRowOnly_r0 & ~enable_r0) begin
+			if (initStateIDLE & initRowOnly & ~enable) begin
 				initCursorRow <= `DELAY  rowInitRow;
 				initCursorCol <= `DELAY  rowInitCol;
 			end if (initStateACTIVE_SEQ | initStateACTIVE_ZERO) begin
 				initCursorRow <= `DELAY (initCursorColAtMax)? (initCursorRow + 1'b1): initCursorRow;
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);
-				//initData <= `DELAY (fullScreenInitDone)? 7'd`CHAR_NUL: (initStateACTIVE_SEQ)? (initData + 1'b1): 7'd`CHAR_NUL;
 				initData <= `DELAY (fullScreenInitDone | ~initStateACTIVE_SEQ)? 7'd`CHAR_NUL: (initData + 1'b1);
 			end else if (initStateACTIVE_ROW) begin
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);

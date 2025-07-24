@@ -119,21 +119,9 @@ Note!
 	wire serialANSIDataValid;
 	wire [7:0] serialANSIData;
 
-	datamux2in uarb (
-		.debug0 (), //green
-		.debug1 (debug1), //red
-		.debug2 (debug2), //blue
-		.clk (clk),
-		.resetn (userResetn),
-		.d0 (serialANSIData), 
-		.d0v (serialANSIDataValid), 
-		.d1 (kbdAsciiData),
-		.d1v (1'b0), //kbdAsciiDataValid),
-		.error (dataArbError),
-		.od (dataArbDout),
-		.odv (dataArbDoutValid));
-
 	wire dataInTxBusy;
+	wire [7:0] dataInTx;
+	wire dataInTxValid;
 
 	uart uuart0 (
 		.ECHO (1'b0),
@@ -164,14 +152,30 @@ Note!
 		.rxANSIDataOutValid (serialANSIDataValid),
 		.rxANSIDataOut (serialANSIData));
 
+	datamux2in uarb (
+		.debug0 (), //green
+		.debug1 (debug1), //red
+		.debug2 (debug2), //blue
+		.clk (clk),
+		.resetn (userResetn),
+		.d0 (serialANSIData), 
+		.d0v (serialANSIDataValid), 
+		.d1 (kbdAsciiData),
+		.d1v (1'b0), //kbdAsciiDataValid),
+		.error (dataArbError),
+		.od (dataArbDout),
+		.odv (dataArbDoutValid));
+
 	vga uvga(
 		.resetn (resetn),
 		//.inputCmdData (dataArbDout), //FIXME: uncomment
-		//.inputCmdValid (dataArbDoutValid), //FIXME: remove
-		.inputCmdData (rxDataOut), //FIXME: remove
-		.inputCmdValid (rxDataOutValid), //FIXME: remove
+		//.inputCmdValid (dataArbDoutValid), //FIXME: uncomment
+		.inputCmdData (serialANSIData), //FIXME: remove
+		.inputCmdValid (serialANSIDataValid), //FIXME: remove
 		.inputKeyA (keyAOut),
 		.inputKeyB (keyBOut),
+		.debugUARTTxData (),
+		.debugUARTTxDataValid (),
 		.debug (1'b0),
 		.clk (clk),
 		.userResetn (userResetn),

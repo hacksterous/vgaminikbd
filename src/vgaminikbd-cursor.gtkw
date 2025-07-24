@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Jul 24 03:53:50 2025
+[*]
+[dumpfile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.fst"
+[dumpfile_mtime] "Thu Jul 24 03:51:19 2025"
+[dumpfile_size] 63462
+[savefile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd-cursor.gtkw"
+[timestart] 44308000
+[size] 1920 947
+[pos] 5 -11
+*-17.699345 44507000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.uvgaminikbd.
+[treeopen] tb.uvgaminikbd.uvga.
+[sst_width] 254
+[signals_width] 288
+[sst_expanded] 1
+[sst_vpaned_height] 264
+@22
+tb.uvgaminikbd.uvga.currentCursorCol[6:0]
+@28
+tb.uvgaminikbd.uvga.inputCmdData[7:0]
+tb.uvgaminikbd.uvga.inputCmdValid
+@23
+tb.uvgaminikbd.uvga.inputCmd_r0[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

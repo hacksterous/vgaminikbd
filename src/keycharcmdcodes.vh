@@ -34,5 +34,6 @@
 `define CMD_CURTOG 19
 //CMD_CHRTOG: toggle character mode for codes 0-31
 `define CMD_CHRTOG 20
+`define CMD_SETCOL 21
 `define CHAR_SPC 32
 `endif

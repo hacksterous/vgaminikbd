@@ -65,8 +65,8 @@ module tb ();
 	//assign txString[11] = "d";
 	//assign txString[12] = "!";
 	//assign txString[13] = " ";
-	assign txString[0] = "a";
-	assign txString[1] = 8;
+	assign txString[0] = 17;
+	assign txString[1] = 10;
 
 	reg [1:0] tbTxState;
 	initial begin

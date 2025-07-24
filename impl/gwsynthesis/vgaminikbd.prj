@@ -6,8 +6,8 @@
     <FileList>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v" type="verilog"/>
-        <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v" type="verilog"/>
+        <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGen/clockGen.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/clockGenALT/clockGenALT.v" type="verilog"/>
         <File path="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v" type="verilog"/>
@@ -29,6 +29,7 @@
         <Option type="output_file" value="/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/impl/gwsynthesis/vgaminikbd.vg"/>
         <Option type="print_all_synthesis_warning" value="0"/>
         <Option type="ram_rw_check" value="0"/>
+        <Option type="vcc" value="1.2"/>
         <Option type="verilog_language" value="verilog-2001"/>
         <Option type="vhdl_language" value="vhdl-1993"/>
     </OptionList>
