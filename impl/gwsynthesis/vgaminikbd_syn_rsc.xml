@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module name="vgaminikbd" T_Register="291(0)" T_Alu="52(0)" T_Lut="599(0)" T_Bsram="4(0)" T_Ssram="2(0)">
+<Module name="vgaminikbd" T_Register="307(0)" T_Alu="59(0)" T_Lut="671(0)" T_Bsram="4(0)" T_Ssram="2(0)">
  <SubModule name="uclockGen"/>
  <SubModule name="ukdA" Register="2" T_Register="2(2)"/>
  <SubModule name="ukdB" Register="2" T_Register="2(2)"/>
- <SubModule name="ukbd" Register="13" Lut="48" T_Register="59(13)" T_Lut="89(48)" T_Bsram="1(0)" T_Ssram="2(0)">
+ <SubModule name="ukbd" Register="13" Lut="44" T_Register="59(13)" T_Lut="85(44)" T_Bsram="1(0)" T_Ssram="2(0)">
   <SubModule name="ukbdrom" Bsram="1" T_Bsram="1(1)"/>
   <SubModule name="kbdfifo" Register="19" Lut="25" Ssram="2" T_Register="19(19)" T_Lut="25(25)" T_Ssram="2(2)"/>
   <SubModule name="ps2kbd" Register="27" Lut="16" T_Register="27(27)" T_Lut="16(16)"/>
  </SubModule>
- <SubModule name="uuart0" Register="69" Lut="113" T_Register="69(69)" T_Lut="113(113)"/>
- <SubModule name="uarb" Register="4" Lut="8" T_Register="21(4)" T_Lut="38(8)">
+ <SubModule name="uuart0" Register="69" Lut="119" T_Register="69(69)" T_Lut="119(119)"/>
+ <SubModule name="uarb" Register="4" Lut="8" T_Register="21(4)" T_Lut="42(8)">
   <SubModule name="dfifo0" Register="6" Lut="12" T_Register="6(6)" T_Lut="12(12)"/>
   <SubModule name="dfifo1" Register="5" Lut="7" T_Register="5(5)" T_Lut="7(7)"/>
-  <SubModule name="ArbFifo" Register="6" Lut="11" T_Register="6(6)" T_Lut="11(11)"/>
+  <SubModule name="ArbFifo" Register="6" Lut="15" T_Register="6(6)" T_Lut="15(15)"/>
  </SubModule>
- <SubModule name="uvga" Register="91" Alu="34" Lut="292" T_Register="138(91)" T_Alu="52(34)" T_Lut="359(292)" T_Bsram="3(0)">
+ <SubModule name="uvga" Register="107" Alu="41" Lut="359" T_Register="154(107)" T_Alu="59(41)" T_Lut="425(359)" T_Bsram="3(0)">
   <SubModule name="uheartbeat" Register="6" Lut="5" T_Register="6(6)" T_Lut="5(5)"/>
-  <SubModule name="ucharbufinit" Register="21" Lut="51" T_Register="21(21)" T_Lut="51(51)"/>
+  <SubModule name="ucharbufinit" Register="21" Lut="50" T_Register="21(21)" T_Lut="50(50)"/>
   <SubModule name="ucharROM" Bsram="1" T_Bsram="1(1)"/>
   <SubModule name="ucharBuffer" Bsram="2" T_Bsram="2(2)"/>
   <SubModule name="uhvsync" Register="20" Alu="18" Lut="11" T_Register="20(20)" T_Alu="18(18)" T_Lut="11(11)"/>

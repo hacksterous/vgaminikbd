@@ -49,7 +49,7 @@ module tb ();
 
 	reg [7:0] TXCOUNT;
 	//initial TXCOUNT = 14;
-	initial TXCOUNT = 2;
+	initial TXCOUNT = 4;
 	wire [7:0] txString [0:13];
 	//assign txString[0]  = "h";
 	//assign txString[1]  = "e";
@@ -65,8 +65,10 @@ module tb ();
 	//assign txString[11] = "d";
 	//assign txString[12] = "!";
 	//assign txString[13] = " ";
-	assign txString[0] = 17;
-	assign txString[1] = 10;
+	assign txString[0] = "h";
+	assign txString[1] = "e";
+	assign txString[2] = 23;
+	assign txString[3] = "a";
 
 	reg [1:0] tbTxState;
 	initial begin

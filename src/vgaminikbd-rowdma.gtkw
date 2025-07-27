@@ -1,0 +1,172 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Sat Jul 26 01:45:44 2025
+[*]
+[dumpfile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.fst"
+[dumpfile_mtime] "Fri Jul 25 18:40:47 2025"
+[dumpfile_size] 61712
+[savefile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd-rowdma.gtkw"
+[timestart] 60871990
+[size] 1920 947
+[pos] -1 -1
+*-12.407914 60899000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.uvgaminikbd.
+[treeopen] tb.uvgaminikbd.uvga.
+[sst_width] 254
+[signals_width] 312
+[sst_expanded] 1
+[sst_vpaned_height] 264
+@28
+tb.uvgaminikbd.uvga.rowDMAState[2:0]
+@c00024
+[color] 5
+tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+@28
+[color] 5
+(0)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(1)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(2)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(3)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(4)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(5)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(6)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(7)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(8)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(9)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(10)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+[color] 5
+(11)tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+@1401200
+-group_end
+@24
+[color] 5
+tb.uvgaminikbd.uvga.charBufferWrAddr[11:0]
+@c00022
+tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+@28
+(0)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(1)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(2)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(3)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(4)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(5)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(6)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+@1401200
+-group_end
+@28
+tb.uvgaminikbd.uvga.ucharBuffer.clk
+tb.uvgaminikbd.uvga.rowDMARead
+tb.uvgaminikbd.uvga.inputCmdInsertChar
+@22
+tb.uvgaminikbd.uvga.currentCursorCol[6:0]
+@28
+tb.uvgaminikbd.uvga.rowDMAWrite
+tb.uvgaminikbd.uvga.rowDMAWriteLast
+@22
+tb.uvgaminikbd.uvga.nextRowDMARdCol[6:0]
+tb.uvgaminikbd.uvga.rowDMAWrCol[6:0]
+tb.uvgaminikbd.uvga.rowDMARdCol[6:0]
+@28
+tb.uvgaminikbd.uvga.charBufferRdEn
+tb.uvgaminikbd.uvga.inputCmdMemWrEn
+@24
+[color] 5
+tb.uvgaminikbd.uvga.charBufferWrData[7:0]
+@28
+tb.uvgaminikbd.uvga.charBufferWrEn
+@24
+tb.uvgaminikbd.uvga.charBufferRdCol[6:0]
+@22
+tb.uvgaminikbd.uvga.charBufferRdRow[4:0]
+@c00022
+tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+@28
+(0)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(1)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(2)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(3)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(4)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+@1401200
+-group_end
+@22
+tb.uvgaminikbd.uvga.currentScanCharRow[4:0]
+@28
+tb.uvgaminikbd.uvga.rowDMAWriteLast
+tb.uvgaminikbd.uvga.rowDMAWrColMaxxed
+tb.uvgaminikbd.uvga.rowDMARdColMaxxed
+@200
+-
+@22
+tb.uvgaminikbd.uvga.ucharBuffer.ad[11:0]
+@28
+tb.uvgaminikbd.uvga.ucharBuffer.ce
+tb.uvgaminikbd.uvga.ucharBuffer.wre
+@22
+tb.uvgaminikbd.uvga.ucharBuffer.dout[7:0]
+tb.uvgaminikbd.uvga.ucharBuffer.memrddata[7:0]
+@28
+tb.uvgaminikbd.uvga.rowDMAState[2:0]
+tb.uvgaminikbd.uvga.inputCmdInsertChar
+@25
+[color] 5
+tb.uvgaminikbd.uvga.charBufferRdAddr[11:0]
+@c00022
+tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+@28
+(0)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(1)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(2)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(3)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(4)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(5)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+(6)tb.uvgaminikbd.uvga.charBufferRdData[6:0]
+@1401200
+-group_end
+@28
+tb.uvgaminikbd.uvga.charBufferRdEn
+@22
+tb.uvgaminikbd.uvga.charBufferWrData[7:0]
+@28
+tb.uvgaminikbd.uvga.charBufferWrEn
+@24
+tb.uvgaminikbd.uvga.charBufferRdCol[6:0]
+@22
+tb.uvgaminikbd.uvga.charBufferRdRow[4:0]
+@24
+[color] 5
+tb.uvgaminikbd.uvga.charBufferWrAddr[11:0]
+@22
+tb.uvgaminikbd.uvga.rowDMAWrCol[6:0]
+@c00022
+tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+@28
+(0)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(1)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(2)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(3)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+(4)tb.uvgaminikbd.uvga.currentScrolledRow[4:0]
+@1401200
+-group_end
+@22
+tb.uvgaminikbd.uvga.ucharBuffer.ad[11:0]
+@28
+tb.uvgaminikbd.uvga.ucharBuffer.ce
+@22
+tb.uvgaminikbd.uvga.ucharBuffer.dout[7:0]
+tb.uvgaminikbd.uvga.ucharBuffer.memrddata[7:0]
+@28
+tb.uvgaminikbd.uvga.ucharBuffer.oce
+tb.uvgaminikbd.uvga.ucharBuffer.wre
+[pattern_trace] 1
+[pattern_trace] 0
