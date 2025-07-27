@@ -99,9 +99,10 @@ module vga(
 	output reg vsync);
 
 	
-	localparam TABLEN = 4'd8; //tab is 8 space wide
+	localparam TABLEN = 4'd4; //tab is 8 space wide
 	localparam MAXCOL_M_1 = 79;
-	localparam MAXCOL_M_TABLEN_1 = 71;
+	localparam MAXCOL_M_2 = 78;
+	localparam MAXCOL_M_TABLEN_1 = 75;
 	localparam MAXROW_M_1 = 31;
 	localparam MAXCHARWIDTH_M_1 = 7;	//1 blank pixel + 7 pixels
 	localparam MAXCHARHEIGHT_M_1 = 14;	//9 lines + 1 blank line + 2 cursor lines + 3 interrow blank lines
@@ -213,46 +214,48 @@ module vga(
 	wire inputCmdSetCol = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETCOL);
 	wire inputCmdSetRow = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETROW);
 
-	//TODO: rowDMA when isPrintableChar = 1
+	wire inputCmdMoveRows = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
 
-	reg [6:0] insertModeCol;
-	reg [7:0] insertModeChar;
+	//reg [6:0] insertModeCol;
 	reg eraseToSOLInProgress;
 	reg [6:0] rowDMARdCol;
 	reg [6:0] nextRowDMARdCol;
 	//row DMA is to handle backspace and delete
 	reg [2:0] nextRowDMAState;
 	reg [2:0] rowDMAState;
-	localparam LDMA_IDLE = 0;
-	localparam LDMA_READ = 1;
-	localparam LDMA_WRITE = 3;
-	localparam LDMA_LASTWRITE = 2;
-	localparam LDMA_INSCHAR_READ = 6;
-	localparam LDMA_INSCHAR_WRITE = 7;
-	localparam LDMA_INSCHAR_DONE = 5;
-	//LDMA_IDLE - idle, on backspace or delete, go to 1, if 
-	//LDMA_READ - read, go to 2
-	//LDMA_WRITE - write, if currentScanCharCol == 79 got to 3, else go to 1
-	//LDMA_LASTWRITE - column 79, write space, go to 0
+	localparam ROWDMA_IDLE = 0;
+	localparam ROWDMA_READ = 1;
+	localparam ROWDMA_WRITE = 3;
+	localparam ROWDMA_LASTWRITE = 2;
+	localparam ROWDMA_INSCHAR_READ = 6;
+	localparam ROWDMA_INSCHAR_WRITE = 7;
+	localparam ROWDMA_INSCHAR_DONE = 5;
+	localparam ROWDMA_ROWMOVE = 4;
+	//ROWDMA_IDLE - idle, on backspace or delete, go to 1, if 
+	//ROWDMA_READ - read, go to 2
+	//ROWDMA_WRITE - write, if currentScanCharCol == 79 got to 3, else go to 1
+	//ROWDMA_LASTWRITE - column 79, write space, go to 0
 	//note: charBuffer is single-port RAM
-	//read happens in states LDMA_READ
-	//write to previous location happens in states LDMA_WRITE
+	//read happens in states ROWDMA_READ
+	//write to previous location happens in states ROWDMA_WRITE
 	wire rowDMAInsReadWrite;
 	wire rowDMAInsDone;
 
-	wire rowDMAIdle = (rowDMAState == LDMA_IDLE);
-	wire rowDMARdEn = (rowDMAState == LDMA_READ);
-	wire rowDMAWrEn =  (rowDMAState == LDMA_WRITE);
-	wire rowDMAWrEnLast = (rowDMAState == LDMA_LASTWRITE);
-	wire rowDMAInsRdEn = (rowDMAState == LDMA_INSCHAR_READ);
-	wire rowDMAInsWrEn = (rowDMAState == LDMA_INSCHAR_WRITE);
-	assign rowDMAInsDone = (rowDMAState == LDMA_INSCHAR_DONE);
+	wire rowDMAIdle = (rowDMAState == ROWDMA_IDLE);
+	wire rowDMARdEn = (rowDMAState == ROWDMA_READ);
+	wire rowDMAWrEn =  (rowDMAState == ROWDMA_WRITE);
+	wire rowDMAWrEnLast = (rowDMAState == ROWDMA_LASTWRITE);
+	wire rowDMAInsRdEn = (rowDMAState == ROWDMA_INSCHAR_READ);
+	wire rowDMAInsWrEn = (rowDMAState == ROWDMA_INSCHAR_WRITE);
+	assign rowDMAInsDone = (rowDMAState == ROWDMA_INSCHAR_DONE);
+	wire rowDMARowMove = (rowDMAState == ROWDMA_ROWMOVE);
 	wire [6:0] rowDMAWrCol = (rowDMAWrEnLast | rowDMAInsDone)? rowDMARdCol:
 							 (rowDMAInsReadWrite)? (rowDMARdCol + 1'b1):
 							 (eraseToSOLInProgress)? (rowDMARdCol - currentCursorCol):
 							 (rowDMARdCol - 1'b1);
 	wire rowDMARdColMaxxed = (rowDMARdCol == MAXCOL_M_1);
-	wire rowDMARdColAtCursor = (rowDMARdCol == insertModeCol);
+	//wire rowDMARdColAtCursor = (rowDMARdCol == insertModeCol); //FIXME
+	wire rowDMARdColAtCursor = (rowDMARdCol == currentCursorCol);
 	wire rowDMAWrColMaxxed = (rowDMAWrCol == MAXCOL_M_1);
 	assign rowDMAInsReadWrite = rowDMAInsRdEn | rowDMAInsWrEn;
 	wire bkspNotAtColZero = inputCmdCMD_BKSP & |currentCursorCol[6:0];
@@ -271,68 +274,72 @@ module vga(
 		nextRowDMAState = rowDMAState;
 		nextRowDMARdCol = rowDMARdCol;
 		case (rowDMAState)
-			LDMA_IDLE: begin
-				if (inputCmdInsertChar) begin
-					nextRowDMAState = LDMA_INSCHAR_READ;
-					nextRowDMARdCol = 78;//currentCursorCol;
+			ROWDMA_IDLE: begin
+				if (inputCmdMoveRows) begin
+					nextRowDMAState = ROWDMA_ROWMOVE;
+					nextRowDMARdCol = 7'h0;
+				end else if (inputCmdInsertChar) begin
+					nextRowDMAState = ROWDMA_INSCHAR_READ;
+					nextRowDMARdCol = MAXCOL_M_2;
 				end else if (bkspNotAtColZero | inputCmdCMD_DEL | inputCmdEraseSOL) begin
-					nextRowDMAState = LDMA_READ;
+					nextRowDMAState = ROWDMA_READ;
 					//the DMA read address -- this is always 1 more than DMA write address except in erase to SOL case
 					nextRowDMARdCol = (inputCmdCMD_DEL)? (currentCursorCol + 1'b1):
 										currentCursorCol;
 				end
 			end
-			LDMA_INSCHAR_READ: begin
-				nextRowDMAState = LDMA_INSCHAR_WRITE;
+			ROWDMA_ROWMOVE: begin
+
 			end
-			LDMA_INSCHAR_WRITE: begin
-				nextRowDMAState = (rowDMARdColAtCursor)? LDMA_INSCHAR_DONE: LDMA_INSCHAR_READ;
-				nextRowDMARdCol = (rowDMARdColAtCursor)? insertModeCol: (rowDMARdCol - 1'b1);
+			ROWDMA_INSCHAR_READ: begin
+				nextRowDMAState = ROWDMA_INSCHAR_WRITE;
 			end
-			LDMA_INSCHAR_DONE: begin
-				nextRowDMAState = LDMA_IDLE;
+			ROWDMA_INSCHAR_WRITE: begin
+				nextRowDMAState = (rowDMARdColAtCursor)? ROWDMA_INSCHAR_DONE: ROWDMA_INSCHAR_READ;
+				//nextRowDMARdCol = (rowDMARdColAtCursor)? insertModeCol: (rowDMARdCol - 1'b1); //FIXME
+				nextRowDMARdCol = (rowDMARdColAtCursor)? currentCursorCol: (rowDMARdCol - 1'b1);
 			end
-			LDMA_READ: begin
+			ROWDMA_INSCHAR_DONE: begin
+				nextRowDMAState = ROWDMA_IDLE;
+			end
+			ROWDMA_READ: begin
 				//read from column rowDMARdCol
-				nextRowDMAState = LDMA_WRITE;
+				nextRowDMAState = ROWDMA_WRITE;
 			end
-			LDMA_WRITE: begin
-				//write to column (rowDMARdCol - 1) with the data read in state LDMA_READ
-				nextRowDMAState = (rowDMARdColMaxxed)? LDMA_LASTWRITE: LDMA_READ;
-				//if read to column 79 has happened in state LDMA_READ, then increment read column to 80
-				//but exit to state LDMA_LASTWRITE
+			ROWDMA_WRITE: begin
+				//write to column (rowDMARdCol - 1) with the data read in state ROWDMA_READ
+				nextRowDMAState = (rowDMARdColMaxxed)? ROWDMA_LASTWRITE: ROWDMA_READ;
+				//if read to column 79 has happened in state ROWDMA_READ, then increment read column to 80
+				//but exit to state ROWDMA_LASTWRITE
 				//reuse rowDMARdCol counter for rowDMAWrCol, so capture the current rowDMAWrCol value
 				nextRowDMARdCol = (rowDMARdColMaxxed)? (rowDMAWrCol + 1'b1): (rowDMARdCol + 1'b1);
 			end
-			LDMA_LASTWRITE: begin
+			ROWDMA_LASTWRITE: begin
 				//write to column (rowDMARdCol - 1), which now equals 79, but write data is null char
 				//for erase to SOL, stay in this state
-				nextRowDMAState = (rowDMAWrColMaxxed)? LDMA_IDLE: LDMA_LASTWRITE;
+				nextRowDMAState = (rowDMAWrColMaxxed)? ROWDMA_IDLE: ROWDMA_LASTWRITE;
 				//nextRowDMARdCol = (rowDMAWrColMaxxed)? 7'h0: (rowDMARdCol + 1'b1);
 				nextRowDMARdCol = (rowDMARdCol + 1'b1);
 			end
 			default: begin
-				nextRowDMAState = LDMA_IDLE;
+				nextRowDMAState = ROWDMA_IDLE;
 				nextRowDMARdCol = 7'h0;
 			end
 		endcase
 	end
 
-	wire [6:0] nextInsertModeCol = (rowDMAInsCharStart)? currentCursorCol: insertModeCol;
-	wire [7:0] nextInsertModeChar = (rowDMAInsCharStart)? inputCmdMemWrData: insertModeChar;
+	//wire [6:0] nextInsertModeCol = (rowDMAInsCharStart)? currentCursorCol: insertModeCol;
 	always @(posedge clk) begin
 		if (~resetn) begin
 			rowDMAState <= `DELAY 2'h0;
 			rowDMARdCol <= `DELAY 7'h0;
 			eraseToSOLInProgress <= `DELAY 1'b0;
-			insertModeCol <= `DELAY 7'h0;
-			insertModeChar <= `DELAY 8'h0;
+			//insertModeCol <= `DELAY 7'h0;
 		end else begin
 			rowDMAState <= `DELAY nextRowDMAState;
 			rowDMARdCol <= `DELAY nextRowDMARdCol;
 			eraseToSOLInProgress <= `DELAY nextEraseToSOLInProgress;
-			insertModeCol <= `DELAY nextInsertModeCol;
-			insertModeChar <= `DELAY nextInsertModeChar;
+			//insertModeCol <= `DELAY nextInsertModeCol;
 		end
 	end
 
@@ -433,6 +440,8 @@ module vga(
 						4'd`CMD_TAB: begin
 							if (currentCursorCol <= MAXCOL_M_TABLEN_1) begin
 								currentCursorCol <= `DELAY currentCursorCol + TABLEN;
+							end else begin
+								currentCursorCol <= `DELAY MAXCOL_M_1;
 							end
 						end
 						4'd`CMD_UP: begin
@@ -516,7 +525,7 @@ module vga(
 
 	assign charBufferWrData =	(charBufferInitInProgress)?	charBufferInitData[6:0]:
 								(rowDMAWrEn | rowDMAInsWrEn)? {charBufferRdDataColor, charBufferRdData[6:0]}:
-								(rowDMAInsDone)? insertModeChar:
+								(rowDMAInsDone)? inputCmdMemWrData: //still holding last input char
 								//on the last column for bksp/del, write with null
 								(rowDMAWrEnLast)? {charBufferRdDataColor, 7'd0}:
 								{charBufferRdDataColor, inputCmdMemWrData[6:0]};

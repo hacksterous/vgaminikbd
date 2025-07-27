@@ -37,5 +37,6 @@
 `define CMD_SETCOL 21
 `define CMD_SETROW 22
 `define CMD_INSTOG 23
+`define CMD_MOVROWS 24
 `define CHAR_SPC 32
 `endif
