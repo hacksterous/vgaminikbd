@@ -1,3 +1,4 @@
+.fuse*
 impl/.*.sw*
 src/.*.sw*
 src/.vgaminikbd.v.swp
@@ -14,6 +15,9 @@ impl/temp/*
 scripts/__pycache__/*
 src/charROM/charROM_tmp.v
 src/vga.v.0
+src/vga.v.*
+src/*.v.*
+src/*.vh.*
 *.0
 *.1
 *.2

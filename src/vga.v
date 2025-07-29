@@ -159,6 +159,7 @@ module vga(
 	reg inputCmdMemWrEn;
 	reg inputCmdValid_r0;
 	reg inputCmdScrollUp_r0;
+	wire clearLineOnScrollUp;
 	reg [7:0] inputCmdMemWrData/*synthesis syn_ preserve =1*/;
 
 	reg [4:0] scrollRow;
@@ -182,13 +183,12 @@ module vga(
 		.userResetn (userResetn),
 		.cursorBlink (cursorBlink));
 
-	wire inputCmdDownCode = (inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData == 4'd`CMD_CRLF);
+	wire inputCmdDownCode = (inputCmdMemWrData[3:0] == 4'd`CMD_DOWN) | (inputCmdMemWrData[3:0] == 4'd`CMD_CRLF);
 
-	wire screenEnd = (currentCursorCol == MAXCOL_M_1);
+	wire screenEnd = (currentCursorCol[6:0] == MAXCOL_M_1);
 
-	//wire inputCmdLow16 = inputCmdValid_r0 & (inputCmdMemWrData[7:4] == 4'h0);
 	wire inputCmdLow16 = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4];
-	wire inputCmdCls		= inputCmdLow16 & (inputCmdMemWrData == 4'd`CMD_CLS);
+	wire inputCmdCls		= inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_CLS);
 
 	wire inputCmdCMD_BKSP = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_BKSP);
 	wire inputCmdCMD_DEL = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
@@ -199,13 +199,20 @@ module vga(
 
 	wire inputCmdInsertToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_INSTOG);
 
-	wire inputCmdScrollUp	= (inputCmdLow16 & inputCmdDownCode 
-								| inputCmdValid_r0 & screenEnd & isPrintableChar)
-								& (currentCursorRow == MAXROW_M_1);
-
 	wire inputCmdCursorToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
 	//erase to start of line (move char at current char to column 0 with the rest of characters following)
 	wire inputCmdEraseSOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_SOL);
+
+	wire cursorOnLastRow = (currentScrolledRow[4:0] == MAXROW_M_1);
+	wire inputCmdMoveRowsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
+	wire inputCmdMoveRows = inputCmdMoveRowsCommand & ~cursorOnLastRow;
+	wire inputCmdMoveRowsOnLastRow = inputCmdMoveRowsCommand & cursorOnLastRow;
+
+	wire screenEndInputChar = inputCmdValid_r0 & screenEnd & isPrintableChar;
+	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
+	assign clearLineOnScrollUp = inputCmdScrollUp_r0;
+	wire inputCmdScrollUp	= (hitReturnOrDown | screenEndInputChar | inputCmdMoveRowsOnLastRow)
+								& (currentCursorRow[4:0] == MAXROW_M_1);
 
 	//erase to end of line and erase line -- for these two, make use of charBufferInit logic
 	wire inputCmdEraseEOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_EOL);
@@ -213,8 +220,6 @@ module vga(
 
 	wire inputCmdSetCol = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETCOL);
 	wire inputCmdSetRow = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETROW);
-
-	wire inputCmdMoveRows = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
 
 	reg eraseToSOLInProgress;
 	reg [6:0] rowDMARdCol;
@@ -259,11 +264,11 @@ module vga(
 							 (rowDMARdCol - 1'b1);
 
 	wire [4:0] rowDMAWrRow = (rowDMARdRow + 1'b1);
-	wire rowDMARdColMaxxed = (rowDMARdCol == MAXCOL_M_1);
+	wire rowDMARdColMaxxed = (rowDMARdCol[6:0] == MAXCOL_M_1);
 	//currentCursorCol still holds cursor position where character was input
-	wire rowDMARdColAtCursor = (rowDMARdCol == currentCursorCol); 
-	wire rowDMARdRowAtCursor = (rowDMARdRow == currentScrolledRow); 
-	wire rowDMAWrColMaxxed = (rowDMAWrCol == MAXCOL_M_1);
+	wire rowDMARdColAtCursor = (rowDMARdCol[6:0] == currentCursorCol); 
+	wire rowDMARdRowAtCursor = (rowDMARdRow[4:0] == currentScrolledRow); 
+	wire rowDMAWrColMaxxed = (rowDMAWrCol[6:0] == MAXCOL_M_1);
 	assign rowDMAInsReadWrite = rowDMAInsRdEn | rowDMAInsWrEn;
 	wire bkspNotAtColZero = inputCmdCMD_BKSP & |currentCursorCol[6:0];
 
@@ -381,11 +386,11 @@ module vga(
 		`endif
 					& ~rowEraseMoveRows 
 					& ~inputCmdCls 
-					& ~inputCmdScrollUp_r0 
+					& ~clearLineOnScrollUp 
 					& ~inputCmdEraseEOL
 					& ~inputCmdEraseLine),
 		.sequential (~inputKeyB),
-		.initRowOnly (inputCmdScrollUp_r0
+		.initRowOnly (clearLineOnScrollUp
 						| rowEraseMoveRows
 						| inputCmdEraseEOL 
 						| inputCmdEraseLine),
@@ -431,10 +436,13 @@ module vga(
 				currentCursorRow	<= `DELAY 5'h0;
 				scrollRow			<= `DELAY 5'h0;
 			end else if (inputCmdValid_r0 | rowDMAInsDone) begin
-				
-				if (inputCmdMoveRows) begin
-					currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
+				if (inputCmdMoveRowsCommand) begin
 					currentCursorCol <= `DELAY 7'h0;
+					if (cursorOnLastRow) begin
+						scrollRow <= `DELAY (scrollRow + 1'b1);
+					end else begin
+						currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
+					end
 				end else if (pendingSetRow) begin
 					currentCursorRow <= `DELAY inputCmdMemWrData[4:0];
 					pendingSetRow <= `DELAY 1'b0;
@@ -443,15 +451,15 @@ module vga(
 					pendingSetCol <= `DELAY 1'b0;
 				end else if (inputCmdMemWrData[7:4] == 4'h0) begin
 					case (inputCmdMemWrData[3:0])
-						4'd`CMD_SCROLL_UP: begin
+						4'd`CMD_SCROLL_DOWN: begin
 							scrollRow <= `DELAY (scrollRow - 1'b1);
 						end
 						4'd`CMD_CRLF: begin
 							//Return is CMD_HOME + CMD_DOWN
 							currentCursorCol <= `DELAY 7'h0;
-							if (currentCursorRow == MAXROW_M_1) begin
-								scrollRow <= `DELAY (scrollRow + 1'b1);
+							if (currentCursorRow[4:0] == MAXROW_M_1) begin
 								//erase previous line
+								scrollRow <= `DELAY (scrollRow + 1'b1);
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
 							end
@@ -459,7 +467,7 @@ module vga(
 						4'd`CMD_DOWN: begin
 							//same as LF
 							//remain on row MAXROW_M_1
-							if (currentCursorRow == MAXROW_M_1) begin
+							if (currentCursorRow[4:0] == MAXROW_M_1) begin
 								scrollRow <= `DELAY (scrollRow + 1'b1);
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
@@ -509,9 +517,9 @@ module vga(
 				end else if (isPrintableChar & ~insertModeNotAtMaxCol | rowDMAInsDone) begin
 					//printable character > ASCII 31 < 128
 					//in insert mode, this code is used only when cursor column is max
-					if (currentCursorCol == MAXCOL_M_1) begin
+					if (currentCursorCol[6:0] == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 7'h0;
-						if (currentCursorRow == MAXROW_M_1) begin
+						if (currentCursorRow[4:0] == MAXROW_M_1) begin
 							scrollRow <= `DELAY (scrollRow + 1'b1);
 							//previous line gets erased
 						end else begin
@@ -584,7 +592,7 @@ module vga(
 								 (rowDMARdEn | rowDMAInsRdEn)? currentScrolledRow[4:0]: 
 									currentScrolledScanRow[4:0];
 	assign charBufferRdAddr = {charBufferRdCol[6:0], charBufferRdRow[4:0]};
-	assign charBufferRdEn = ((charWidthCounter == 3'h0) & inDisplayArea_r0 & rowDMAIdle) 
+	assign charBufferRdEn = ((charWidthCounter[2:0] == 3'h0) & inDisplayArea_r0 & rowDMAIdle) 
 								| rowDMARdEn | rowDMAInsRdEn | rowDMAMoveRowsRdEn;
 
 	charBuffer ucharBuffer (
@@ -612,10 +620,10 @@ module vga(
 	wire [6:0] nextCurrentScanCharCol = (currentScanCharCol + 1'b1);
 	wire [4:0] nextCurrentScanCharRow = (currentScanCharRow + 1'b1);
 
-	assign charWidthCounterMaxxed = (charWidthCounter == MAXCHARWIDTH_M_1);
-	assign charHeightCounterMaxxed = (charHeightCounter == MAXCHARHEIGHT_M_1);
-	assign currentScanCharColMaxxed = (currentScanCharCol == MAXCOL_M_1);
-	assign currentScanCharRowMaxxed = (currentScanCharRow == (MAXROW_M_1));
+	assign charWidthCounterMaxxed = (charWidthCounter[2:0] == MAXCHARWIDTH_M_1);
+	assign charHeightCounterMaxxed = (charHeightCounter[3:0] == MAXCHARHEIGHT_M_1);
+	assign currentScanCharColMaxxed = (currentScanCharCol[6:0] == MAXCOL_M_1);
+	assign currentScanCharRowMaxxed = (currentScanCharRow[4:0] == (MAXROW_M_1));
 
 	always @(posedge clk) begin
 		if (~resetn) begin

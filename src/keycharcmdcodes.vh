@@ -12,7 +12,7 @@
 `define CMD_NUL 0
 `define CMD_CRLF 1
 `define CMD_UP 2
-`define CMD_SCROLL_UP 3
+`define CMD_SCROLL_DOWN 3
 `define CMD_DEL 4
 `define CMD_PGUP 5
 `define CMD_PGDN 6
@@ -38,5 +38,6 @@
 `define CMD_SETROW 22
 `define CMD_INSTOG 23
 `define CMD_MOVROWS 24
+`define CMD_MOVCOLS 25
 `define CHAR_SPC 32
 `endif
