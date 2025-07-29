@@ -12,6 +12,9 @@
 	input clk,
 	input resetn,
 	input enable,
+	`ifdef DEBUG_FPGA_BUILD
+	input rowIncrement,
+	`endif
 	input initRowOnly,		 //only erase one line partially
 	input [4:0] rowInitRow, //partial line erase: row number
 	input [6:0] rowInitCol, //partial line erase: column to start at
@@ -69,14 +72,10 @@
 	wire rowInitDone = initStateACTIVE_ROW & initCursorColAtMax;
 	wire initDone = fullScreenInitDone | rowInitDone;
 
-	assign nextInitState =  (~enable & initStateIDLE & sequential & ~initRowOnly)?
-								INIT_STATE_ACTIVE_SEQ:
-							(~enable & initStateIDLE & ~sequential & ~initRowOnly)?
-								INIT_STATE_ACTIVE_ZERO:
-							(~enable & initStateIDLE & initRowOnly)?
-								INIT_STATE_ACTIVE_ROW:
-							(initDone & enable)?
-								INIT_STATE_IDLE:
+	assign nextInitState =  (~enable & initStateIDLE & sequential & ~initRowOnly)? INIT_STATE_ACTIVE_SEQ:
+							(~enable & initStateIDLE & ~sequential & ~initRowOnly)? INIT_STATE_ACTIVE_ZERO:
+							(~enable & initStateIDLE & initRowOnly)? INIT_STATE_ACTIVE_ROW:
+							(initDone & enable)? INIT_STATE_IDLE:
 								initState;
 	
 	assign initWrEn = ~initStateIDLE;
@@ -86,16 +85,30 @@
 		if (~resetn) begin
 			initCursorRow <= `DELAY 5'h0;
 			initCursorCol <= `DELAY 7'h0;
+			`ifdef DEBUG_FPGA_BUILD
+			initData <= `DELAY 7'd48;
+			`else
 			initData <= `DELAY 7'd`CHAR_NUL;
+			`endif
 			initState <= `DELAY 1'b0;
 		end else begin
 			if (initStateIDLE & initRowOnly & ~enable) begin
 				initCursorRow <= `DELAY  rowInitRow;
 				initCursorCol <= `DELAY  rowInitCol;
-			end if (initStateACTIVE_SEQ | initStateACTIVE_ZERO) begin
+			`ifdef DEBUG_FPGA_BUILD
+			end else if (initStateIDLE & rowIncrement & ~enable) begin
+				initData <= `DELAY 7'd48;//number 0
+			`endif
+			end else if (initStateACTIVE_SEQ | initStateACTIVE_ZERO) begin
 				initCursorRow <= `DELAY (initCursorColAtMax)? (initCursorRow + 1'b1): initCursorRow;
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);
-				initData <= `DELAY (fullScreenInitDone | ~initStateACTIVE_SEQ)? 7'd`CHAR_NUL: (initData + 1'b1);
+				initData <= `DELAY 
+									`ifdef DEBUG_FPGA_BUILD
+									(rowIncrement & initCursorColAtMax & initStateACTIVE_SEQ)? (initData + 1'b1):
+									(rowIncrement & initStateACTIVE_SEQ)? initData:
+									`endif
+									(fullScreenInitDone | initStateACTIVE_ZERO)? 
+									7'd`CHAR_NUL: (initData + 1'b1);
 			end else if (initStateACTIVE_ROW) begin
 				initCursorCol <= `DELAY (initCursorColAtMax)? 7'h0: (initCursorCol + 1'b1);
 				initData <= `DELAY 7'd`CHAR_NUL;
