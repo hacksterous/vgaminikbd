@@ -40,4 +40,5 @@
 `define CMD_MOVROWS 24
 `define CMD_MOVCOLS 25
 `define CHAR_SPC 32
+`define CHAR_ZERO 48
 `endif

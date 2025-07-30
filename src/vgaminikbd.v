@@ -154,7 +154,7 @@ Note!
 
 	datamux2in uarb (
 		.debug0 (), //green
-		.debug1 (debug1), //red
+		.debug1 (), //red
 		.debug2 (debug2), //blue
 		.clk (clk),
 		.resetn (userResetn),
@@ -180,7 +180,7 @@ Note!
 		.clk (clk),
 		.userResetn (userResetn),
 		.debug0 (debug0), //green
-		.debug1 (), //red
+		.debug1 (debug1), //red
 		.debug2 (),	//blue
 		.pixel (pixel),
 		.hsync (hsync),

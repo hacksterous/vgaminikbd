@@ -3,4 +3,5 @@
 	`else
 	`define DELAY 
 	`endif
-	`define DEBUG_FPGA_BUILD
+	//`define DEBUG_FPGA_BUILD
+	`undef DEBUG_FPGA_BUILD
