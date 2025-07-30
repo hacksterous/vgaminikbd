@@ -46,7 +46,6 @@ Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keychar
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":80)
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":81)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":81)
-Undeclared symbol 'rowDMAMoveColsDone', assumed default net type 'wire'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v":279)
 Analyzing Verilog file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'
 Analyzing included file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.vh'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)
 Back to file '/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v'("/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v":8)

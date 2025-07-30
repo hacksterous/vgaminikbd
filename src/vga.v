@@ -242,14 +242,13 @@ module vga(
 	wire inputCmdMoveRowsOnLastRow = inputCmdMoveRowsCommand & cursorOnLastPhysicalRow;
 
 	wire inputCmdMoveCols = inputCmdMoveColsCommand & ~cursorOnLastPhysicalRow;
-	wire inputCmdMoveColsOnLastRow = inputCmdMoveColsCommand & cursorOnLastPhysicalRow;
 
 	wire screenEndInputChar = inputCmdValid_r0 & screenEnd & isPrintableChar;
 	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
 	assign clearLineOnScrollUp = inputCmdScrollUp_r0;
 	wire inputCmdScrollUp	= (hitReturnOrDown | screenEndInputChar)
 								& (currentCursorRow[4:0] == MAXROW_M_1) 
-								| inputCmdMoveRowsOnLastRow | inputCmdMoveColsOnLastRow;
+								| inputCmdMoveRowsOnLastRow;
 
 	//erase to end of line and erase line -- for these two, make use of charBufferInit logic
 	wire inputCmdEraseEOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_EOL);
@@ -276,7 +275,7 @@ module vga(
 
 	wire rowDMAMoveColsRdEn = (rowDMAState == ROWDMA_COLMOVE_READ);
 	wire rowDMAMoveColsWrEn = (rowDMAState == ROWDMA_COLMOVE_WRITE);
-	assign rowDMAMoveColsDone = (rowDMAState == ROWDMA_COLMOVE_DONE);
+	wire rowDMAMoveColsDone = (rowDMAState == ROWDMA_COLMOVE_DONE);
 
 	wire [6:0] rowDMAWrCol = (eraseToSOLInProgress | rowDMAMoveColsWrEn)? (rowDMARdCol - currentCursorCol):
 							 (rowDMAWrEnLast | rowDMAInsDone | rowDMAMoveRowsWrEn)? rowDMARdCol:
