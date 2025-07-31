@@ -160,7 +160,7 @@ module vga(
 	reg inputCmdMemWrEn;
 	reg inputCmdValid_r0;
 	reg inputCmdScrollUp_r0;
-	wire clearLineOnScrollUp;
+	wire clearRowOnScrollUp;
 	reg [7:0] inputCmdMemWrData/*synthesis syn_ preserve =1*/;
 
 	reg [4:0] scrollRow;
@@ -173,6 +173,7 @@ module vga(
 	reg pendingSetRow;
 	reg insertMode;
 	reg frozenBottomRowMode;
+	wire triggerAutoStatusUpdate;
 
 	//The heartbeat module takes in the VSync pulse
 	//and generates user reset that remains active low
@@ -255,7 +256,7 @@ module vga(
 
 	wire screenEndInputChar = inputCmdValid_r0 & screenEnd & isPrintableChar;
 	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
-	assign clearLineOnScrollUp = inputCmdScrollUp_r0;
+	assign clearRowOnScrollUp = inputCmdScrollUp_r0;
 	wire inputCmdScrollUp	= (hitReturnOrDown | screenEndInputChar)
 								& cursorOnLastPhysicalRow
 								| inputCmdMoveRowsOnLastRow;
@@ -431,35 +432,51 @@ module vga(
 	end
 
 	wire rowEraseMoveRows = rowDMAMoveRowsWrEn & rowDMARdRowAtCursor & rowDMARdColMaxxed;
-	//NOTE: only the scrollUp command needs to be delayed
-	//because it depends upon a cursor command of data < 16
-	//that needs to complete first, otherwise wrong row will
-	//be erased
+	wire charBufferInitStateIsIdle;
 	charBufferInit ucharbufinit (
 		.clk (clk),
 		.resetn (userResetn),
+		.initStateIsIdle (charBufferInitStateIsIdle),
 		.enable (userResetn & inputKeyA & inputKeyB 
 					& ~rowEraseMoveRows 
 					& ~inputCmdCls 
-					& ~clearLineOnScrollUp 
+					& ~clearRowOnScrollUp 
 					& ~inputCmdEraseEOL
 					& ~rowDMAMoveColsDone
 					& ~inputCmdEraseLine),
 		.sequential (~inputKeyB),
-		//.frozenBottomRowMode (frozenBottomRowMode),
-		.updateStatusRow (inputCmdStatusUpdateCode),
-		.initRowOnly (clearLineOnScrollUp
+		.scrollRow (scrollRow),
+		.updateStatusRow (inputCmdStatusUpdateCode | triggerAutoStatusUpdate),
+		.initRowOnly (clearRowOnScrollUp
 						| rowEraseMoveRows
 						| inputCmdEraseEOL 
 						| rowDMAMoveColsDone 
 						| inputCmdEraseLine),
 		//rowInitRow = rowDMARdRow is set by the previous MOVEROWS operation, and equals
 		//(currentScrolledRow - 1)
-		.rowInitRow ((inputCmdStatusUpdateCode)? scrollRow: (rowDMAMoveColsDone)? rowDMARdRow: currentScrolledRow),
+		.rowInitRow ((rowDMAMoveColsDone)? rowDMARdRow: currentScrolledRow),
 		.rowInitCol ((inputCmdEraseEOL | rowDMAMoveColsDone)? currentCursorCol: 7'h0),
 		.initWrEn (charBufferInitInProgress),
 		.initAddress (charBufferInitAddr),
 		.initData (charBufferInitData));
+
+	//On a scroll event requiring a row clear, this FSM will move to STATE1 and wait.
+	//When the row is cleared and the init FSM moves to idle, this FSM will move to STATE2
+	//It will stay in STATE2 for one cycle at which point triggerAutoStatusUpdate will pulse
+	//This FSM will then move to idle (STATE0).
+	reg [1:0] triggerAutoStatusUpdateState;
+	wire [1:0] nextTriggerAutoStatusUpdateState = (clearRowOnScrollUp & frozenBottomRowMode)? 2'd1: 
+											(triggerAutoStatusUpdateState[0] & charBufferInitStateIsIdle)? 2'd2:
+											(triggerAutoStatusUpdateState[1])? 2'h0:
+											triggerAutoStatusUpdateState;
+	assign triggerAutoStatusUpdate = triggerAutoStatusUpdateState[1];
+	always @(posedge clk) begin
+		if (~resetn) begin
+			triggerAutoStatusUpdateState <= `DELAY 2'h0;
+		end else begin
+			triggerAutoStatusUpdateState <= nextTriggerAutoStatusUpdateState;
+		end
+	end
 
 	assign debugUARTTxData = {1'b0, inputCmdMemWrData[7:1]};
 	assign debugUARTTxDataValid = inputCmdValid_r0;
@@ -518,20 +535,13 @@ module vga(
 						4'd`CMD_SCROLL_DOWN: begin
 							scrollRow <= `DELAY (scrollRow - 1'b1);
 						end
-						4'd`CMD_CRLF: begin
+						4'd`CMD_CRLF, `CMD_DOWN: begin
 							//Return is CMD_HOME + CMD_DOWN
-							currentCursorCol <= `DELAY 7'h0;
+							if (inputCmdMemWrData[3:0] == 4'd`CMD_CRLF) begin
+								currentCursorCol <= `DELAY 7'h0;
+							end
 							if (cursorOnLastPhysicalRow) begin
 								//erase previous line
-								scrollRow <= `DELAY (scrollRow + 1'b1);
-							end else begin
-								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);
-							end
-						end
-						4'd`CMD_DOWN: begin
-							//same as LF
-							//remain on row MAXROW_M_1
-							if (cursorOnLastPhysicalRow) begin
 								scrollRow <= `DELAY (scrollRow + 1'b1);
 							end else begin
 								currentCursorRow <= `DELAY (currentCursorRow + 1'b1);

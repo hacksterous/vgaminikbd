@@ -1,0 +1,45 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Jul 31 14:19:06 2025
+[*]
+[dumpfile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.fst"
+[dumpfile_mtime] "Thu Jul 31 13:43:43 2025"
+[dumpfile_size] 49634
+[savefile] "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd-init.gtkw"
+[timestart] 55932940
+[size] 1920 947
+[pos] -1 -1
+*-11.087757 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.uvgaminikbd.
+[treeopen] tb.uvgaminikbd.uvga.
+[sst_width] 254
+[signals_width] 263
+[sst_expanded] 1
+[sst_vpaned_height] 264
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.enable
+tb.uvgaminikbd.uvga.ucharbufinit.initRowOnly
+tb.uvgaminikbd.uvga.ucharbufinit.sequential
+tb.uvgaminikbd.uvga.ucharbufinit.updateStatusRow
+tb.uvgaminikbd.uvga.ucharbufinit.initStateIDLE
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.rowInitCol[6:0]
+@24
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorCol[6:0]
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorRow[4:0]
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.initStateACTIVE_SEQ
+@22
+tb.uvgaminikbd.uvga.ucharbufinit.initData[6:0]
+@28
+tb.uvgaminikbd.uvga.ucharbufinit.initAddress[11:0]
+tb.uvgaminikbd.uvga.ucharbufinit.initStateACTIVE_ROW
+tb.uvgaminikbd.uvga.ucharbufinit.initWrEn
+@24
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorCol[6:0]
+@25
+tb.uvgaminikbd.uvga.ucharbufinit.initCursorRow[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

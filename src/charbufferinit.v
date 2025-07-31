@@ -11,11 +11,13 @@
   module charBufferInit (
 	input clk,
 	input resetn,
+	output wire initStateIsIdle,
 	input enable,
 	input updateStatusRow,
+	input [4:0] scrollRow, 
 	input initRowOnly,		 //only erase one line partially
-	input [4:0] rowInitRow, //partial line erase: row number
-	input [6:0] rowInitCol, //partial line erase: column to start at
+	input [4:0] rowInitRow, //line erase: row number
+	input [6:0] rowInitCol, //line erase: column to start at
 	input sequential,	 //initialize with sequential values
 	output wire initWrEn,
 	output wire [11:0] initAddress,
@@ -59,6 +61,8 @@
 	wire initStateACTIVE_ROW = (initState == INIT_STATE_ACTIVE_ROW);
 	wire initStateACTIVE_STAT = (initState == INIT_STATE_ACTIVE_STAT);
 
+	assign initStateIsIdle = initStateIDLE;
+
 	wire fullScreenInitDone = (initStateACTIVE_SEQ | initStateACTIVE_CLS) & initAddressAtMax;
 	wire rowInitDone = initStateACTIVE_ROW & initCursorColAtMax;
 	wire statusUpdateDone = initStateACTIVE_STAT & initCursorColAtMax;
@@ -82,7 +86,7 @@
 			initState <= `DELAY 3'h0;
 		end else begin
 			if (initStateIDLE & updateStatusRow) begin
-				initCursorRow <= `DELAY rowInitRow - 1'b1; //same as adding 31, rowInitRow is scrollRow value
+				initCursorRow <= `DELAY scrollRow - 1'b1; //same as adding 31
 				initCursorCol <= `DELAY  7'h0;
 				initData <= `DELAY 7'd127;
 			end else if (initStateACTIVE_STAT) begin
