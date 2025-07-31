@@ -16,6 +16,7 @@ scripts/__pycache__/*
 src/charROM/charROM_tmp.v
 src/vga.v.0
 src/vga.v.*
+src/charbufferinit.v.*
 src/*.v.*
 src/*.vh.*
 *.0

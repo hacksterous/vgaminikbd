@@ -40,19 +40,19 @@ module tb ();
 	initial keyA = 1'b1;
 	initial keyB = 1'b1;
 	
-	initial	begin
-		#10001 keyA = 1'b0;
-		#105 keyA = 1'b1;
-		#10001 keyB = 1'b0;
-		#75 keyB = 1'b1;
-	end
+	//initial	begin
+	//	#10001 keyA = 1'b1; //make this 0 if required
+	//	#105 keyA = 1'b1;
+	//	#10001 keyB = 1'b1; //make this 0 if required
+	//	#75 keyB = 1'b1;
+	//end
 
 	reg [7:0] TXCOUNT;
 	initial TXCOUNT = 14;
-	wire [7:0] txString [0:13];
+	wire [7:0] txString [0:15];
 	assign txString[0] = "h";
 	assign txString[1] = "e";
-	assign txString[2] = 24;
+	assign txString[2] = 7;
 	assign txString[3] = "l";
 	assign txString[4] = "l";
 	assign txString[5]  = "o";
@@ -64,11 +64,13 @@ module tb ();
 	assign txString[11]  = "l";
 	assign txString[12] = "d";
 	assign txString[13] = "!";
+	assign txString[14] = 0;
+	assign txString[15] = 0;
 
 	reg [1:0] tbTxState;
 	initial begin
 		//f = $fopen ("vgasim.txt", "w");
-		#6000000
+		#600000
 		$finish;
 		//$fclose(f);
 	end

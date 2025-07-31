@@ -16,7 +16,7 @@
 `define CMD_DEL 4
 `define CMD_PGUP 5
 `define CMD_PGDN 6
-//code 7 is available
+`define CMD_STATUSBARUPD 7
 `define CMD_BKSP 8
 `define CMD_TAB 9
 `define CMD_LF 10
@@ -39,6 +39,7 @@
 `define CMD_INSTOG 23
 `define CMD_MOVROWS 24
 `define CMD_MOVCOLS 25
+`define CMD_STATUSBARTOG 26
 `define CHAR_SPC 32
 `define CHAR_ZERO 48
 `endif
