@@ -99,11 +99,12 @@ module vga(
 	output reg vsync);
 
 	
-	localparam TABLEN = 4'd4; //tab is 8 space wide
+	localparam TABLEN = 4'd4; //tab is 4 space wide
 	localparam MAXCOL_M_1 = 79;
 	localparam MAXCOL_M_2 = 78;
 	localparam MAXCOL_M_TABLEN_1 = 75;
 	localparam MAXROW_M_1 = 31;
+	localparam MAXROW_M_1_SCROLL = 30;
 	localparam MAXCHARWIDTH_M_1 = 7;	//1 blank pixel + 7 pixels
 	localparam MAXCHARHEIGHT_M_1 = 14;	//9 lines + 1 blank line + 2 cursor lines + 3 interrow blank lines
 
@@ -171,6 +172,7 @@ module vga(
 	reg pendingSetCol;
 	reg pendingSetRow;
 	reg insertMode;
+	reg frozenBottomRowMode;
 
 	//The heartbeat module takes in the VSync pulse
 	//and generates user reset that remains active low
@@ -218,7 +220,10 @@ module vga(
 	wire screenEnd = (currentCursorCol[6:0] == MAXCOL_M_1);
 
 	wire inputCmdLow16 = inputCmdValid_r0 & ~|inputCmdMemWrData[7:4];
-	wire inputCmdCls		= inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_CLS);
+	wire inputCmdCls   = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_CLS);
+
+	//update the status bar at bottom
+	wire inputCmdStatusUpdateCode = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_STATUSBARUPD);
 
 	wire inputCmdCMD_BKSP = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_BKSP);
 	wire inputCmdCMD_DEL = inputCmdLow16 & (inputCmdMemWrData[3:0] == 4'd`CMD_DEL);
@@ -230,10 +235,15 @@ module vga(
 	wire inputCmdInsertToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_INSTOG);
 
 	wire inputCmdCursorToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
+
+	//freeze the bottom row (status bar)
+	wire inputCmdStatusBarToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_STATUSBARTOG);
 	//erase to start of line (move char at current char to column 0 with the rest of characters following)
 	wire inputCmdEraseSOL = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_ERASE_SOL);
 
-	wire cursorOnLastPhysicalRow = (currentCursorRow[4:0] == MAXROW_M_1);
+	wire cursorOnLastPhysicalRow = (frozenBottomRowMode)? 
+									(currentCursorRow[4:0] == MAXROW_M_1_SCROLL):
+									(currentCursorRow[4:0] == MAXROW_M_1);
 
 	wire inputCmdMoveRowsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
 	wire inputCmdMoveColsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVCOLS);
@@ -247,7 +257,7 @@ module vga(
 	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
 	assign clearLineOnScrollUp = inputCmdScrollUp_r0;
 	wire inputCmdScrollUp	= (hitReturnOrDown | screenEndInputChar)
-								& (currentCursorRow[4:0] == MAXROW_M_1) 
+								& cursorOnLastPhysicalRow
 								| inputCmdMoveRowsOnLastRow;
 
 	//erase to end of line and erase line -- for these two, make use of charBufferInit logic
@@ -436,6 +446,8 @@ module vga(
 					& ~rowDMAMoveColsDone
 					& ~inputCmdEraseLine),
 		.sequential (~inputKeyB),
+		//.frozenBottomRowMode (frozenBottomRowMode),
+		.updateStatusRow (inputCmdStatusUpdateCode),
 		.initRowOnly (clearLineOnScrollUp
 						| rowEraseMoveRows
 						| inputCmdEraseEOL 
@@ -443,7 +455,7 @@ module vga(
 						| inputCmdEraseLine),
 		//rowInitRow = rowDMARdRow is set by the previous MOVEROWS operation, and equals
 		//(currentScrolledRow - 1)
-		.rowInitRow ((rowDMAMoveColsDone)? rowDMARdRow: currentScrolledRow),
+		.rowInitRow ((inputCmdStatusUpdateCode)? scrollRow: (rowDMAMoveColsDone)? rowDMARdRow: currentScrolledRow),
 		.rowInitCol ((inputCmdEraseEOL | rowDMAMoveColsDone)? currentCursorCol: 7'h0),
 		.initWrEn (charBufferInitInProgress),
 		.initAddress (charBufferInitAddr),
@@ -455,6 +467,7 @@ module vga(
 		if (~resetn) begin
 			inputCmdScrollUp_r0 <= `DELAY 5'h0;
 			insertMode <= `DELAY 1'b0;
+			frozenBottomRowMode <= `DELAY 1'b0;
 			pendingSetCol <= `DELAY 1'b0; //1 means next input byte will set the column
 			pendingSetRow <= `DELAY 1'b0; //1 means next input byte will set the column
 			cursorInvisible <= `DELAY 1'b0; //1 means cursor is invisible
@@ -472,6 +485,7 @@ module vga(
 			//during backspace or delete operation, make cursor invisible
 			cursorInvisible <= `DELAY (inputCmdCursorToggle)? ~cursorInvisible: cursorInvisible; 
 			insertMode <= `DELAY (inputCmdInsertToggle)? ~insertMode: insertMode;
+			frozenBottomRowMode <= `DELAY (inputCmdStatusBarToggle)? ~frozenBottomRowMode: frozenBottomRowMode;
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
 			inputCmdMemWrEn <= `DELAY inputCmdValid & |inputCmdData[6:5] & ~pendingSetCol & ~pendingSetRow;
 			inputCmdMemWrData <= `DELAY inputCmdData;
@@ -527,7 +541,9 @@ module vga(
 							currentCursorRow <= `DELAY 0;
 						end
 						4'd`CMD_PGDN: begin
-							currentCursorRow <= `DELAY MAXROW_M_1;
+							currentCursorRow <= `DELAY (frozenBottomRowMode)? 
+														MAXROW_M_1_SCROLL:
+														MAXROW_M_1;
 						end
 						4'd`CMD_TAB: begin
 							if (currentCursorCol <= MAXCOL_M_TABLEN_1) begin
@@ -569,7 +585,7 @@ module vga(
 					//in insert mode, this code is used only when cursor column is max
 					if (currentCursorCol[6:0] == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 7'h0;
-						if (currentCursorRow[4:0] == MAXROW_M_1) begin
+						if (cursorOnLastPhysicalRow) begin
 							scrollRow <= `DELAY (scrollRow + 1'b1);
 							//previous line gets erased
 						end else begin
@@ -583,7 +599,7 @@ module vga(
 		end //else ~resetn
 	end //always
 
-	assign debug0 = ~inputCmdMoveColsInProgress; //green
+	assign debug0 = ~inputCmdMoveColsInProgress & ~frozenBottomRowMode; //green
 	assign debug1 = ~insertMode; //red
 	assign debug2 = 1'b1; //blue
 
@@ -672,7 +688,7 @@ module vga(
 	assign charWidthCounterMaxxed = (charWidthCounter[2:0] == MAXCHARWIDTH_M_1);
 	assign charHeightCounterMaxxed = (charHeightCounter[3:0] == MAXCHARHEIGHT_M_1);
 	assign currentScanCharColMaxxed = (currentScanCharCol[6:0] == MAXCOL_M_1);
-	assign currentScanCharRowMaxxed = (currentScanCharRow[4:0] == (MAXROW_M_1));
+	assign currentScanCharRowMaxxed = (currentScanCharRow[4:0] == MAXROW_M_1);
 
 	always @(posedge clk) begin
 		if (~resetn) begin
