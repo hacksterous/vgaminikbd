@@ -135,7 +135,7 @@ Note!
 		`else
 		.clockDividerValue(20'd1313),
 		`endif
-		.dataOutRx (rxDataOut),		//CPU Rx parallel data to mux
+		.dataOutRx (rxDataOut),		//CPU Rx parallel data to ANSI decode module
 		.dataOutRxAvailable (rxDataOutValid),
 		.dataInTx (kbdAsciiData),	//keyboard parallel data to Tx
 		.dataInTxValid (kbdAsciiDataValid),
@@ -152,26 +152,28 @@ Note!
 		.rxANSIDataOutValid (serialANSIDataValid),
 		.rxANSIDataOut (serialANSIData));
 
-	datamux2in uarb (
-		.debug0 (), //green
-		.debug1 (), //red
-		.debug2 (debug2), //blue
-		.clk (clk),
-		.resetn (userResetn),
-		.d0 (serialANSIData), 
-		.d0v (serialANSIDataValid), 
-		.d1 (kbdAsciiData),
-		.d1v (1'b0), //kbdAsciiDataValid),
-		.error (dataArbError),
-		.od (dataArbDout),
-		.odv (dataArbDoutValid));
+	//Data Arb is not needed as keyboard data is sent out
+	//to CPU only to maintain correct order of input
+	//as seen by the VGA controller (which was till now 
+	//receiving data from CPU and the keyboard)
+	//--datamux2in uarb (
+	//--	.debug0 (), //green
+	//--	.debug1 (), //red
+	//--	.debug2 (), //blue
+	//--	.clk (clk),
+	//--	.resetn (userResetn),
+	//--	.d0 (serialANSIData), 
+	//--	.d0v (serialANSIDataValid), 
+	//--	.d1 (kbdAsciiData),
+	//--	.d1v (1'b0), //kbdAsciiDataValid),
+	//--	.error (dataArbError),
+	//--	.od (dataArbDout),
+	//--	.odv (dataArbDoutValid));
 
 	vga uvga(
 		.resetn (resetn),
-		//.inputCmdData (dataArbDout), //FIXME: uncomment
-		//.inputCmdValid (dataArbDoutValid), //FIXME: uncomment
-		.inputCmdData (serialANSIData), //FIXME: remove
-		.inputCmdValid (serialANSIDataValid), //FIXME: remove
+		.inputCmdData (serialANSIData),
+		.inputCmdValid (serialANSIDataValid),
 		.inputKeyA (keyAOut),
 		.inputKeyB (keyBOut),
 		.debugUARTTxData (),
@@ -181,7 +183,7 @@ Note!
 		.userResetn (userResetn),
 		.debug0 (debug0), //green
 		.debug1 (debug1), //red
-		.debug2 (),	//blue
+		.debug2 (debug2), //blue
 		.pixel (pixel),
 		.hsync (hsync),
 		.vsync (vsync));

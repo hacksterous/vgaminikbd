@@ -302,9 +302,10 @@ module vga(
 	assign rowDMAInsReadWrite = rowDMAInsRdEn | rowDMAInsWrEn;
 	wire bkspNotAtColZero = inputCmdCMD_BKSP & |currentCursorCol[6:0];
 
-	wire cursorColNotAtMax = (currentCursorCol != MAXCOL_M_1);
+	wire cursorColAtMax = (currentCursorCol == MAXCOL_M_1);
 	
-	wire insertModeNotAtMaxCol = insertMode & cursorColNotAtMax;
+	wire insertModeNotAtMaxCol = insertMode & ~cursorColAtMax;
+
 	wire inputCmdInsertChar = isPrintableChar & insertModeNotAtMaxCol;
 	wire rowDMAInsCharStart = rowDMAIdle & inputCmdInsertChar;
 
@@ -593,6 +594,7 @@ module vga(
 				end else if (isPrintableChar & ~insertModeNotAtMaxCol | rowDMAInsDone) begin
 					//printable character > ASCII 31 < 128
 					//in insert mode, this code is used only when cursor column is max
+					//either not in insert mode, or at max column
 					if (currentCursorCol[6:0] == MAXCOL_M_1) begin
 						currentCursorCol <= `DELAY 7'h0;
 						if (cursorOnLastPhysicalRow) begin
@@ -654,7 +656,7 @@ module vga(
 
 	//backspace writes a space character one clock after the cursor is moved left
 	//delete just writes a space character without moving the cursor
-	assign charBufferWrEn = charBufferInitInProgress | (inputCmdMemWrEn & ~insertMode) 
+	assign charBufferWrEn = charBufferInitInProgress | (inputCmdMemWrEn & ~insertModeNotAtMaxCol) 
 							//even if rowDMA is happening, update the char buffer, as we
 							//don't want to lose user's data input
 							| rowDMAWrEn | rowDMAWrEnLast | rowDMAInsWrEn 
