@@ -11,14 +11,13 @@
         <File path="src/charbufferinit.v" type="file.verilog" enable="1"/>
         <File path="src/clockGen/clockGen.v" type="file.verilog" enable="1"/>
         <File path="src/clockGenALT/clockGenALT.v" type="file.verilog" enable="1"/>
-        <File path="src/datamux2in.v" type="file.verilog" enable="1"/>
-        <File path="src/fifo.v" type="file.verilog" enable="1"/>
         <File path="src/heartbeat.v" type="file.verilog" enable="1"/>
         <File path="src/hvsync.v" type="file.verilog" enable="1"/>
         <File path="src/kbd.v" type="file.verilog" enable="1"/>
         <File path="src/kbdrom/kbdrom.v" type="file.verilog" enable="1"/>
         <File path="src/keysynchronizer.v" type="file.verilog" enable="1"/>
         <File path="src/ps2receiver.v" type="file.verilog" enable="1"/>
+        <File path="src/regFifo4x8/regFifo4x8.v" type="file.verilog" enable="1"/>
         <File path="src/uart.v" type="file.verilog" enable="1"/>
         <File path="src/vga.v" type="file.verilog" enable="1"/>
         <File path="src/vgaminikbd.v" type="file.verilog" enable="1"/>
