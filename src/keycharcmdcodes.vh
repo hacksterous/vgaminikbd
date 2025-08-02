@@ -21,11 +21,11 @@
 `define CMD_TAB 9
 `define CMD_LF 10
 `define CMD_DOWN 10
-`define CMD_CLS 11
+`define CMD_RIGHT 11
 `define CMD_LEFT 12
 `define CMD_CR 13
 `define CMD_HOME 13
-`define CMD_RIGHT 14
+`define CMD_CLS 14
 `define CMD_END 15
 `define CMD_ERASE_SOL 16
 `define CMD_ERASE_EOL 17
@@ -43,9 +43,18 @@
 `define CHAR_ESC 27
 `define CHAR_SPC 32
 `define CHAR_ZERO 48
+`define CHAR_ONE 49
+`define CHAR_TWO 50
 `define CHAR_A 65
 `define CHAR_B 66
 `define CHAR_C 67
 `define CHAR_D 68
+`define CHAR_E 69
+`define CHAR_F 70
+`define CHAR_G 71
+`define CHAR_H 72
+`define CHAR_I 73
+`define CHAR_J 74
+`define CHAR_K 75
 `define CHAR_LEFTBRACKET 91
 `endif

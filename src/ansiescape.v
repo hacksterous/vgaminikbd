@@ -37,8 +37,13 @@ module ansiEscape (
 	localparam ANSI_RECD_IDLE = 0;
 	localparam ANSI_RECD_ESC = 1;
 	localparam ANSI_RECD_SEQ = 3;
-	reg [2:0] ansiEscSeqState;	
-	reg [2:0] nextAnsiEscSeqState;
+	localparam ANSI_RECD_SEQNEXT = 2;
+
+	reg [1:0] inputHistory;
+	reg [1:0] nextInputHistory;
+
+	reg [1:0] ansiEscSeqState;	
+	reg [1:0] nextAnsiEscSeqState;
 
 	reg nextRxANSIDataOutValid;
 	reg [7:0] nextRxANSIDataOut;
@@ -46,6 +51,7 @@ module ansiEscape (
 	wire ansiEscSeqStateANSI_RECD_IDLE = (ansiEscSeqState == ANSI_RECD_IDLE);
 	wire ansiEscSeqStateANSI_RECD_ESC = (ansiEscSeqState == ANSI_RECD_ESC);
 	wire ansiEscSeqStateANSI_RECD_SEQ = (ansiEscSeqState == ANSI_RECD_SEQ);
+	wire ansiEscSeqStateANSI_RECD_SEQNEXT = (ansiEscSeqState == ANSI_RECD_SEQNEXT);
 
 	wire fifoEmpty;
 	wire [7:0] fifoOut;
@@ -70,12 +76,14 @@ module ansiEscape (
 		if (~resetn) begin
 			ansiEscSeqState <= `DELAY 3'h0;
 			rxANSIDataOutValid <= `DELAY 1'b0;
+			inputHistory <= `DELAY 2'h0;
 			rxANSIDataOut <= `DELAY 8'h0;
 			ansiEscDebug <= `DELAY 1'b1;
 			fifoOutValid <= `DELAY 1'b0;
 		end else begin
 			ansiEscSeqState <= `DELAY nextAnsiEscSeqState;
 			rxANSIDataOutValid <= `DELAY nextRxANSIDataOutValid;
+			inputHistory <= `DELAY nextInputHistory;
 			rxANSIDataOut <= `DELAY nextRxANSIDataOut;
 			ansiEscDebug <= `DELAY (^ansiEscSeqStateANSI_RECD_IDLE & fifoOutValid)? ~ansiEscDebug: ansiEscDebug;
 			fifoOutValid <= `DELAY fifoRdEn;
@@ -86,7 +94,10 @@ module ansiEscape (
 		nextAnsiEscSeqState = ansiEscSeqState;
 		nextRxANSIDataOutValid = 1'b0;
 		nextRxANSIDataOut = rxANSIDataOut;
+		nextInputHistory = 2'h0;
 
+		//MS bit is for color information, and is passed as-is
+		//for non-control characters.
 		if (ansiEscSeqStateANSI_RECD_IDLE & fifoOutValid) begin
 			if (fifoOut[7:0] == 8'd`CHAR_ESC) begin
 				nextAnsiEscSeqState = ANSI_RECD_ESC;
@@ -106,27 +117,86 @@ module ansiEscape (
 		end else if (ansiEscSeqStateANSI_RECD_SEQ & fifoOutValid) begin
 			nextAnsiEscSeqState = ANSI_RECD_IDLE;
 			case (fifoOut[7:0])
-				65: begin //A -- up
+				`CHAR_A, `CHAR_F: begin //A -- up, F -- previous line home*
 					nextRxANSIDataOutValid = 1'b1;
-					nextRxANSIDataOut = 2; //CMD_UP
+					nextRxANSIDataOut = `CMD_UP;
 				end
-				66: begin //B -- down
+				`CHAR_B, `CHAR_E: begin //B -- down, E -- next line home*
 					nextRxANSIDataOutValid = 1'b1;
-					nextRxANSIDataOut = 10; //CMD_DOWN
+					nextRxANSIDataOut = `CMD_DOWN;
 				end
-				67: begin //C -- right
+				`CHAR_C: begin //C -- right
 					nextRxANSIDataOutValid = 1'b1;
-					nextRxANSIDataOut = 14; //CMD_RIGHT
+					nextRxANSIDataOut = `CMD_RIGHT;
 				end
-				68: begin //D -- left
+				`CHAR_D: begin //D -- left
 					nextRxANSIDataOutValid = 1'b1;
-					nextRxANSIDataOut = 12; //CMD_LEFT
+					nextRxANSIDataOut = `CMD_LEFT;
+				end
+				`CHAR_G: begin //G -- home
+					nextRxANSIDataOutValid = 1'b1;
+					nextRxANSIDataOut = `CMD_HOME;
+				end
+				`CHAR_J: begin //J -- clear screen -- difference from ANSI
+					nextRxANSIDataOutValid = 1'b1;
+					nextRxANSIDataOut = `CMD_CLS;
+				end
+				`CHAR_K: begin //K -- clear from cursor to end of the line
+					nextRxANSIDataOutValid = 1'b1;
+					nextRxANSIDataOut = `CMD_ERASE_EOL;
+				end
+				`CHAR_ZERO,
+				`CHAR_ONE,
+				`CHAR_TWO: begin //2 -- generate output in next state SEQNEXT
+					nextAnsiEscSeqState = ANSI_RECD_SEQNEXT;
+					nextInputHistory = fifoOut[1:0];
+					nextRxANSIDataOutValid = 1'b0;
 				end
 				default: begin
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = fifoOut;
 				end
 			endcase
+		end else if (ansiEscSeqStateANSI_RECD_SEQNEXT & fifoOutValid) begin
+			nextAnsiEscSeqState = ANSI_RECD_IDLE;
+			case (fifoOut[7:0])
+				`CHAR_J: begin
+					//clear in display
+					//J, if history is 2 or 3, clear display
+					//"ESC [ 2 J" is clear screen
+					if (inputHistory == 2'h2) begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_CLS;
+					end else begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = fifoOut;
+					end
+				end
+				`CHAR_K: begin 
+					//clear in line
+					//"ESC [ 0 K" is clear from cursor to end of the line
+					//"ESC [ 1 K" is clear from cursor to start of the line
+					//"ESC [ 2 K" is clear entire line
+					if (inputHistory == 2'h2) begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_ERASE_LINE;
+					end else if (inputHistory == 2'h1) begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_ERASE_SOL;
+					end else if (inputHistory == 2'h0) begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_ERASE_EOL;
+					end else begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = fifoOut;
+					end
+				end
+				default: begin
+					nextRxANSIDataOutValid = 1'b1;
+					nextRxANSIDataOut = fifoOut;
+				end
+			endcase
+
 		end
 	end
 
