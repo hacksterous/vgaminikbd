@@ -252,8 +252,6 @@ module vga(
 	wire inputCmdMoveRows = inputCmdMoveRowsCommand & ~cursorOnLastPhysicalRow;
 	wire inputCmdMoveRowsOnLastRow = inputCmdMoveRowsCommand & cursorOnLastPhysicalRow;
 
-	wire inputCmdMoveCols = inputCmdMoveColsCommand & ~cursorOnLastPhysicalRow;
-
 	wire screenEndInputChar = inputCmdValid_r0 & screenEnd & isPrintableChar;
 	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
 	assign clearRowOnScrollUp = inputCmdScrollUp_r0;
@@ -328,7 +326,6 @@ module vga(
 					nextRowDMAState = ROWDMA_COLMOVE_START;
 					nextRowDMARdRow = currentScrolledRow;
 					nextRowDMARdCol = currentCursorCol;
-				//end else if (inputCmdMoveRows | inputCmdMoveCols) begin //FIXME
 				end else if (inputCmdMoveRows) begin
 					nextRowDMAState = ROWDMA_ROWMOVE_READ;
 					nextRowDMARdCol = 7'h0;
@@ -612,8 +609,8 @@ module vga(
 	end //always
 
 	assign debug0 = ~inputCmdMoveColsInProgress & ~frozenBottomRowMode; //green
-	assign debug1 = ~insertMode; //red
-	assign debug2 = 1'b1; //blue
+	assign debug1 = 1'b1; //red
+	assign debug2 = ~insertMode; //blue
 
 	wire [4:0] shiftedHeightCounter = ({1'b0, charHeightCounter_r0[3:0]} - 5'd9);
 	//bit[4] set means charHeightCounter_r0 is < 9, so use charHeightCounter in ROM address
@@ -822,7 +819,8 @@ module vga(
 								endcase
 							end
 							//make cursor invisible during backspace/delete operations
-							4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle;
+							//4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle & ~insertMode;
+							4'd12: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle & ~insertMode;
 							default: pixel <= `DELAY 1'b0;
 						endcase
 					end else begin
@@ -833,7 +831,7 @@ module vga(
 									//Make first pixel a blank one -- workaround for 
 									//leftmost pixel column shift to rightmost column.
 									//The shift still happens, but it is now a blank pixel.
-									3'h0: pixel <= `DELAY 1'b0; 
+									3'h0: pixel <= `DELAY 1'b0;
 									3'h1: pixel <= `DELAY charROMRdData[6];
 									3'h2: pixel <= `DELAY charROMRdData[5];
 									3'h3: pixel <= `DELAY charROMRdData[4];
@@ -845,9 +843,13 @@ module vga(
 								endcase
 							end
 							//make cursor invisible during backspace/delete operations
-							4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle;
+							//4'd12, 4'd13: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle & ~insertMode;
+							4'd12: pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle & ~insertMode;
 							default: pixel <= `DELAY 1'b0;
 						endcase
+					end
+					if ((charWidthCounter_r1 == 3'h1) & ((charHeightCounter_r1[3:2] == 2'b10) | (charHeightCounter_r1[3:2] == 2'b11))) begin
+						pixel <= `DELAY scanningCurrentCursorCell_r2 & cursorBlink & ~cursorInvisible & rowDMAIdle & insertMode;
 					end
 				end
 			end else begin

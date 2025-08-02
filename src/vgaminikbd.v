@@ -26,8 +26,8 @@ module vgaminikbd(
 	output wire vsync);
 
 	wire clk;
-	wire [7:0] rxDataOut;
-	wire rxDataOutValid;
+	wire [7:0] uartRxDataOut;
+	wire uartRxDataOutValid;
 
 	`ifndef SIM_ONLY
 	//Gowin/Xilinx global reset controls main reset
@@ -135,8 +135,8 @@ Note!
 		`else
 		.clockDividerValue(20'd1313),
 		`endif
-		.dataOutRx (rxDataOut),		//CPU Rx parallel data to ANSI decode module
-		.dataOutRxAvailable (rxDataOutValid),
+		.dataOutRx (uartRxDataOut),	//CPU Rx parallel data to ANSI decode module
+		.dataOutRxAvailable (uartRxDataOutValid),
 		.dataInTx (kbdAsciiData),	//keyboard parallel data to Tx
 		.dataInTxValid (kbdAsciiDataValid),
 		.dataInTxBusy (dataInTxBusy),
@@ -144,31 +144,14 @@ Note!
 		.rxBitTick(),
 		.txBitTick());
 
-	ansiescape uansiesc (
+	ansiEscape uansiesc (
 		.clk (clk),
 		.resetn (userResetn),
-		.rxDataInValid (rxDataOutValid),
-		.rxDataIn (rxDataOut),
+		.ansiEscDebug(debug0),
+		.rxDataInValid (uartRxDataOutValid),
+		.rxDataIn (uartRxDataOut),
 		.rxANSIDataOutValid (serialANSIDataValid),
 		.rxANSIDataOut (serialANSIData));
-
-	//Data Arb is not needed as keyboard data is sent out
-	//to CPU only to maintain correct order of input
-	//as seen by the VGA controller (which was till now 
-	//receiving data from CPU and the keyboard)
-	//--datamux2in uarb (
-	//--	.debug0 (), //green
-	//--	.debug1 (), //red
-	//--	.debug2 (), //blue
-	//--	.clk (clk),
-	//--	.resetn (userResetn),
-	//--	.d0 (serialANSIData), 
-	//--	.d0v (serialANSIDataValid), 
-	//--	.d1 (kbdAsciiData),
-	//--	.d1v (1'b0), //kbdAsciiDataValid),
-	//--	.error (dataArbError),
-	//--	.od (dataArbDout),
-	//--	.odv (dataArbDoutValid));
 
 	vga uvga(
 		.resetn (resetn),
@@ -181,7 +164,7 @@ Note!
 		.debug (1'b0),
 		.clk (clk),
 		.userResetn (userResetn),
-		.debug0 (debug0), //green
+		.debug0 (), //green
 		.debug1 (debug1), //red
 		.debug2 (debug2), //blue
 		.pixel (pixel),
