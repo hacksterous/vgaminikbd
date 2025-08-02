@@ -23,7 +23,6 @@ module kbd (
 	wire [7:0] kbdcode;
 	wire kbdcodeValid;
 	reg fifoReadDataValid;
-	wire kbdfifoNotEmpty;
 	reg skipNextCode; //this is the second code of a key break/release code pair
 	reg nextSkipNextCode;
 	reg shiftState;
@@ -43,6 +42,9 @@ module kbd (
 	wire shiftKeycodes;
 	wire specialCodeValidFPulse;
 
+	wire fifoEmpty;
+	wire fifoRdEn = ~fifoEmpty;
+
 	assign romAsciiDout = (shiftState)? romAsciiDoutNormalAndShift[13:7]: romAsciiDoutNormalAndShift[6:0];
 	assign asciiCode = (readKbdRom_r0)? romAsciiDout: specialAsciiCode;
 	assign specialCodeValidFPulse = ~nextSpecialCodeValid & specialCodeValid & ~nextSkipNextCode;
@@ -61,7 +63,7 @@ module kbd (
 			kbdData <= `DELAY 8'h0;
 			kbdDataValid <= `DELAY 1'b0;
 		end else begin
-			fifoReadDataValid <= `DELAY kbdfifoNotEmpty;
+			fifoReadDataValid <= `DELAY fifoRdEn;
 			shiftState <= `DELAY nextShiftState;
 			readKbdRom_r0 <= `DELAY readKbdRom;
 			specialCodeValid <= `DELAY nextSpecialCodeValid;
@@ -135,15 +137,16 @@ module kbd (
 		.dout (romAsciiDoutNormalAndShift[13:0]));
 
 	//keyboard data goes into this FIFO
-	fifo #(.WIDTH(8), .DEPTH(4)) kbdfifo (
-		.clk (clk),
-		.resetn (resetn),
-		.push (kbdcodeValid),
-		.notfull (),
-		.inData (kbdcode),
-		.notempty (kbdfifoNotEmpty),
-		.pop (kbdfifoNotEmpty),
-		.outData (kbdOutCode));
+	regFifo4x8 ufifo(
+		.Clk(clk), //input Clk
+		.Data(kbdcode), //input [7:0] Data
+		.WrEn(kbdcodeValid), //input WrEn
+		.RdEn(fifoRdEn), //input RdEn
+		.Reset(~resetn), //input Reset
+		.Q(kbdOutCode), //output [7:0] Q
+		.Empty(fifoEmpty), //output Empty
+		.Full() //output Full
+	);
 
 	ps2receiver ps2kbd (
 		.clk (clk),

@@ -1,0 +1,746 @@
+//Copyright (C)2014-2025 Gowin Semiconductor Corporation.
+//All rights reserved.
+//File Title: Post-PnR Verilog Simulation Model file
+//Tool Version: V1.9.11.03
+//Created Time: Sat Aug  2 17:29:25 2025
+
+`timescale 100 ps/100 ps
+module regFifo4x8(
+	Data,
+	Clk,
+	WrEn,
+	RdEn,
+	Reset,
+	Q,
+	Empty,
+	Full
+);
+input [7:0] Data;
+input Clk;
+input WrEn;
+input RdEn;
+input Reset;
+output [7:0] Q;
+output Empty;
+output Full;
+wire Clk;
+wire [7:0] Data;
+wire Empty;
+wire Full;
+wire GND;
+wire [7:0] Q;
+wire RdEn;
+wire Reset;
+wire VCC;
+wire WrEn;
+wire \fifo_sc_inst/mem_RAMOUT_1_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_2_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_4_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_5_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_7_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_8_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_10_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_11_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_13_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_14_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_16_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_17_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_19_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_20_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_22_G[1]_1 ;
+wire \fifo_sc_inst/mem_RAMOUT_23_G[1]_1 ;
+wire \fifo_sc_inst/n11_4 ;
+wire \fifo_sc_inst/mem_59 ;
+wire \fifo_sc_inst/mem_61 ;
+wire \fifo_sc_inst/mem_63 ;
+wire \fifo_sc_inst/mem_65 ;
+wire \fifo_sc_inst/rbin_next_0_8 ;
+wire \fifo_sc_inst/wbin_next_0_8 ;
+wire \fifo_sc_inst/wfull_val_4 ;
+wire \fifo_sc_inst/wfull_val ;
+wire \fifo_sc_inst/rempty_val ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[0]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[1]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[2]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[3]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[4]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[5]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[6]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_0_G[7]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[0]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[1]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[2]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[3]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[4]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[5]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[6]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_1_G[7]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[0]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[1]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[2]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[3]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[4]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[5]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[6]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_2_G[7]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[0]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[1]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[2]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[3]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[4]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[5]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[6]_2 ;
+wire \fifo_sc_inst/mem_mem_RAMREG_3_G[7]_2 ;
+wire \fifo_sc_inst/n75_1_SUM ;
+wire \fifo_sc_inst/n75_3 ;
+wire \fifo_sc_inst/n76_1_SUM ;
+wire \fifo_sc_inst/n76_3 ;
+wire \fifo_sc_inst/mem_RAMOUT_0_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_3_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_6_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_9_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_12_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_15_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_18_G[0]_2 ;
+wire \fifo_sc_inst/mem_RAMOUT_21_G[0]_2 ;
+wire [2:1] \fifo_sc_inst/rbin_next ;
+wire [2:1] \fifo_sc_inst/wbin_next ;
+wire [2:0] \fifo_sc_inst/rbin ;
+wire [2:0] \fifo_sc_inst/wbin ;
+VCC VCC_cZ (
+  .V(VCC)
+);
+GND GND_cZ (
+  .G(GND)
+);
+GSR GSR (
+	.GSRI(VCC)
+);
+LUT3 \fifo_sc_inst/mem_RAMOUT_0_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[0]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[0]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_1_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_0_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_0_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[0]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[0]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_2_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_0_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_3_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[1]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[1]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_4_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_3_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_3_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[1]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[1]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_5_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_3_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_6_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[2]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[2]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_7_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_6_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_6_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[2]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[2]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_8_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_6_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_9_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[3]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[3]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_10_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_9_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_9_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[3]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[3]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_11_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_9_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_12_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[4]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[4]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_13_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_12_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_12_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[4]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[4]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_14_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_12_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_15_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[5]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[5]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_16_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_15_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_15_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[5]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[5]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_17_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_15_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_18_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[6]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[6]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_19_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_18_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_18_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[6]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[6]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_20_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_18_G[0]_s2 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_21_G[0]_s1  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_0_G[7]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_2_G[7]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_22_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_21_G[0]_s1 .INIT=8'hCA;
+LUT3 \fifo_sc_inst/mem_RAMOUT_21_G[0]_s2  (
+	.I0(\fifo_sc_inst/mem_mem_RAMREG_1_G[7]_2 ),
+	.I1(\fifo_sc_inst/mem_mem_RAMREG_3_G[7]_2 ),
+	.I2(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/mem_RAMOUT_23_G[1]_1 )
+);
+defparam \fifo_sc_inst/mem_RAMOUT_21_G[0]_s2 .INIT=8'hCA;
+LUT2 \fifo_sc_inst/n11_s0  (
+	.I0(Empty),
+	.I1(RdEn),
+	.F(\fifo_sc_inst/n11_4 )
+);
+defparam \fifo_sc_inst/n11_s0 .INIT=4'h4;
+LUT4 \fifo_sc_inst/mem_s57  (
+	.I0(Full),
+	.I1(\fifo_sc_inst/wbin [1]),
+	.I2(\fifo_sc_inst/wbin [0]),
+	.I3(WrEn),
+	.F(\fifo_sc_inst/mem_59 )
+);
+defparam \fifo_sc_inst/mem_s57 .INIT=16'h0100;
+LUT4 \fifo_sc_inst/mem_s58  (
+	.I0(Full),
+	.I1(\fifo_sc_inst/wbin [1]),
+	.I2(WrEn),
+	.I3(\fifo_sc_inst/wbin [0]),
+	.F(\fifo_sc_inst/mem_61 )
+);
+defparam \fifo_sc_inst/mem_s58 .INIT=16'h1000;
+LUT4 \fifo_sc_inst/mem_s59  (
+	.I0(Full),
+	.I1(\fifo_sc_inst/wbin [0]),
+	.I2(\fifo_sc_inst/wbin [1]),
+	.I3(WrEn),
+	.F(\fifo_sc_inst/mem_63 )
+);
+defparam \fifo_sc_inst/mem_s59 .INIT=16'h1000;
+LUT4 \fifo_sc_inst/mem_s60  (
+	.I0(Full),
+	.I1(WrEn),
+	.I2(\fifo_sc_inst/wbin [1]),
+	.I3(\fifo_sc_inst/wbin [0]),
+	.F(\fifo_sc_inst/mem_65 )
+);
+defparam \fifo_sc_inst/mem_s60 .INIT=16'h4000;
+LUT3 \fifo_sc_inst/rbin_next_0_s3  (
+	.I0(Empty),
+	.I1(RdEn),
+	.I2(\fifo_sc_inst/rbin [0]),
+	.F(\fifo_sc_inst/rbin_next_0_8 )
+);
+defparam \fifo_sc_inst/rbin_next_0_s3 .INIT=8'hB4;
+LUT4 \fifo_sc_inst/rbin_next_1_s3  (
+	.I0(Empty),
+	.I1(RdEn),
+	.I2(\fifo_sc_inst/rbin [0]),
+	.I3(\fifo_sc_inst/rbin [1]),
+	.F(\fifo_sc_inst/rbin_next [1])
+);
+defparam \fifo_sc_inst/rbin_next_1_s3 .INIT=16'hBF40;
+LUT4 \fifo_sc_inst/rbin_next_2_s2  (
+	.I0(\fifo_sc_inst/rbin [0]),
+	.I1(\fifo_sc_inst/rbin [1]),
+	.I2(\fifo_sc_inst/n11_4 ),
+	.I3(\fifo_sc_inst/rbin [2]),
+	.F(\fifo_sc_inst/rbin_next [2])
+);
+defparam \fifo_sc_inst/rbin_next_2_s2 .INIT=16'h7F80;
+LUT3 \fifo_sc_inst/wbin_next_0_s3  (
+	.I0(Full),
+	.I1(WrEn),
+	.I2(\fifo_sc_inst/wbin [0]),
+	.F(\fifo_sc_inst/wbin_next_0_8 )
+);
+defparam \fifo_sc_inst/wbin_next_0_s3 .INIT=8'hB4;
+LUT4 \fifo_sc_inst/wbin_next_1_s3  (
+	.I0(Full),
+	.I1(WrEn),
+	.I2(\fifo_sc_inst/wbin [0]),
+	.I3(\fifo_sc_inst/wbin [1]),
+	.F(\fifo_sc_inst/wbin_next [1])
+);
+defparam \fifo_sc_inst/wbin_next_1_s3 .INIT=16'hBF40;
+LUT2 \fifo_sc_inst/wbin_next_2_s2  (
+	.I0(\fifo_sc_inst/wbin [2]),
+	.I1(\fifo_sc_inst/mem_65 ),
+	.F(\fifo_sc_inst/wbin_next [2])
+);
+defparam \fifo_sc_inst/wbin_next_2_s2 .INIT=4'h6;
+LUT4 \fifo_sc_inst/wfull_val_s1  (
+	.I0(\fifo_sc_inst/rbin_next [1]),
+	.I1(\fifo_sc_inst/wbin_next [1]),
+	.I2(\fifo_sc_inst/wbin_next_0_8 ),
+	.I3(\fifo_sc_inst/rbin_next_0_8 ),
+	.F(\fifo_sc_inst/wfull_val_4 )
+);
+defparam \fifo_sc_inst/wfull_val_s1 .INIT=16'h9009;
+LUT4 \fifo_sc_inst/wfull_val_s2  (
+	.I0(\fifo_sc_inst/rbin_next [2]),
+	.I1(\fifo_sc_inst/wbin [2]),
+	.I2(\fifo_sc_inst/mem_65 ),
+	.I3(\fifo_sc_inst/wfull_val_4 ),
+	.F(\fifo_sc_inst/wfull_val )
+);
+defparam \fifo_sc_inst/wfull_val_s2 .INIT=16'h9600;
+LUT3 \fifo_sc_inst/rempty_val_s1  (
+	.I0(\fifo_sc_inst/n76_3 ),
+	.I1(\fifo_sc_inst/wbin [2]),
+	.I2(\fifo_sc_inst/rbin_next [2]),
+	.F(\fifo_sc_inst/rempty_val )
+);
+defparam \fifo_sc_inst/rempty_val_s1 .INIT=8'h41;
+DFFCE \fifo_sc_inst/Q_r2_6_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_18_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[6])
+);
+defparam \fifo_sc_inst/Q_r2_6_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_5_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_15_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[5])
+);
+defparam \fifo_sc_inst/Q_r2_5_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_4_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_12_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[4])
+);
+defparam \fifo_sc_inst/Q_r2_4_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_3_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_9_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[3])
+);
+defparam \fifo_sc_inst/Q_r2_3_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_2_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_6_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[2])
+);
+defparam \fifo_sc_inst/Q_r2_2_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_1_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_3_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[1])
+);
+defparam \fifo_sc_inst/Q_r2_1_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_0_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_0_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[0])
+);
+defparam \fifo_sc_inst/Q_r2_0_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/rbin_2_s0  (
+	.D(\fifo_sc_inst/rbin_next [2]),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/rbin [2])
+);
+defparam \fifo_sc_inst/rbin_2_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/rbin_1_s0  (
+	.D(\fifo_sc_inst/rbin_next [1]),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/rbin [1])
+);
+defparam \fifo_sc_inst/rbin_1_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/rbin_0_s0  (
+	.D(\fifo_sc_inst/rbin_next_0_8 ),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/rbin [0])
+);
+defparam \fifo_sc_inst/rbin_0_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/wbin_2_s0  (
+	.D(\fifo_sc_inst/wbin_next [2]),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/wbin [2])
+);
+defparam \fifo_sc_inst/wbin_2_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/wbin_1_s0  (
+	.D(\fifo_sc_inst/wbin_next [1]),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/wbin [1])
+);
+defparam \fifo_sc_inst/wbin_1_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/wbin_0_s0  (
+	.D(\fifo_sc_inst/wbin_next_0_8 ),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(\fifo_sc_inst/wbin [0])
+);
+defparam \fifo_sc_inst/wbin_0_s0 .INIT=1'b0;
+DFFC \fifo_sc_inst/Full_s0  (
+	.D(\fifo_sc_inst/wfull_val ),
+	.CLK(Clk),
+	.CLEAR(Reset),
+	.Q(Full)
+);
+defparam \fifo_sc_inst/Full_s0 .INIT=1'b0;
+DFFCE \fifo_sc_inst/Q_r2_7_s0  (
+	.D(\fifo_sc_inst/mem_RAMOUT_21_G[0]_2 ),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/n11_4 ),
+	.CLEAR(Reset),
+	.Q(Q[7])
+);
+defparam \fifo_sc_inst/Q_r2_7_s0 .INIT=1'b0;
+DFFP \fifo_sc_inst/Empty_s0  (
+	.D(\fifo_sc_inst/rempty_val ),
+	.CLK(Clk),
+	.PRESET(Reset),
+	.Q(Empty)
+);
+defparam \fifo_sc_inst/Empty_s0 .INIT=1'b1;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[0]_s0  (
+	.D(Data[0]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[0]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[0]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[1]_s0  (
+	.D(Data[1]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[1]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[1]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[2]_s0  (
+	.D(Data[2]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[2]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[2]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[3]_s0  (
+	.D(Data[3]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[3]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[3]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[4]_s0  (
+	.D(Data[4]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[4]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[4]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[5]_s0  (
+	.D(Data[5]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[5]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[5]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[6]_s0  (
+	.D(Data[6]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[6]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[6]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_0_G[7]_s0  (
+	.D(Data[7]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_59 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_0_G[7]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_0_G[7]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[0]_s0  (
+	.D(Data[0]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[0]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[0]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[1]_s0  (
+	.D(Data[1]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[1]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[1]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[2]_s0  (
+	.D(Data[2]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[2]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[2]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[3]_s0  (
+	.D(Data[3]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[3]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[3]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[4]_s0  (
+	.D(Data[4]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[4]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[4]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[5]_s0  (
+	.D(Data[5]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[5]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[5]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[6]_s0  (
+	.D(Data[6]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[6]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[6]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_1_G[7]_s0  (
+	.D(Data[7]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_61 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_1_G[7]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_1_G[7]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[0]_s0  (
+	.D(Data[0]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[0]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[0]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[1]_s0  (
+	.D(Data[1]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[1]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[1]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[2]_s0  (
+	.D(Data[2]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[2]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[2]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[3]_s0  (
+	.D(Data[3]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[3]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[3]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[4]_s0  (
+	.D(Data[4]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[4]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[4]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[5]_s0  (
+	.D(Data[5]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[5]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[5]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[6]_s0  (
+	.D(Data[6]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[6]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[6]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_2_G[7]_s0  (
+	.D(Data[7]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_63 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_2_G[7]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_2_G[7]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[0]_s0  (
+	.D(Data[0]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[0]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[0]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[1]_s0  (
+	.D(Data[1]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[1]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[1]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[2]_s0  (
+	.D(Data[2]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[2]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[2]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[3]_s0  (
+	.D(Data[3]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[3]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[3]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[4]_s0  (
+	.D(Data[4]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[4]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[4]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[5]_s0  (
+	.D(Data[5]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[5]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[5]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[6]_s0  (
+	.D(Data[6]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[6]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[6]_s0 .INIT=1'b0;
+DFFE \fifo_sc_inst/mem_mem_RAMREG_3_G[7]_s0  (
+	.D(Data[7]),
+	.CLK(Clk),
+	.CE(\fifo_sc_inst/mem_65 ),
+	.Q(\fifo_sc_inst/mem_mem_RAMREG_3_G[7]_2 )
+);
+defparam \fifo_sc_inst/mem_mem_RAMREG_3_G[7]_s0 .INIT=1'b0;
+ALU \fifo_sc_inst/n75_s0  (
+	.I0(\fifo_sc_inst/rbin_next_0_8 ),
+	.I1(\fifo_sc_inst/wbin [0]),
+	.I3(GND),
+	.CIN(GND),
+	.COUT(\fifo_sc_inst/n75_3 ),
+	.SUM(\fifo_sc_inst/n75_1_SUM )
+);
+defparam \fifo_sc_inst/n75_s0 .ALU_MODE=3;
+ALU \fifo_sc_inst/n76_s0  (
+	.I0(\fifo_sc_inst/rbin_next [1]),
+	.I1(\fifo_sc_inst/wbin [1]),
+	.I3(GND),
+	.CIN(\fifo_sc_inst/n75_3 ),
+	.COUT(\fifo_sc_inst/n76_3 ),
+	.SUM(\fifo_sc_inst/n76_1_SUM )
+);
+defparam \fifo_sc_inst/n76_s0 .ALU_MODE=3;
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_0_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_1_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_2_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_0_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_3_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_4_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_5_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_3_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_6_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_7_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_8_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_6_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_9_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_10_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_11_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_9_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_12_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_13_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_14_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_12_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_15_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_16_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_17_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_15_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_18_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_19_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_20_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_18_G[0]_2 )
+);
+MUX2_LUT5 \fifo_sc_inst/mem_RAMOUT_21_G[0]_s0  (
+	.I0(\fifo_sc_inst/mem_RAMOUT_22_G[1]_1 ),
+	.I1(\fifo_sc_inst/mem_RAMOUT_23_G[1]_1 ),
+	.S0(\fifo_sc_inst/rbin [0]),
+	.O(\fifo_sc_inst/mem_RAMOUT_21_G[0]_2 )
+);
+endmodule

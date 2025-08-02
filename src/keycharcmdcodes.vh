@@ -32,7 +32,7 @@
 `define CMD_ERASE_LINE 18
 //CMD_CURTOG: toggle cursor enable
 `define CMD_CURTOG 19
-//CMD_CHRTOG: toggle character mode for codes 0-31
+//CMD_CHRTOG: toggle character mode for codes 1-31
 `define CMD_CHRTOG 20
 `define CMD_SETCOL 21
 `define CMD_SETROW 22
@@ -40,6 +40,12 @@
 `define CMD_MOVROWS 24
 `define CMD_MOVCOLS 25
 `define CMD_STATUSBARTOG 26
+`define CHAR_ESC 27
 `define CHAR_SPC 32
 `define CHAR_ZERO 48
+`define CHAR_A 65
+`define CHAR_B 66
+`define CHAR_C 67
+`define CHAR_D 68
+`define CHAR_LEFTBRACKET 91
 `endif
