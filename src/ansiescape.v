@@ -39,8 +39,8 @@ module ansiEscape (
 	localparam ANSI_RECD_SEQ = 3;
 	localparam ANSI_RECD_SEQNEXT = 2;
 
-	reg [1:0] inputHistory;
-	reg [1:0] nextInputHistory;
+	reg [3:0] inputHistory;
+	reg [3:0] nextInputHistory;
 
 	reg [1:0] ansiEscSeqState;	
 	reg [1:0] nextAnsiEscSeqState;
@@ -76,7 +76,7 @@ module ansiEscape (
 		if (~resetn) begin
 			ansiEscSeqState <= `DELAY 3'h0;
 			rxANSIDataOutValid <= `DELAY 1'b0;
-			inputHistory <= `DELAY 2'h0;
+			inputHistory <= `DELAY 4'h0;
 			rxANSIDataOut <= `DELAY 8'h0;
 			ansiEscDebug <= `DELAY 1'b1;
 			fifoOutValid <= `DELAY 1'b0;
@@ -94,7 +94,7 @@ module ansiEscape (
 		nextAnsiEscSeqState = ansiEscSeqState;
 		nextRxANSIDataOutValid = 1'b0;
 		nextRxANSIDataOut = rxANSIDataOut;
-		nextInputHistory = 2'h0;
+		nextInputHistory = inputHistory;
 
 		//MS bit is for color information, and is passed as-is
 		//for non-control characters.
@@ -145,11 +145,31 @@ module ansiEscape (
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = `CMD_ERASE_EOL;
 				end
-				`CHAR_ZERO,
-				`CHAR_ONE,
-				`CHAR_TWO: begin //2 -- generate output in next state SEQNEXT
+
+				/*
+				https://en.wikipedia.org/wiki/ANSI_escape_code
+				<esc>[1~    - Home        <esc>[16~   -             <esc>[31~   - F17
+				<esc>[2~    - Insert      <esc>[17~   - F6          <esc>[32~   - F18
+				<esc>[3~    - Delete      <esc>[18~   - F7          <esc>[33~   - F19
+				<esc>[4~    - End         <esc>[19~   - F8          <esc>[34~   - F20
+				<esc>[5~    - PgUp        <esc>[20~   - F9          <esc>[35~   - 
+				<esc>[6~    - PgDn        <esc>[21~   - F10         
+				<esc>[7~    - Home        <esc>[22~   -             
+				<esc>[8~    - End         <esc>[23~   - F11         
+				<esc>[9~    -             <esc>[24~   - F12         
+				<esc>[10~   - F0          <esc>[25~   - F13         
+				<esc>[11~   - F1          <esc>[26~   - F14         
+				<esc>[12~   - F2          <esc>[27~   -             
+				<esc>[13~   - F3          <esc>[28~   - F15         
+				<esc>[14~   - F4          <esc>[29~   - F16         
+				<esc>[15~   - F5          <esc>[30~   -
+				*/
+				`CHAR_ZERO, `CHAR_ONE, `CHAR_TWO, `CHAR_THREE,
+				`CHAR_FOUT, `CHAR_FIVE, `CHAR_SIX, `CHAR_SEVEN,
+				`CHAR_EIGHT, `CHAR_NINE: begin 
+					//1-8 -- generate output in next state SEQNEXT
 					nextAnsiEscSeqState = ANSI_RECD_SEQNEXT;
-					nextInputHistory = fifoOut[1:0];
+					nextInputHistory = fifoOut[3:0];
 					nextRxANSIDataOutValid = 1'b0;
 				end
 				default: begin
@@ -164,7 +184,7 @@ module ansiEscape (
 					//clear in display
 					//J, if history is 2 or 3, clear display
 					//"ESC [ 2 J" is clear screen
-					if (inputHistory == 2'h2) begin
+					if ((inputHistory == 4'h2) | (inputHistory == 4'h3)) begin
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_CLS;
 					end else begin
@@ -177,15 +197,44 @@ module ansiEscape (
 					//"ESC [ 0 K" is clear from cursor to end of the line
 					//"ESC [ 1 K" is clear from cursor to start of the line
 					//"ESC [ 2 K" is clear entire line
-					if (inputHistory == 2'h2) begin
+					if (inputHistory == 4'h2) begin
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_ERASE_LINE;
-					end else if (inputHistory == 2'h1) begin
+					end else if (inputHistory == 4'h1) begin
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_ERASE_SOL;
-					end else if (inputHistory == 2'h0) begin
+					end else if (inputHistory == 4'h0) begin
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_ERASE_EOL;
+					end else begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = fifoOut;
+					end
+				end
+				`CHAR_TILDE: begin 
+					if (inputHistory == 4'h0) begin
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_CLS;
+					end else if ((inputHistory == 4'h1) |
+							(inputHistory == 4'h7)) begin //"ESC [ 1 ~" is Home
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_HOME; //home not working FIXME
+					end else if (inputHistory == 4'h2) begin //Insert
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_INSTOG;
+					end else if (inputHistory == 4'h3) begin //Delete 
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_DEL;
+					end else if ((inputHistory == 4'h4) 
+							| (inputHistory == 4'h8)) begin //End 
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_END; //end not working FIXME
+					end else if (inputHistory == 4'h5) begin //PgUp 
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_PGUP;
+					end else if (inputHistory == 4'h6) begin //PgDn 
+						nextRxANSIDataOutValid = 1'b1;
+						nextRxANSIDataOut = `CMD_PGDN;
 					end else begin
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = fifoOut;
@@ -196,7 +245,6 @@ module ansiEscape (
 					nextRxANSIDataOut = fifoOut;
 				end
 			endcase
-
 		end
 	end
 

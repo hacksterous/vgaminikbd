@@ -49,7 +49,7 @@
     "SubInsts" : [
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
-      "InstLine" : 129,
+      "InstLine" : 131,
       "InstName" : "ukbdrom",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbdrom/kbdrom.v",
       "ModuleLine" : 10,
@@ -57,15 +57,25 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
-      "InstLine" : 138,
-      "InstName" : "kbdfifo",
-      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
-      "ModuleLine" : 7,
-      "ModuleName" : "fifo"
+      "InstLine" : 140,
+      "InstName" : "ufifo",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+      "ModuleLine" : 294,
+      "ModuleName" : "regFifo4x8",
+      "SubInsts" : [
+       {
+        "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+        "InstLine" : 315,
+        "InstName" : "fifo_sc_inst",
+        "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+        "ModuleLine" : 13,
+        "ModuleName" : "~fifo_sc.regFifo4x8"
+       }
+      ]
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v",
-      "InstLine" : 148,
+      "InstLine" : 151,
       "InstName" : "ps2kbd",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v",
       "ModuleLine" : 11,
@@ -87,45 +97,31 @@
     "InstName" : "uansiesc",
     "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v",
     "ModuleLine" : 24,
-    "ModuleName" : "ansiescape"
-   },
-   {
-    "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 155,
-    "InstName" : "uarb",
-    "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
-    "ModuleLine" : 7,
-    "ModuleName" : "datamux2in",
+    "ModuleName" : "ansiEscape",
     "SubInsts" : [
      {
-      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 42,
-      "InstName" : "dfifo0",
-      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
-      "ModuleLine" : 7,
-      "ModuleName" : "fifo"
-     },
-     {
-      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 56,
-      "InstName" : "dfifo1",
-      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
-      "ModuleLine" : 7,
-      "ModuleName" : "fifo"
-     },
-     {
-      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/datamux2in.v",
-      "InstLine" : 130,
-      "InstName" : "ArbFifo",
-      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/fifo.v",
-      "ModuleLine" : 7,
-      "ModuleName" : "fifo"
+      "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ansiescape.v",
+      "InstLine" : 64,
+      "InstName" : "ufifo",
+      "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+      "ModuleLine" : 294,
+      "ModuleName" : "regFifo4x8",
+      "SubInsts" : [
+       {
+        "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+        "InstLine" : 315,
+        "InstName" : "fifo_sc_inst",
+        "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v",
+        "ModuleLine" : 13,
+        "ModuleName" : "~fifo_sc.regFifo4x8"
+       }
+      ]
      }
     ]
    },
    {
     "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v",
-    "InstLine" : 169,
+    "InstLine" : 156,
     "InstName" : "uvga",
     "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
     "ModuleLine" : 83,
@@ -133,7 +129,7 @@
     "SubInsts" : [
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 179,
+      "InstLine" : 182,
       "InstName" : "uheartbeat",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/heartbeat.v",
       "ModuleLine" : 7,
@@ -141,7 +137,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 428,
+      "InstLine" : 434,
       "InstName" : "ucharbufinit",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charbufferinit.v",
       "ModuleLine" : 11,
@@ -149,7 +145,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 597,
+      "InstLine" : 622,
       "InstName" : "ucharROM",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charROM/charROM.v",
       "ModuleLine" : 9,
@@ -157,7 +153,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 647,
+      "InstLine" : 672,
       "InstName" : "ucharBuffer",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/charBuffer/charBuffer.v",
       "ModuleLine" : 9,
@@ -165,7 +161,7 @@
      },
      {
       "InstFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v",
-      "InstLine" : 659,
+      "InstLine" : 684,
       "InstName" : "uhvsync",
       "ModuleFile" : "/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v",
       "ModuleLine" : 25,

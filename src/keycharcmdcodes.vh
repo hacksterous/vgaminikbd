@@ -45,6 +45,13 @@
 `define CHAR_ZERO 48
 `define CHAR_ONE 49
 `define CHAR_TWO 50
+`define CHAR_THREE 51
+`define CHAR_FOUT 52
+`define CHAR_FIVE 53
+`define CHAR_SIX 54
+`define CHAR_SEVEN 55
+`define CHAR_EIGHT 56
+`define CHAR_NINE 57
 `define CHAR_A 65
 `define CHAR_B 66
 `define CHAR_C 67
@@ -57,4 +64,5 @@
 `define CHAR_J 74
 `define CHAR_K 75
 `define CHAR_LEFTBRACKET 91
+`define CHAR_TILDE 126
 `endif
