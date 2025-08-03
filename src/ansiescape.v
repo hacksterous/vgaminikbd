@@ -117,11 +117,11 @@ module ansiEscape (
 		end else if (ansiEscSeqStateANSI_RECD_SEQ & fifoOutValid) begin
 			nextAnsiEscSeqState = ANSI_RECD_IDLE;
 			case (fifoOut[7:0])
-				`CHAR_A, `CHAR_F: begin //A -- up, F -- previous line home*
+				`CHAR_A: begin //A -- up
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = `CMD_UP;
 				end
-				`CHAR_B, `CHAR_E: begin //B -- down, E -- next line home*
+				`CHAR_B: begin //B -- down
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = `CMD_DOWN;
 				end
@@ -133,7 +133,11 @@ module ansiEscape (
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = `CMD_LEFT;
 				end
-				`CHAR_G: begin //G -- home
+				`CHAR_F: begin //F -- end
+					nextRxANSIDataOutValid = 1'b1;
+					nextRxANSIDataOut = `CMD_END;
+				end
+				`CHAR_H: begin //H -- home
 					nextRxANSIDataOutValid = 1'b1;
 					nextRxANSIDataOut = `CMD_HOME;
 				end
@@ -218,7 +222,8 @@ module ansiEscape (
 					end else if ((inputHistory == 4'h1) |
 							(inputHistory == 4'h7)) begin //"ESC [ 1 ~" is Home
 						nextRxANSIDataOutValid = 1'b1;
-						nextRxANSIDataOut = `CMD_HOME; //home not working FIXME
+						nextRxANSIDataOut = `CMD_HOME;  //home not generating this
+														//"ESC [ H" is generated
 					end else if (inputHistory == 4'h2) begin //Insert
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_INSTOG;
@@ -228,7 +233,8 @@ module ansiEscape (
 					end else if ((inputHistory == 4'h4) 
 							| (inputHistory == 4'h8)) begin //End 
 						nextRxANSIDataOutValid = 1'b1;
-						nextRxANSIDataOut = `CMD_END; //end not working FIXME
+						nextRxANSIDataOut = `CMD_END; //end not generating this
+													  //"ESC [ F" is generated
 					end else if (inputHistory == 4'h5) begin //PgUp 
 						nextRxANSIDataOutValid = 1'b1;
 						nextRxANSIDataOut = `CMD_PGUP;
