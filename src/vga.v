@@ -193,8 +193,8 @@ module vga(
 	reg [4:0] nextRowDMARdRow;
 	//row DMA is to handle backspace, delete, insert mode and inserting
 	//blank rows
-	reg [3:0] nextRowDMAState;
-	reg [3:0] rowDMAState;
+	reg [4:0] nextRowDMAState;
+	reg [4:0] rowDMAState;
 	localparam ROWDMA_IDLE = 0;
 	localparam ROWDMA_READ = 1;
 	localparam ROWDMA_WRITE = 3;
@@ -208,6 +208,8 @@ module vga(
 	localparam ROWDMA_COLMOVE_READ = 15;
 	localparam ROWDMA_COLMOVE_WRITE = 14;
 	localparam ROWDMA_COLMOVE_DONE = 10;
+	localparam ROWDMA_ROWMOVEUP_READ = 26;
+	localparam ROWDMA_ROWMOVEUP_WRITE = 27;
 	//ROWDMA_IDLE - idle, on backspace or delete, go to 1, if 
 	//ROWDMA_READ - read, go to 2
 	//ROWDMA_WRITE - write, if currentScanCharCol == 79 got to 3, else go to 1
@@ -248,9 +250,13 @@ module vga(
 
 	wire inputCmdMoveRowsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
 	wire inputCmdMoveColsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVCOLS);
+	wire inputCmdMoveRowsUpCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWSUP);
 
 	wire inputCmdMoveRows = inputCmdMoveRowsCommand & ~cursorOnLastPhysicalRow;
 	wire inputCmdMoveRowsOnLastRow = inputCmdMoveRowsCommand & cursorOnLastPhysicalRow;
+
+	wire inputCmdMoveRowsUp = inputCmdMoveRowsUpCommand & ~cursorOnLastPhysicalRow;
+	wire inputCmdMoveRowsUpOnLastRow = inputCmdMoveRowsUpCommand & cursorOnLastPhysicalRow;
 
 	wire screenEndInputChar = inputCmdValid_r0 & screenEnd & isPrintableChar;
 	wire hitReturnOrDown = inputCmdLow16 & inputCmdDownCode;
@@ -276,23 +282,30 @@ module vga(
 	wire rowDMAInsRdEn = (rowDMAState == ROWDMA_INSCHAR_READ);
 	wire rowDMAInsWrEn = (rowDMAState == ROWDMA_INSCHAR_WRITE);
 	assign rowDMAInsDone = (rowDMAState == ROWDMA_INSCHAR_DONE);
-	wire rowDMAMoveRowsRdEn = (rowDMAState == ROWDMA_ROWMOVE_READ);
+	wire rowDMAMoveRowsRdEn = (rowDMAState == ROWDMA_ROWMOVE_READ) 
+								| (rowDMAState == ROWDMA_ROWMOVEUP_READ);
 	wire rowDMAMoveRowsWrEn = (rowDMAState == ROWDMA_ROWMOVE_WRITE);
+	wire rowDMAMoveRowsUpWrEn = (rowDMAState == ROWDMA_ROWMOVEUP_WRITE);
+
 	wire rowDMARdRowAtCursor;
 	wire rowDMARdColMaxxed;
+	wire rowDMARdRowMaxxed;
 	wire rowDMAMoveRowsDone = rowDMARdRowAtCursor & rowDMARdColMaxxed;
+
+	wire rowDMAMoveRowsUpDone = rowDMARdRowMaxxed & rowDMARdColMaxxed; 
 
 	wire rowDMAMoveColsRdEn = (rowDMAState == ROWDMA_COLMOVE_READ);
 	wire rowDMAMoveColsWrEn = (rowDMAState == ROWDMA_COLMOVE_WRITE);
 	wire rowDMAMoveColsDone = (rowDMAState == ROWDMA_COLMOVE_DONE);
 
 	wire [6:0] rowDMAWrCol = (eraseToSOLInProgress | rowDMAMoveColsWrEn)? (rowDMARdCol - currentCursorCol):
-							 (rowDMAWrEnLast | rowDMAInsDone | rowDMAMoveRowsWrEn)? rowDMARdCol:
+							 (rowDMAWrEnLast | rowDMAInsDone | rowDMAMoveRowsWrEn | rowDMAMoveRowsUpWrEn)? rowDMARdCol:
 							 (rowDMAInsReadWrite)? (rowDMARdCol + 1'b1):
 							 (rowDMARdCol - 1'b1);
 
-	wire [4:0] rowDMAWrRow = (rowDMARdRow + 1'b1);
+	wire [4:0] rowDMAWrRow = (rowDMAMoveRowsUpWrEn)? (rowDMARdRow - 1'b1): (rowDMARdRow + 1'b1);
 	assign rowDMARdColMaxxed = (rowDMARdCol[6:0] == MAXCOL_M_1);
+	assign rowDMARdRowMaxxed = (rowDMARdRow[4:0] == MAXROW_M_1);
 	//currentCursorCol still holds cursor position where character was input
 	wire rowDMARdColAtCursor = (rowDMARdCol[6:0] == currentCursorCol); 
 	assign rowDMARdRowAtCursor = (rowDMARdRow[4:0] == currentScrolledRow);
@@ -324,8 +337,12 @@ module vga(
 			ROWDMA_IDLE: begin
 				if (inputCmdMoveColsCommand) begin
 					nextRowDMAState = ROWDMA_COLMOVE_START;
-					nextRowDMARdRow = currentScrolledRow;
 					nextRowDMARdCol = currentCursorCol;
+					nextRowDMARdRow = currentScrolledRow;
+				end else if (inputCmdMoveRowsUp) begin
+					nextRowDMAState = ROWDMA_ROWMOVEUP_READ;
+					nextRowDMARdCol = 7'h0;
+					nextRowDMARdRow = currentScrolledRow + 1'b1;
 				end else if (inputCmdMoveRows) begin
 					nextRowDMAState = ROWDMA_ROWMOVE_READ;
 					nextRowDMARdCol = 7'h0;
@@ -340,17 +357,33 @@ module vga(
 										currentCursorCol;
 				end
 			end
+			ROWDMA_ROWMOVEUP_READ: begin
+				//move the byte at Row R, Column C to Row R-1, Column C
+				//for R = 31, 30, ... (currentCursorRow + 1), and C = 0, 1, ... 79
+				nextRowDMAState = ROWDMA_ROWMOVEUP_WRITE;
+			end
 			ROWDMA_ROWMOVE_READ: begin
 				//move the byte at Row R, Column C to Row R+1, Column C
 				//for R = 30, 29, ... (currentCursorRow + 1), and C = 0, 1, ... 79
 				nextRowDMAState = ROWDMA_ROWMOVE_WRITE;
+			end
+			ROWDMA_ROWMOVEUP_WRITE: begin
+				nextRowDMAState = ROWDMA_ROWMOVEUP_READ;
+				if (rowDMAMoveRowsUpDone) begin
+					nextRowDMAState = ROWDMA_IDLE;
+					nextRowDMARdCol = 7'h0;
+				end else if (rowDMARdColMaxxed) begin
+					nextRowDMARdCol = 7'h0;
+					nextRowDMARdRow = (rowDMARdRow + 1'b1);
+				end else begin
+					nextRowDMARdCol = (rowDMARdCol + 1'b1);
+				end
 			end
 			ROWDMA_ROWMOVE_WRITE: begin
 				nextRowDMAState = ROWDMA_ROWMOVE_READ;
 				if (rowDMAMoveRowsDone) begin
 					nextRowDMAState = ROWDMA_IDLE;
 					nextRowDMARdCol = 7'h0;
-					//nextRowDMARdRow = 5'd30;
 				end else if (rowDMARdColMaxxed) begin
 					nextRowDMARdCol = 7'h0;
 					nextRowDMARdRow = (rowDMARdRow - 1'b1);
@@ -635,9 +668,10 @@ module vga(
 	//There is only one counter for rowDMARdCol, once read column has reached MAXCOL_M_1,
 	//reuse the counter for write column.
 	//currentCursorCol does not change while eraseToSOL operation is in progress
+	wire moveRowsColWrEn = rowDMAMoveRowsWrEn | rowDMAMoveColsWrEn | rowDMAMoveRowsUpWrEn;
 	assign currentScrolledRow = currentCursorRow + scrollRow;
 	assign charBufferWrAddr =	(charBufferInitInProgress)?	charBufferInitAddr[11:0]:
-								(rowDMAMoveRowsWrEn | rowDMAMoveColsWrEn)? {rowDMAWrCol[6:0], rowDMAWrRow[4:0]}:
+								(moveRowsColWrEn)? {rowDMAWrCol[6:0], rowDMAWrRow[4:0]}:
 								(rowDMAWrEn | rowDMAWrEnLast | rowDMAInsWrEn)? {rowDMAWrCol[6:0], currentScrolledRow[4:0]}:
 								{currentCursorCol[6:0], currentScrolledRow[4:0]};
 
@@ -646,7 +680,7 @@ module vga(
 								//don't want to lose user's data input
 								//rowDMAInsDone: inputCmdMemWrData still holds last input char
 								(inputCmdMemWrEn & ~insertMode | rowDMAInsDone)? inputCmdMemWrData[7:0]:
-								(rowDMAWrEn | rowDMAInsWrEn | rowDMAMoveRowsWrEn | rowDMAMoveColsWrEn)? {charBufferRdDataColor, charBufferRdData[6:0]}:
+								(rowDMAWrEn | rowDMAInsWrEn | moveRowsColWrEn)? {charBufferRdDataColor, charBufferRdData[6:0]}:
 								//on the last column for bksp/del, write with null
 								(rowDMAWrEnLast)? {charBufferRdDataColor, 7'd0}:
 								{charBufferRdDataColor, inputCmdMemWrData[6:0]};
@@ -657,7 +691,7 @@ module vga(
 							//even if rowDMA is happening, update the char buffer, as we
 							//don't want to lose user's data input
 							| rowDMAWrEn | rowDMAWrEnLast | rowDMAInsWrEn 
-							| rowDMAInsDone | rowDMAMoveRowsWrEn | rowDMAMoveColsWrEn;
+							| rowDMAInsDone | moveRowsColWrEn;
 
 	wire [4:0] currentScrolledScanRow = currentScanCharRow + scrollRow;
 	wire [6:0] charBufferRdCol = (rowDMARdEn | rowDMAInsRdEn | rowDMAMoveRowsRdEn | rowDMAMoveColsRdEn)? rowDMARdCol[6:0]: 
