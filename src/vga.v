@@ -712,7 +712,7 @@ module vga(
 
 	//backspace writes a space character one clock after the cursor is moved left
 	//delete just writes a space character without moving the cursor
-	assign charBufferWrEn = charBufferInitInProgress | (inputCmdMemWrEn & ~insertModeNotAtMaxCol) 
+	assign charBufferWrEn = charBufferInitInProgress | (inputCmdMemWrEn & ~insertModeNotAtMaxCol & ~commandMode) 
 							//even if rowDMA is happening, update the char buffer, as we
 							//don't want to lose user's data input
 							| rowDMAWrEn | rowDMAWrEnLast | rowDMAInsWrEn 
@@ -880,13 +880,13 @@ module vga(
 							end
 							//overwrite mode cursor
 							4'd13: pixel <= `DELAY showCursor & (~insertMode | commandMode);
-							4'd12, 4'd14: pixel <= `DELAY showCursor & commandMode;
+							4'd9, 4'd10, 4'd11, 4'd12, 4'd14: pixel <= `DELAY (showCursor & commandMode);
 							default: pixel <= `DELAY 1'b0;
 						endcase
 					end else begin
 						//char with descending glyph
 						case (charHeightCounter_r1)
-							4'd3, 4'd4, 4'd5, 4'd6, 4'd7, 4'd8, 4'd9, 4'd10, 4'd11: begin
+							4'd3, 4'd4, 4'd5, 4'd6, 4'd7, 4'd8: begin
 								case (charWidthCounter_r1)
 									//Make first pixel a blank one -- workaround for 
 									//leftmost pixel column shift to rightmost column.
@@ -902,16 +902,31 @@ module vga(
 									default: pixel <= `DELAY 1'b0;
 								endcase
 							end
+							4'd9, 4'd10, 4'd11: begin
+								case (charWidthCounter_r1)
+									//Make first pixel a blank one -- workaround for 
+									//leftmost pixel column shift to rightmost column.
+									//The shift still happens, but it is now a blank pixel.
+									3'h0: pixel <= `DELAY					 (showCursor & commandMode);
+									3'h1: pixel <= `DELAY charROMRdData[6] ^ (showCursor & commandMode);
+									3'h2: pixel <= `DELAY charROMRdData[5] ^ (showCursor & commandMode);
+									3'h3: pixel <= `DELAY charROMRdData[4] ^ (showCursor & commandMode);
+									3'h4: pixel <= `DELAY charROMRdData[3] ^ (showCursor & commandMode);
+									3'h5: pixel <= `DELAY charROMRdData[2] ^ (showCursor & commandMode);
+									3'h6: pixel <= `DELAY charROMRdData[1] ^ (showCursor & commandMode);
+									3'h7: pixel <= `DELAY charROMRdData[0] ^ (showCursor & commandMode);
+									default: pixel <= `DELAY 1'b0;
+								endcase
+							end
 							//overwrite mode cursor
 							4'd13: pixel <= `DELAY showCursor & (~insertMode | commandMode);
-							4'd12, 4'd14: pixel <= `DELAY showCursor & commandMode;
+							4'd12, 4'd14: pixel <= `DELAY (showCursor & commandMode);
 							default: pixel <= `DELAY 1'b0;
 						endcase
 					end
 					//insert mode cursor
-					//if ((charWidthCounter_r1 == 3'h1) & ((charHeightCounter_r1[3:2] == 2'b10) | (charHeightCounter_r1[3:2] == 2'b11))) begin
 					if ((charWidthCounter_r1 == 3'h1) & charHeightCounter_r1[3]) begin
-						pixel <= `DELAY showCursor & insertMode;
+						pixel <= `DELAY (showCursor & insertMode);
 					end
 				end
 			end else begin

@@ -20,7 +20,7 @@ module heartbeat (
 	assign keyTimeout = heartbeatCounter[1];
 	`else
 	assign cursorBlink = heartbeatCounter[4];
-	assign keyTimeout = heartbeatCounter[3];
+	assign keyTimeout = heartbeatCounter[0];
 	`endif
 	always @(posedge clk) begin
 		if (~resetn) begin
