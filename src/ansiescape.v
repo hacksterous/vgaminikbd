@@ -24,6 +24,7 @@
 module ansiEscape (
 	input resetn,
 	input clk,
+	input keyTimeout,
 	output reg ansiEscDebug,
 	input rxDataInValid,
 	input [7:0] rxDataIn,
@@ -53,6 +54,21 @@ module ansiEscape (
 	wire ansiEscSeqStateANSI_RECD_SEQ = (ansiEscSeqState == ANSI_RECD_SEQ);
 	wire ansiEscSeqStateANSI_RECD_SEQNEXT = (ansiEscSeqState == ANSI_RECD_SEQNEXT);
 
+	reg keyTimeout_r0;
+	reg keyEscapeTimeoutRunning;
+
+	wire keyTimeoutPosPulse = ~keyTimeout_r0 & keyTimeout;
+
+	//count two pulses of keyTimeout rise edge for the escape key to time out
+	wire keyEscapeTimeoutStart = keyTimeoutPosPulse & ansiEscSeqStateANSI_RECD_ESC;
+
+	//timeout
+	wire keyEscapeTimedOut = keyTimeoutPosPulse & keyEscapeTimeoutRunning;
+
+	//clear timeout running flag -- either timeout happened or a new character
+	//came in and timeout was aborted
+	wire keyEscapeTimeoutEnd = keyEscapeTimedOut | fifoOutValid;
+
 	wire fifoEmpty;
 	wire [7:0] fifoOut;
 
@@ -80,6 +96,8 @@ module ansiEscape (
 			rxANSIDataOut <= `DELAY 8'h0;
 			ansiEscDebug <= `DELAY 1'b1;
 			fifoOutValid <= `DELAY 1'b0;
+			keyEscapeTimeoutRunning <= `DELAY 1'b0;
+			keyTimeout_r0 <= `DELAY 1'b0;
 		end else begin
 			ansiEscSeqState <= `DELAY nextAnsiEscSeqState;
 			rxANSIDataOutValid <= `DELAY nextRxANSIDataOutValid;
@@ -87,6 +105,10 @@ module ansiEscape (
 			rxANSIDataOut <= `DELAY nextRxANSIDataOut;
 			ansiEscDebug <= `DELAY (^ansiEscSeqStateANSI_RECD_IDLE & fifoOutValid)? ~ansiEscDebug: ansiEscDebug;
 			fifoOutValid <= `DELAY fifoRdEn;
+			keyTimeout_r0 <= `DELAY keyTimeout;
+			keyEscapeTimeoutRunning <= `DELAY (keyEscapeTimeoutEnd)? 1'b0:
+											(keyEscapeTimeoutStart)? 1'b1: 
+											keyEscapeTimeoutRunning;
 		end
 	end
 
@@ -251,6 +273,14 @@ module ansiEscape (
 					nextRxANSIDataOut = fifoOut;
 				end
 			endcase
+		end else if (ansiEscSeqStateANSI_RECD_ESC & keyEscapeTimedOut) begin
+			//escape has timed out due to delay in arrival of the
+			//next char in ANSI sequence.
+			//This means that the RECD_ESC state has seen two 
+			//pulses at the frequency of heartbest[3]
+			nextAnsiEscSeqState = ANSI_RECD_IDLE;
+			nextRxANSIDataOutValid = 1'b1;
+			nextRxANSIDataOut = 8'd`CHAR_ESC;
 		end
 	end
 

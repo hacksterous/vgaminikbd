@@ -20,7 +20,7 @@
 `define CMD_BKSP 8
 `define CMD_TAB 9
 `define CMD_LF 10
-`define CMD_DOWN 10
+`define CMD_DOWN 10 
 `define CMD_RIGHT 11
 `define CMD_LEFT 12
 `define CMD_CR 13
@@ -40,6 +40,7 @@
 `define CMD_MOVROWS 24
 `define CMD_MOVCOLS 25
 `define CMD_STATUSBARTOG 26
+`define CMD_ESC 27
 `define CMD_MOVROWSUP 28
 `define CHAR_ESC 27
 `define CHAR_SPC 32

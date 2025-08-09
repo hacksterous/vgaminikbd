@@ -10,14 +10,17 @@ module heartbeat (
 	input vsync,
 	//remains high forever after deassertion
 	output reg userResetn /* synthesis syn_keep=1 */,
+	output wire keyTimeout,
 	output wire cursorBlink);
 
 	reg syncReg;
-	reg [5:0] heartbeatCounter;
+	reg [4:0] heartbeatCounter;
 	`ifdef SIM_ONLY
 	assign cursorBlink = heartbeatCounter[1];
+	assign keyTimeout = heartbeatCounter[1];
 	`else
-	assign cursorBlink = heartbeatCounter[3];
+	assign cursorBlink = heartbeatCounter[4];
+	assign keyTimeout = heartbeatCounter[3];
 	`endif
 	always @(posedge clk) begin
 		if (~resetn) begin

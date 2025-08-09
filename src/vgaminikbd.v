@@ -123,6 +123,8 @@ Note!
 	wire [7:0] dataInTx;
 	wire dataInTxValid;
 
+	wire keyTimeout;
+
 	uart uuart0 (
 		.ECHO (1'b0),
 		.clk (clk),
@@ -147,6 +149,7 @@ Note!
 	ansiEscape uansiesc (
 		.clk (clk),
 		.resetn (userResetn),
+		.keyTimeout (keyTimeout),
 		.ansiEscDebug(debug0),
 		.rxDataInValid (uartRxDataOutValid),
 		.rxDataIn (uartRxDataOut),
@@ -163,6 +166,7 @@ Note!
 		.debugUARTTxDataValid (),
 		.debug (1'b0),
 		.clk (clk),
+		.keyTimeout (keyTimeout),
 		.userResetn (userResetn),
 		.debug0 (), //green
 		.debug1 (debug1), //red
