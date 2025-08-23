@@ -487,13 +487,13 @@ module vga(
 		.clk (clk),
 		.resetn (userResetn),
 		.initStateIsIdle (charBufferInitStateIsIdle),
-		.enable (userResetn & inputKeyA & inputKeyB 
-					& ~rowEraseMoveRows 
-					& ~inputCmdCls 
-					& ~clearRowOnScrollUp 
+		.enable (userResetn & inputKeyA & inputKeyB
+					& ~rowEraseMoveRows
+					& ~inputCmdCls
+					& ~clearRowOnScrollUp
 					& ~inputCmdEraseEOL
 					& ~rowDMAMoveColsDone
-					& ~rowDMAMoveRowsUpDone //FIXME -- check
+					& ~rowDMAMoveRowsUpDone
 					& ~inputCmdEraseLine),
 		.sequential (~inputKeyB),
 		.scrollRow (scrollRow),
@@ -502,7 +502,7 @@ module vga(
 						| rowEraseMoveRows
 						| inputCmdEraseEOL 
 						| rowDMAMoveColsDone 
-						| rowDMAMoveRowsUpDone //FIXME -- check
+						| rowDMAMoveRowsUpDone
 						| inputCmdEraseLine),
 		//rowInitRow = rowDMARdRow is set by the previous MOVEROWS operation, and equals (currentScrolledRow - 1)
 		//For MOVEROWSUP, if Row #31 is frozen, delete Row #30, else delete Row #31

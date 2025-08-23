@@ -65,12 +65,12 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/hvsync.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbd.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/kbdrom/kbdrom.v<br>
-/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/keysynchronizer.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/ps2receiver.v<br>
+/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/uart.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vga.v<br>
 /media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/vgaminikbd.v<br>
-/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/regFifo4x8/regFifo4x8.v<br>
+/media/oreo/5110E4171A5F1B7F/Git/vgaminikbd/src/arb2x1.v<br>
 </td>
 </tr>
 <tr>
@@ -91,7 +91,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">Created Time</td>
-<td>Sat Aug  9 16:49:53 2025
+<td>Sat Aug 23 18:22:51 2025
 </td>
 </tr>
 <tr>
@@ -107,11 +107,11 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">Synthesis Process</td>
-<td>Running parser:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0.438s, Elapsed time = 0h 0m 0.413s, Peak memory usage = 665.789MB<br/>Running netlist conversion:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s, Peak memory usage = 0MB<br/>Running device independent optimization:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 0: CPU time = 0h 0m 0.111s, Elapsed time = 0h 0m 0.109s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 1: CPU time = 0h 0m 0.047s, Elapsed time = 0h 0m 0.046s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 2: CPU time = 0h 0m 0.102s, Elapsed time = 0h 0m 0.1s, Peak memory usage = 665.789MB<br/>Running inference:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 0: CPU time = 0h 0m 0.027s, Elapsed time = 0h 0m 0.025s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 1: CPU time = 0h 0m 0.005s, Elapsed time = 0h 0m 0.003s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 2: CPU time = 0h 0m 0.008s, Elapsed time = 0h 0m 0.006s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 3: CPU time = 0h 0m 0.01s, Elapsed time = 0h 0m 0.008s, Peak memory usage = 665.789MB<br/>Running technical mapping:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 0: CPU time = 0h 0m 0.148s, Elapsed time = 0h 0m 0.146s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 1: CPU time = 0h 0m 0.031s, Elapsed time = 0h 0m 0.03s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 2: CPU time = 0h 0m 0.023s, Elapsed time = 0h 0m 0.021s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 3: CPU time = 0h 0m 15s, Elapsed time = 0h 0m 15s, Peak memory usage = 665.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 4: CPU time = 0h 0m 0.259s, Elapsed time = 0h 0m 0.25s, Peak memory usage = 665.789MB<br/>Generate output files:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0.136s, Elapsed time = 0h 0m 0.142s, Peak memory usage = 665.789MB<br/></td>
+<td>Running parser:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0.459s, Elapsed time = 0h 0m 0.409s, Peak memory usage = 459.441MB<br/>Running netlist conversion:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s, Peak memory usage = 0MB<br/>Running device independent optimization:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 0: CPU time = 0h 0m 0.11s, Elapsed time = 0h 0m 0.107s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 1: CPU time = 0h 0m 0.047s, Elapsed time = 0h 0m 0.045s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Optimizing Phase 2: CPU time = 0h 0m 0.102s, Elapsed time = 0h 0m 0.1s, Peak memory usage = 459.441MB<br/>Running inference:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 0: CPU time = 0h 0m 0.027s, Elapsed time = 0h 0m 0.024s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 1: CPU time = 0h 0m 0.004s, Elapsed time = 0h 0m 0.002s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 2: CPU time = 0h 0m 0.007s, Elapsed time = 0h 0m 0.006s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Inferring Phase 3: CPU time = 0h 0m 0.01s, Elapsed time = 0h 0m 0.009s, Peak memory usage = 459.441MB<br/>Running technical mapping:<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 0: CPU time = 0h 0m 0.154s, Elapsed time = 0h 0m 0.151s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 1: CPU time = 0h 0m 0.033s, Elapsed time = 0h 0m 0.03s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 2: CPU time = 0h 0m 0.021s, Elapsed time = 0h 0m 0.02s, Peak memory usage = 459.441MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 3: CPU time = 0h 0m 16s, Elapsed time = 0h 0m 16s, Peak memory usage = 477.789MB<br/>&nbsp;&nbsp;&nbsp;&nbsp;Tech-Mapping Phase 4: CPU time = 0h 0m 0.592s, Elapsed time = 0h 0m 0.587s, Peak memory usage = 477.789MB<br/>Generate output files:<br/>&nbsp;&nbsp;&nbsp;&nbsp;CPU time = 0h 0m 0.142s, Elapsed time = 0h 0m 0.15s, Peak memory usage = 477.789MB<br/></td>
 </tr>
 <tr>
 <td class="label">Total Time and Memory Usage</td>
-<td>CPU time = 0h 0m 16s, Elapsed time = 0h 0m 16s, Peak memory usage = 665.789MB</td>
+<td>CPU time = 0h 0m 17s, Elapsed time = 0h 0m 17s, Peak memory usage = 477.789MB</td>
 </tr>
 </table>
 <h1><a name="resource">Resource</a></h1>
@@ -139,11 +139,11 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label"><b>Register </b></td>
-<td>380</td>
+<td>376</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspDFF</td>
-<td>48</td>
+<td>44</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspDFFE</td>
@@ -159,11 +159,11 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspDFFR</td>
-<td>40</td>
+<td>44</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspDFFRE</td>
-<td>161</td>
+<td>157</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspDFFP</td>
@@ -179,19 +179,19 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label"><b>LUT </b></td>
-<td>883</td>
+<td>893</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspLUT2</td>
-<td>121</td>
+<td>115</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspLUT3</td>
-<td>251</td>
+<td>262</td>
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp&nbsp&nbspLUT4</td>
-<td>511</td>
+<td>516</td>
 </tr>
 <tr>
 <td class="label"><b>ALU </b></td>
@@ -239,12 +239,12 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">Logic</td>
-<td>971(894 LUT, 77 ALU) / 1152</td>
-<td>85%</td>
+<td>981(904 LUT, 77 ALU) / 1152</td>
+<td>86%</td>
 </tr>
 <tr>
 <td class="label">Register</td>
-<td>380 / 957</td>
+<td>376 / 957</td>
 <td>40%</td>
 </tr>
 <tr>
@@ -254,7 +254,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">&nbsp&nbsp--Register as FF</td>
-<td>380 / 957</td>
+<td>376 / 957</td>
 <td>40%</td>
 </tr>
 <tr>
@@ -353,8 +353,8 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1</td>
 <td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
 <td>24.000(MHz)</td>
-<td>54.920(MHz)</td>
-<td>7</td>
+<td>51.225(MHz)</td>
+<td>8</td>
 <td>TOP</td>
 </tr>
 </table>
@@ -364,11 +364,11 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <table class="summary_table">
 <tr>
 <td class="label">Slack</td>
-<td>23.458</td>
+<td>22.145</td>
 </tr>
 <tr>
 <td class="label">Data Arrival Time</td>
-<td>19.839</td>
+<td>21.152</td>
 </tr>
 <tr>
 <td class="label">Data Required Time</td>
@@ -414,7 +414,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -430,8 +430,8 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>3.806</td>
 <td>tC2Q</td>
 <td>RF</td>
-<td>2</td>
-<td>uvga/ucharROM/prom_inst_0/DO[3]</td>
+<td>1</td>
+<td>uvga/ucharROM/prom_inst_0/DO[5]</td>
 </tr>
 <tr>
 <td>6.932</td>
@@ -439,15 +439,15 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/n1660_s15/I1</td>
+<td>uvga/n1626_s14/I1</td>
 </tr>
 <tr>
 <td>8.141</td>
 <td>1.209</td>
 <td>tINS</td>
 <td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s15/F</td>
+<td>2</td>
+<td>uvga/n1626_s14/F</td>
 </tr>
 <tr>
 <td>9.197</td>
@@ -455,82 +455,98 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/n1660_s13/I1</td>
+<td>uvga/n1626_s18/I0</td>
 </tr>
 <tr>
-<td>10.406</td>
-<td>1.209</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s13/F</td>
-</tr>
-<tr>
-<td>11.462</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s11/I2</td>
-</tr>
-<tr>
-<td>12.366</td>
-<td>0.904</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s11/F</td>
-</tr>
-<tr>
-<td>13.422</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s8/I0</td>
-</tr>
-<tr>
-<td>14.558</td>
+<td>10.332</td>
 <td>1.135</td>
 <td>tINS</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/n1660_s8/F</td>
+<td>uvga/n1626_s18/F</td>
 </tr>
 <tr>
-<td>15.614</td>
+<td>11.388</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/n1660_s2/I2</td>
+<td>uvga/n1626_s16/I1</td>
 </tr>
 <tr>
-<td>16.518</td>
-<td>0.904</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s2/F</td>
-</tr>
-<tr>
-<td>17.574</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s0/I1</td>
-</tr>
-<tr>
-<td>18.783</td>
+<td>12.597</td>
 <td>1.209</td>
 <td>tINS</td>
 <td>FF</td>
-<td>1</td>
-<td>uvga/n1660_s0/F</td>
+<td>2</td>
+<td>uvga/n1626_s16/F</td>
 </tr>
 <tr>
-<td>19.839</td>
+<td>13.653</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s2/I1</td>
+</tr>
+<tr>
+<td>14.862</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n1659_s2/F</td>
+</tr>
+<tr>
+<td>15.918</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s8/I3</td>
+</tr>
+<tr>
+<td>16.607</td>
+<td>0.689</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s8/F</td>
+</tr>
+<tr>
+<td>17.663</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s3/I3</td>
+</tr>
+<tr>
+<td>18.351</td>
+<td>0.689</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s3/F</td>
+</tr>
+<tr>
+<td>19.407</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s0/I3</td>
+</tr>
+<tr>
+<td>20.096</td>
+<td>0.689</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n1659_s0/F</td>
+</tr>
+<tr>
+<td>21.152</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
@@ -561,7 +577,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -593,12 +609,12 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">Logic Level:</td>
-<td>7</td>
+<td>8</td>
 </tr>
 <tr>
 <td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 <tr>
-<td class="label">Arrival Data Path Delay:</td><td> cell: 6.570, 36.978%; route: 7.392, 41.602%; tC2Q: 3.806, 21.420%</td></tr>
+<td class="label">Arrival Data Path Delay:</td><td> cell: 6.828, 35.781%; route: 8.448, 44.273%; tC2Q: 3.806, 19.946%</td></tr>
 <tr>
 <td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 </table>
@@ -608,11 +624,11 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <table class="summary_table">
 <tr>
 <td class="label">Slack</td>
-<td>25.914</td>
+<td>23.880</td>
 </tr>
 <tr>
 <td class="label">Data Arrival Time</td>
-<td>17.383</td>
+<td>19.417</td>
 </tr>
 <tr>
 <td class="label">Data Required Time</td>
@@ -658,7 +674,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -674,7 +690,331 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>0.504</td>
 <td>tC2Q</td>
 <td>RF</td>
-<td>15</td>
+<td>14</td>
+<td>uvga/currentCursorRow_0_s0/Q</td>
+</tr>
+<tr>
+<td>3.631</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_0_s/I1</td>
+</tr>
+<tr>
+<td>4.780</td>
+<td>1.150</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/currentScrolledRow_0_s/COUT</td>
+</tr>
+<tr>
+<td>4.780</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_1_s/CIN</td>
+</tr>
+<tr>
+<td>5.399</td>
+<td>0.619</td>
+<td>tINS</td>
+<td>FF</td>
+<td>5</td>
+<td>uvga/currentScrolledRow_1_s/SUM</td>
+</tr>
+<tr>
+<td>6.455</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n267_s0/I1</td>
+</tr>
+<tr>
+<td>7.605</td>
+<td>1.150</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n267_s0/COUT</td>
+</tr>
+<tr>
+<td>7.605</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n268_s0/CIN</td>
+</tr>
+<tr>
+<td>7.668</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n268_s0/COUT</td>
+</tr>
+<tr>
+<td>7.668</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n269_s0/CIN</td>
+</tr>
+<tr>
+<td>7.730</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/n269_s0/COUT</td>
+</tr>
+<tr>
+<td>7.730</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n270_s0/CIN</td>
+</tr>
+<tr>
+<td>7.793</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>4</td>
+<td>uvga/n270_s0/COUT</td>
+</tr>
+<tr>
+<td>8.849</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/I1</td>
+</tr>
+<tr>
+<td>10.058</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/F</td>
+</tr>
+<tr>
+<td>11.114</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s4/I0</td>
+</tr>
+<tr>
+<td>12.249</td>
+<td>1.135</td>
+<td>tINS</td>
+<td>FF</td>
+<td>8</td>
+<td>uvga/ucharbufinit/n339_s4/F</td>
+</tr>
+<tr>
+<td>13.305</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s7/I2</td>
+</tr>
+<tr>
+<td>14.209</td>
+<td>0.904</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s7/F</td>
+</tr>
+<tr>
+<td>15.265</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s4/I0</td>
+</tr>
+<tr>
+<td>16.400</td>
+<td>1.135</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s4/F</td>
+</tr>
+<tr>
+<td>17.456</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s2/I2</td>
+</tr>
+<tr>
+<td>18.361</td>
+<td>0.904</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n249_s2/F</td>
+</tr>
+<tr>
+<td>19.417</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initCursorRow_4_s1/D</td>
+</tr>
+</table>
+<b>Data Required Path:</b>
+<table class="summary_table">
+<tr>
+<th>AT</th>
+<th>DELAY</th>
+<th>TYPE</th>
+<th>RF</th>
+<th>FANOUT</th>
+<th>NODE</th>
+</tr>
+<tr>
+<td>41.667</td>
+<td>0.000</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
+</tr>
+<tr>
+<td>42.938</td>
+<td>1.272</td>
+<td>tCL</td>
+<td>RR</td>
+<td>380</td>
+<td>uclockGen/rpll_inst/CLKOUT</td>
+</tr>
+<tr>
+<td>43.737</td>
+<td>0.799</td>
+<td>tNET</td>
+<td>RR</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initCursorRow_4_s1/CLK</td>
+</tr>
+<tr>
+<td>43.297</td>
+<td>-0.440</td>
+<td>tSu</td>
+<td> </td>
+<td>1</td>
+<td>uvga/ucharbufinit/initCursorRow_4_s1</td>
+</tr>
+</table>
+<b>Path Statistics:</b>
+<table class="summary_table">
+<tr>
+<td class="label">Clock Skew:</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td class="label">Setup Relationship:</td>
+<td>41.667</td>
+</tr>
+<tr>
+<td class="label">Logic Level:</td>
+<td>10</td>
+</tr>
+<tr>
+<td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
+<tr>
+<td class="label">Arrival Data Path Delay:</td><td> cell: 8.394, 48.391%; route: 8.448, 48.703%; tC2Q: 0.504, 2.906%</td></tr>
+<tr>
+<td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
+</table>
+<br/>
+<h3>Path&nbsp3</h3>
+<b>Path Summary:</b></br>
+<table class="summary_table">
+<tr>
+<td class="label">Slack</td>
+<td>24.478</td>
+</tr>
+<tr>
+<td class="label">Data Arrival Time</td>
+<td>19.211</td>
+</tr>
+<tr>
+<td class="label">Data Required Time</td>
+<td>43.689</td>
+</tr>
+<tr>
+<td class="label">From</td>
+<td>uvga/currentCursorRow_0_s0</td>
+</tr>
+<tr>
+<td class="label">To</td>
+<td>uvga/ucharbufinit/initState_1_s1</td>
+</tr>
+<tr>
+<td class="label">Launch Clk</td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
+</tr>
+<tr>
+<td class="label">Latch Clk</td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
+</tr>
+</table>
+<b>Data Arrival Path:</b>
+<table class="summary_table">
+<tr>
+<th>AT</th>
+<th>DELAY</th>
+<th>TYPE</th>
+<th>RF</th>
+<th>FANOUT</th>
+<th>NODE</th>
+</tr>
+<tr>
+<td>0.000</td>
+<td>0.000</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
+</tr>
+<tr>
+<td>1.272</td>
+<td>1.272</td>
+<td>tCL</td>
+<td>RR</td>
+<td>380</td>
+<td>uclockGen/rpll_inst/CLKOUT</td>
+</tr>
+<tr>
+<td>2.070</td>
+<td>0.799</td>
+<td>tNET</td>
+<td>RR</td>
+<td>1</td>
+<td>uvga/currentCursorRow_0_s0/CLK</td>
+</tr>
+<tr>
+<td>2.575</td>
+<td>0.504</td>
+<td>tC2Q</td>
+<td>RF</td>
+<td>14</td>
 <td>uvga/currentCursorRow_0_s0/Q</td>
 </tr>
 <tr>
@@ -763,15 +1103,15 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>2</td>
-<td>uvga/n271_s0/I1</td>
+<td>uvga/n270_s0/I1</td>
 </tr>
 <tr>
 <td>7.793</td>
 <td>1.150</td>
 <td>tINS</td>
 <td>FF</td>
-<td>3</td>
-<td>uvga/n271_s0/COUT</td>
+<td>4</td>
+<td>uvga/n270_s0/COUT</td>
 </tr>
 <tr>
 <td>8.849</td>
@@ -779,71 +1119,87 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
+<td>uvga/ucharbufinit/n339_s7/I1</td>
+</tr>
+<tr>
+<td>10.058</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/F</td>
+</tr>
+<tr>
+<td>11.114</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
 <td>uvga/ucharbufinit/n339_s4/I0</td>
 </tr>
 <tr>
-<td>9.984</td>
+<td>12.249</td>
 <td>1.135</td>
 <td>tINS</td>
 <td>FF</td>
-<td>1</td>
+<td>8</td>
 <td>uvga/ucharbufinit/n339_s4/F</td>
 </tr>
 <tr>
-<td>11.040</td>
+<td>13.305</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/ucharbufinit/n339_s1/I2</td>
+<td>uvga/ucharbufinit/n339_s5/I1</td>
 </tr>
 <tr>
-<td>11.944</td>
+<td>14.514</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/ucharbufinit/n339_s5/F</td>
+</tr>
+<tr>
+<td>15.570</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s5/I2</td>
+</tr>
+<tr>
+<td>16.474</td>
 <td>0.904</td>
 <td>tINS</td>
 <td>FF</td>
-<td>11</td>
-<td>uvga/ucharbufinit/n339_s1/F</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s5/F</td>
 </tr>
 <tr>
-<td>13.000</td>
+<td>17.530</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/ucharbufinit/n249_s3/I0</td>
+<td>uvga/ucharbufinit/initState_2_s3/I2</td>
 </tr>
 <tr>
-<td>14.136</td>
-<td>1.135</td>
+<td>18.412</td>
+<td>0.882</td>
 <td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n249_s3/F</td>
+<td>FR</td>
+<td>2</td>
+<td>uvga/ucharbufinit/initState_2_s3/F</td>
 </tr>
 <tr>
-<td>15.192</td>
-<td>1.056</td>
+<td>19.211</td>
+<td>0.799</td>
 <td>tNET</td>
-<td>FF</td>
+<td>RR</td>
 <td>1</td>
-<td>uvga/ucharbufinit/n249_s2/I0</td>
-</tr>
-<tr>
-<td>16.327</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n249_s2/F</td>
-</tr>
-<tr>
-<td>17.383</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_4_s1/D</td>
+<td>uvga/ucharbufinit/initState_1_s1/CE</td>
 </tr>
 </table>
 <b>Data Required Path:</b>
@@ -869,7 +1225,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -878,15 +1234,15 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>RR</td>
 <td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_4_s1/CLK</td>
+<td>uvga/ucharbufinit/initState_1_s1/CLK</td>
 </tr>
 <tr>
-<td>43.297</td>
-<td>-0.440</td>
+<td>43.689</td>
+<td>-0.048</td>
 <td>tSu</td>
 <td> </td>
 <td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_4_s1</td>
+<td>uvga/ucharbufinit/initState_1_s1</td>
 </tr>
 </table>
 <b>Path Statistics:</b>
@@ -901,26 +1257,350 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 </tr>
 <tr>
 <td class="label">Logic Level:</td>
-<td>8</td>
+<td>9</td>
 </tr>
 <tr>
 <td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 <tr>
-<td class="label">Arrival Data Path Delay:</td><td> cell: 7.416, 48.432%; route: 7.392, 48.275%; tC2Q: 0.504, 3.293%</td></tr>
+<td class="label">Arrival Data Path Delay:</td><td> cell: 8.446, 49.274%; route: 8.191, 47.785%; tC2Q: 0.504, 2.941%</td></tr>
 <tr>
 <td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 </table>
 <br/>
-<h3>Path&nbsp3</h3>
+<h3>Path&nbsp4</h3>
 <b>Path Summary:</b></br>
 <table class="summary_table">
 <tr>
 <td class="label">Slack</td>
-<td>25.914</td>
+<td>24.478</td>
 </tr>
 <tr>
 <td class="label">Data Arrival Time</td>
-<td>17.383</td>
+<td>19.211</td>
+</tr>
+<tr>
+<td class="label">Data Required Time</td>
+<td>43.689</td>
+</tr>
+<tr>
+<td class="label">From</td>
+<td>uvga/currentCursorRow_0_s0</td>
+</tr>
+<tr>
+<td class="label">To</td>
+<td>uvga/ucharbufinit/initState_2_s1</td>
+</tr>
+<tr>
+<td class="label">Launch Clk</td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
+</tr>
+<tr>
+<td class="label">Latch Clk</td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
+</tr>
+</table>
+<b>Data Arrival Path:</b>
+<table class="summary_table">
+<tr>
+<th>AT</th>
+<th>DELAY</th>
+<th>TYPE</th>
+<th>RF</th>
+<th>FANOUT</th>
+<th>NODE</th>
+</tr>
+<tr>
+<td>0.000</td>
+<td>0.000</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
+</tr>
+<tr>
+<td>1.272</td>
+<td>1.272</td>
+<td>tCL</td>
+<td>RR</td>
+<td>380</td>
+<td>uclockGen/rpll_inst/CLKOUT</td>
+</tr>
+<tr>
+<td>2.070</td>
+<td>0.799</td>
+<td>tNET</td>
+<td>RR</td>
+<td>1</td>
+<td>uvga/currentCursorRow_0_s0/CLK</td>
+</tr>
+<tr>
+<td>2.575</td>
+<td>0.504</td>
+<td>tC2Q</td>
+<td>RF</td>
+<td>14</td>
+<td>uvga/currentCursorRow_0_s0/Q</td>
+</tr>
+<tr>
+<td>3.631</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_0_s/I1</td>
+</tr>
+<tr>
+<td>4.780</td>
+<td>1.150</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/currentScrolledRow_0_s/COUT</td>
+</tr>
+<tr>
+<td>4.780</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_1_s/CIN</td>
+</tr>
+<tr>
+<td>4.843</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/currentScrolledRow_1_s/COUT</td>
+</tr>
+<tr>
+<td>4.843</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_2_s/CIN</td>
+</tr>
+<tr>
+<td>4.905</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/currentScrolledRow_2_s/COUT</td>
+</tr>
+<tr>
+<td>4.905</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_3_s/CIN</td>
+</tr>
+<tr>
+<td>4.968</td>
+<td>0.063</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/currentScrolledRow_3_s/COUT</td>
+</tr>
+<tr>
+<td>4.968</td>
+<td>0.000</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/currentScrolledRow_4_s/CIN</td>
+</tr>
+<tr>
+<td>5.587</td>
+<td>0.619</td>
+<td>tINS</td>
+<td>FF</td>
+<td>5</td>
+<td>uvga/currentScrolledRow_4_s/SUM</td>
+</tr>
+<tr>
+<td>6.643</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/n270_s0/I1</td>
+</tr>
+<tr>
+<td>7.793</td>
+<td>1.150</td>
+<td>tINS</td>
+<td>FF</td>
+<td>4</td>
+<td>uvga/n270_s0/COUT</td>
+</tr>
+<tr>
+<td>8.849</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/I1</td>
+</tr>
+<tr>
+<td>10.058</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/F</td>
+</tr>
+<tr>
+<td>11.114</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s4/I0</td>
+</tr>
+<tr>
+<td>12.249</td>
+<td>1.135</td>
+<td>tINS</td>
+<td>FF</td>
+<td>8</td>
+<td>uvga/ucharbufinit/n339_s4/F</td>
+</tr>
+<tr>
+<td>13.305</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s5/I1</td>
+</tr>
+<tr>
+<td>14.514</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>2</td>
+<td>uvga/ucharbufinit/n339_s5/F</td>
+</tr>
+<tr>
+<td>15.570</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s5/I2</td>
+</tr>
+<tr>
+<td>16.474</td>
+<td>0.904</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s5/F</td>
+</tr>
+<tr>
+<td>17.530</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s3/I2</td>
+</tr>
+<tr>
+<td>18.412</td>
+<td>0.882</td>
+<td>tINS</td>
+<td>FR</td>
+<td>2</td>
+<td>uvga/ucharbufinit/initState_2_s3/F</td>
+</tr>
+<tr>
+<td>19.211</td>
+<td>0.799</td>
+<td>tNET</td>
+<td>RR</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s1/CE</td>
+</tr>
+</table>
+<b>Data Required Path:</b>
+<table class="summary_table">
+<tr>
+<th>AT</th>
+<th>DELAY</th>
+<th>TYPE</th>
+<th>RF</th>
+<th>FANOUT</th>
+<th>NODE</th>
+</tr>
+<tr>
+<td>41.667</td>
+<td>0.000</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
+</tr>
+<tr>
+<td>42.938</td>
+<td>1.272</td>
+<td>tCL</td>
+<td>RR</td>
+<td>380</td>
+<td>uclockGen/rpll_inst/CLKOUT</td>
+</tr>
+<tr>
+<td>43.737</td>
+<td>0.799</td>
+<td>tNET</td>
+<td>RR</td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s1/CLK</td>
+</tr>
+<tr>
+<td>43.689</td>
+<td>-0.048</td>
+<td>tSu</td>
+<td> </td>
+<td>1</td>
+<td>uvga/ucharbufinit/initState_2_s1</td>
+</tr>
+</table>
+<b>Path Statistics:</b>
+<table class="summary_table">
+<tr>
+<td class="label">Clock Skew:</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td class="label">Setup Relationship:</td>
+<td>41.667</td>
+</tr>
+<tr>
+<td class="label">Logic Level:</td>
+<td>9</td>
+</tr>
+<tr>
+<td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
+<tr>
+<td class="label">Arrival Data Path Delay:</td><td> cell: 8.446, 49.274%; route: 8.191, 47.785%; tC2Q: 0.504, 2.941%</td></tr>
+<tr>
+<td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
+</table>
+<br/>
+<h3>Path&nbsp5</h3>
+<b>Path Summary:</b></br>
+<table class="summary_table">
+<tr>
+<td class="label">Slack</td>
+<td>25.462</td>
+</tr>
+<tr>
+<td class="label">Data Arrival Time</td>
+<td>17.835</td>
 </tr>
 <tr>
 <td class="label">Data Required Time</td>
@@ -966,7 +1646,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -982,7 +1662,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>0.504</td>
 <td>tC2Q</td>
 <td>RF</td>
-<td>15</td>
+<td>14</td>
 <td>uvga/currentCursorRow_0_s0/Q</td>
 </tr>
 <tr>
@@ -1071,15 +1751,15 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>2</td>
-<td>uvga/n271_s0/I1</td>
+<td>uvga/n270_s0/I1</td>
 </tr>
 <tr>
 <td>7.793</td>
 <td>1.150</td>
 <td>tINS</td>
 <td>FF</td>
-<td>3</td>
-<td>uvga/n271_s0/COUT</td>
+<td>4</td>
+<td>uvga/n270_s0/COUT</td>
 </tr>
 <tr>
 <td>8.849</td>
@@ -1087,66 +1767,66 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
+<td>uvga/ucharbufinit/n339_s7/I1</td>
+</tr>
+<tr>
+<td>10.058</td>
+<td>1.209</td>
+<td>tINS</td>
+<td>FF</td>
+<td>1</td>
+<td>uvga/ucharbufinit/n339_s7/F</td>
+</tr>
+<tr>
+<td>11.114</td>
+<td>1.056</td>
+<td>tNET</td>
+<td>FF</td>
+<td>1</td>
 <td>uvga/ucharbufinit/n339_s4/I0</td>
 </tr>
 <tr>
-<td>9.984</td>
+<td>12.249</td>
 <td>1.135</td>
 <td>tINS</td>
 <td>FF</td>
-<td>1</td>
+<td>8</td>
 <td>uvga/ucharbufinit/n339_s4/F</td>
 </tr>
 <tr>
-<td>11.040</td>
+<td>13.305</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/ucharbufinit/n339_s1/I2</td>
+<td>uvga/ucharbufinit/n251_s9/I1</td>
 </tr>
 <tr>
-<td>11.944</td>
-<td>0.904</td>
+<td>14.514</td>
+<td>1.209</td>
 <td>tINS</td>
 <td>FF</td>
-<td>11</td>
-<td>uvga/ucharbufinit/n339_s1/F</td>
+<td>3</td>
+<td>uvga/ucharbufinit/n251_s9/F</td>
 </tr>
 <tr>
-<td>13.000</td>
+<td>15.570</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
 <td>1</td>
-<td>uvga/ucharbufinit/n253_s4/I0</td>
+<td>uvga/ucharbufinit/n253_s3/I1</td>
 </tr>
 <tr>
-<td>14.136</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n253_s4/F</td>
-</tr>
-<tr>
-<td>15.192</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n253_s3/I0</td>
-</tr>
-<tr>
-<td>16.327</td>
-<td>1.135</td>
+<td>16.779</td>
+<td>1.209</td>
 <td>tINS</td>
 <td>FF</td>
 <td>1</td>
 <td>uvga/ucharbufinit/n253_s3/F</td>
 </tr>
 <tr>
-<td>17.383</td>
+<td>17.835</td>
 <td>1.056</td>
 <td>tNET</td>
 <td>FF</td>
@@ -1177,7 +1857,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <td>1.272</td>
 <td>tCL</td>
 <td>RR</td>
-<td>384</td>
+<td>380</td>
 <td>uclockGen/rpll_inst/CLKOUT</td>
 </tr>
 <tr>
@@ -1214,623 +1894,7 @@ table.detail_table td.label { min-width: 100px; width: 8%;}
 <tr>
 <td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 <tr>
-<td class="label">Arrival Data Path Delay:</td><td> cell: 7.416, 48.432%; route: 7.392, 48.275%; tC2Q: 0.504, 3.293%</td></tr>
-<tr>
-<td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
-</table>
-<br/>
-<h3>Path&nbsp4</h3>
-<b>Path Summary:</b></br>
-<table class="summary_table">
-<tr>
-<td class="label">Slack</td>
-<td>25.914</td>
-</tr>
-<tr>
-<td class="label">Data Arrival Time</td>
-<td>17.383</td>
-</tr>
-<tr>
-<td class="label">Data Required Time</td>
-<td>43.297</td>
-</tr>
-<tr>
-<td class="label">From</td>
-<td>uvga/currentCursorRow_0_s0</td>
-</tr>
-<tr>
-<td class="label">To</td>
-<td>uvga/ucharbufinit/initCursorRow_1_s1</td>
-</tr>
-<tr>
-<td class="label">Launch Clk</td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
-</tr>
-<tr>
-<td class="label">Latch Clk</td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
-</tr>
-</table>
-<b>Data Arrival Path:</b>
-<table class="summary_table">
-<tr>
-<th>AT</th>
-<th>DELAY</th>
-<th>TYPE</th>
-<th>RF</th>
-<th>FANOUT</th>
-<th>NODE</th>
-</tr>
-<tr>
-<td>0.000</td>
-<td>0.000</td>
-<td> </td>
-<td> </td>
-<td> </td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
-</tr>
-<tr>
-<td>1.272</td>
-<td>1.272</td>
-<td>tCL</td>
-<td>RR</td>
-<td>384</td>
-<td>uclockGen/rpll_inst/CLKOUT</td>
-</tr>
-<tr>
-<td>2.070</td>
-<td>0.799</td>
-<td>tNET</td>
-<td>RR</td>
-<td>1</td>
-<td>uvga/currentCursorRow_0_s0/CLK</td>
-</tr>
-<tr>
-<td>2.575</td>
-<td>0.504</td>
-<td>tC2Q</td>
-<td>RF</td>
-<td>15</td>
-<td>uvga/currentCursorRow_0_s0/Q</td>
-</tr>
-<tr>
-<td>3.631</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_0_s/I1</td>
-</tr>
-<tr>
-<td>4.780</td>
-<td>1.150</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_0_s/COUT</td>
-</tr>
-<tr>
-<td>4.780</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_1_s/CIN</td>
-</tr>
-<tr>
-<td>4.843</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_1_s/COUT</td>
-</tr>
-<tr>
-<td>4.843</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_2_s/CIN</td>
-</tr>
-<tr>
-<td>4.905</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_2_s/COUT</td>
-</tr>
-<tr>
-<td>4.905</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_3_s/CIN</td>
-</tr>
-<tr>
-<td>4.968</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_3_s/COUT</td>
-</tr>
-<tr>
-<td>4.968</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_4_s/CIN</td>
-</tr>
-<tr>
-<td>5.587</td>
-<td>0.619</td>
-<td>tINS</td>
-<td>FF</td>
-<td>5</td>
-<td>uvga/currentScrolledRow_4_s/SUM</td>
-</tr>
-<tr>
-<td>6.643</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/n271_s0/I1</td>
-</tr>
-<tr>
-<td>7.793</td>
-<td>1.150</td>
-<td>tINS</td>
-<td>FF</td>
-<td>3</td>
-<td>uvga/n271_s0/COUT</td>
-</tr>
-<tr>
-<td>8.849</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s4/I0</td>
-</tr>
-<tr>
-<td>9.984</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s4/F</td>
-</tr>
-<tr>
-<td>11.040</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s1/I2</td>
-</tr>
-<tr>
-<td>11.944</td>
-<td>0.904</td>
-<td>tINS</td>
-<td>FF</td>
-<td>11</td>
-<td>uvga/ucharbufinit/n339_s1/F</td>
-</tr>
-<tr>
-<td>13.000</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n252_s3/I0</td>
-</tr>
-<tr>
-<td>14.136</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n252_s3/F</td>
-</tr>
-<tr>
-<td>15.192</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n252_s2/I0</td>
-</tr>
-<tr>
-<td>16.327</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n252_s2/F</td>
-</tr>
-<tr>
-<td>17.383</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_1_s1/D</td>
-</tr>
-</table>
-<b>Data Required Path:</b>
-<table class="summary_table">
-<tr>
-<th>AT</th>
-<th>DELAY</th>
-<th>TYPE</th>
-<th>RF</th>
-<th>FANOUT</th>
-<th>NODE</th>
-</tr>
-<tr>
-<td>41.667</td>
-<td>0.000</td>
-<td> </td>
-<td> </td>
-<td> </td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
-</tr>
-<tr>
-<td>42.938</td>
-<td>1.272</td>
-<td>tCL</td>
-<td>RR</td>
-<td>384</td>
-<td>uclockGen/rpll_inst/CLKOUT</td>
-</tr>
-<tr>
-<td>43.737</td>
-<td>0.799</td>
-<td>tNET</td>
-<td>RR</td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_1_s1/CLK</td>
-</tr>
-<tr>
-<td>43.297</td>
-<td>-0.440</td>
-<td>tSu</td>
-<td> </td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_1_s1</td>
-</tr>
-</table>
-<b>Path Statistics:</b>
-<table class="summary_table">
-<tr>
-<td class="label">Clock Skew:</td>
-<td>0.000</td>
-</tr>
-<tr>
-<td class="label">Setup Relationship:</td>
-<td>41.667</td>
-</tr>
-<tr>
-<td class="label">Logic Level:</td>
-<td>8</td>
-</tr>
-<tr>
-<td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
-<tr>
-<td class="label">Arrival Data Path Delay:</td><td> cell: 7.416, 48.432%; route: 7.392, 48.275%; tC2Q: 0.504, 3.293%</td></tr>
-<tr>
-<td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
-</table>
-<br/>
-<h3>Path&nbsp5</h3>
-<b>Path Summary:</b></br>
-<table class="summary_table">
-<tr>
-<td class="label">Slack</td>
-<td>25.914</td>
-</tr>
-<tr>
-<td class="label">Data Arrival Time</td>
-<td>17.383</td>
-</tr>
-<tr>
-<td class="label">Data Required Time</td>
-<td>43.297</td>
-</tr>
-<tr>
-<td class="label">From</td>
-<td>uvga/currentCursorRow_0_s0</td>
-</tr>
-<tr>
-<td class="label">To</td>
-<td>uvga/ucharbufinit/initCursorRow_2_s1</td>
-</tr>
-<tr>
-<td class="label">Launch Clk</td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
-</tr>
-<tr>
-<td class="label">Latch Clk</td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk[R]</td>
-</tr>
-</table>
-<b>Data Arrival Path:</b>
-<table class="summary_table">
-<tr>
-<th>AT</th>
-<th>DELAY</th>
-<th>TYPE</th>
-<th>RF</th>
-<th>FANOUT</th>
-<th>NODE</th>
-</tr>
-<tr>
-<td>0.000</td>
-<td>0.000</td>
-<td> </td>
-<td> </td>
-<td> </td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
-</tr>
-<tr>
-<td>1.272</td>
-<td>1.272</td>
-<td>tCL</td>
-<td>RR</td>
-<td>384</td>
-<td>uclockGen/rpll_inst/CLKOUT</td>
-</tr>
-<tr>
-<td>2.070</td>
-<td>0.799</td>
-<td>tNET</td>
-<td>RR</td>
-<td>1</td>
-<td>uvga/currentCursorRow_0_s0/CLK</td>
-</tr>
-<tr>
-<td>2.575</td>
-<td>0.504</td>
-<td>tC2Q</td>
-<td>RF</td>
-<td>15</td>
-<td>uvga/currentCursorRow_0_s0/Q</td>
-</tr>
-<tr>
-<td>3.631</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_0_s/I1</td>
-</tr>
-<tr>
-<td>4.780</td>
-<td>1.150</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_0_s/COUT</td>
-</tr>
-<tr>
-<td>4.780</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_1_s/CIN</td>
-</tr>
-<tr>
-<td>4.843</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_1_s/COUT</td>
-</tr>
-<tr>
-<td>4.843</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_2_s/CIN</td>
-</tr>
-<tr>
-<td>4.905</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_2_s/COUT</td>
-</tr>
-<tr>
-<td>4.905</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_3_s/CIN</td>
-</tr>
-<tr>
-<td>4.968</td>
-<td>0.063</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/currentScrolledRow_3_s/COUT</td>
-</tr>
-<tr>
-<td>4.968</td>
-<td>0.000</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/currentScrolledRow_4_s/CIN</td>
-</tr>
-<tr>
-<td>5.587</td>
-<td>0.619</td>
-<td>tINS</td>
-<td>FF</td>
-<td>5</td>
-<td>uvga/currentScrolledRow_4_s/SUM</td>
-</tr>
-<tr>
-<td>6.643</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>2</td>
-<td>uvga/n271_s0/I1</td>
-</tr>
-<tr>
-<td>7.793</td>
-<td>1.150</td>
-<td>tINS</td>
-<td>FF</td>
-<td>3</td>
-<td>uvga/n271_s0/COUT</td>
-</tr>
-<tr>
-<td>8.849</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s4/I0</td>
-</tr>
-<tr>
-<td>9.984</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s4/F</td>
-</tr>
-<tr>
-<td>11.040</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n339_s1/I2</td>
-</tr>
-<tr>
-<td>11.944</td>
-<td>0.904</td>
-<td>tINS</td>
-<td>FF</td>
-<td>11</td>
-<td>uvga/ucharbufinit/n339_s1/F</td>
-</tr>
-<tr>
-<td>13.000</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n251_s3/I0</td>
-</tr>
-<tr>
-<td>14.136</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n251_s3/F</td>
-</tr>
-<tr>
-<td>15.192</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n251_s2/I0</td>
-</tr>
-<tr>
-<td>16.327</td>
-<td>1.135</td>
-<td>tINS</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/n251_s2/F</td>
-</tr>
-<tr>
-<td>17.383</td>
-<td>1.056</td>
-<td>tNET</td>
-<td>FF</td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_2_s1/D</td>
-</tr>
-</table>
-<b>Data Required Path:</b>
-<table class="summary_table">
-<tr>
-<th>AT</th>
-<th>DELAY</th>
-<th>TYPE</th>
-<th>RF</th>
-<th>FANOUT</th>
-<th>NODE</th>
-</tr>
-<tr>
-<td>41.667</td>
-<td>0.000</td>
-<td> </td>
-<td> </td>
-<td> </td>
-<td>uclockGen/rpll_inst/CLKOUT.default_gen_clk</td>
-</tr>
-<tr>
-<td>42.938</td>
-<td>1.272</td>
-<td>tCL</td>
-<td>RR</td>
-<td>384</td>
-<td>uclockGen/rpll_inst/CLKOUT</td>
-</tr>
-<tr>
-<td>43.737</td>
-<td>0.799</td>
-<td>tNET</td>
-<td>RR</td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_2_s1/CLK</td>
-</tr>
-<tr>
-<td>43.297</td>
-<td>-0.440</td>
-<td>tSu</td>
-<td> </td>
-<td>1</td>
-<td>uvga/ucharbufinit/initCursorRow_2_s1</td>
-</tr>
-</table>
-<b>Path Statistics:</b>
-<table class="summary_table">
-<tr>
-<td class="label">Clock Skew:</td>
-<td>0.000</td>
-</tr>
-<tr>
-<td class="label">Setup Relationship:</td>
-<td>41.667</td>
-</tr>
-<tr>
-<td class="label">Logic Level:</td>
-<td>8</td>
-</tr>
-<tr>
-<td class="label">Arrival Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
-<tr>
-<td class="label">Arrival Data Path Delay:</td><td> cell: 7.416, 48.432%; route: 7.392, 48.275%; tC2Q: 0.504, 3.293%</td></tr>
+<td class="label">Arrival Data Path Delay:</td><td> cell: 7.868, 49.912%; route: 7.392, 46.890%; tC2Q: 0.504, 3.198%</td></tr>
 <tr>
 <td class="label">Required Clock Path Delay:</td><td> cell: 0.000, 0.000%; route: 0.799, 100.000%</td></tr>
 </table>

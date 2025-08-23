@@ -6,6 +6,7 @@
     <Device name="GW1NZ-1" pn="GW1NZ-LV1QN48C6/I5">gw1nz1-015</Device>
     <FileList>
         <File path="src/ansiescape.v" type="file.verilog" enable="1"/>
+        <File path="src/arb2x1.v" type="file.verilog" enable="1"/>
         <File path="src/charBuffer/charBuffer.v" type="file.verilog" enable="1"/>
         <File path="src/charROM/charROM.v" type="file.verilog" enable="1"/>
         <File path="src/charbufferinit.v" type="file.verilog" enable="1"/>
@@ -15,7 +16,6 @@
         <File path="src/hvsync.v" type="file.verilog" enable="1"/>
         <File path="src/kbd.v" type="file.verilog" enable="1"/>
         <File path="src/kbdrom/kbdrom.v" type="file.verilog" enable="1"/>
-        <File path="src/keysynchronizer.v" type="file.verilog" enable="1"/>
         <File path="src/ps2receiver.v" type="file.verilog" enable="1"/>
         <File path="src/regFifo4x8/regFifo4x8.v" type="file.verilog" enable="1"/>
         <File path="src/uart.v" type="file.verilog" enable="1"/>

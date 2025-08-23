@@ -68,6 +68,7 @@
 	wire statusUpdateDone = initStateACTIVE_STAT & initCursorColAtMax;
 	wire initDone = fullScreenInitDone | rowInitDone;
 
+	//row 31 is the status row
 	assign nextInitState =  (initStateIDLE & updateStatusRow)? INIT_STATE_ACTIVE_STAT:
 							(~enable & initStateIDLE & sequential & ~initRowOnly)? INIT_STATE_ACTIVE_SEQ:
 							(~enable & initStateIDLE & ~sequential & ~initRowOnly)? INIT_STATE_ACTIVE_CLS:

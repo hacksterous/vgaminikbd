@@ -88,17 +88,8 @@ Note!
 		.clkout (clk),	//24MHz
 		.lock ());
 
-	keySynchronizer ukdA (
-		.clk (clk),
-		.resetn (resetn),
-		.keyIn (keyA),
-		.keyOut (keyAOut));
-
-	keySynchronizer ukdB (
-		.clk (clk),
-		.resetn (resetn),
-		.keyIn (keyB),
-		.keyOut (keyBOut));
+	assign keyAOut = keyA; //static very low freq signal
+	assign keyBOut = keyB; //static very low freq signal
 
 	wire [7:0] kbdAsciiData;
 	wire kbdAsciiDataValid;
@@ -116,14 +107,15 @@ Note!
 	wire dataArbDoutValid;
 	wire oneSecPulse;
 
-	wire serialANSIDataValid;
-	wire [7:0] serialANSIData;
+	wire ansiOutDataValid;
+	wire [7:0] ansiOutData;
 
 	wire dataInTxBusy;
-	wire [7:0] dataInTx;
-	wire dataInTxValid;
 
 	wire keyTimeout;
+
+	wire [7:0] arbDataOut;
+	wire arbDataOutValid;
 
 	uart uuart0 (
 		.ECHO (1'b0),
@@ -139,8 +131,8 @@ Note!
 		`endif
 		.dataOutRx (uartRxDataOut),	//CPU Rx parallel data to ANSI decode module
 		.dataOutRxAvailable (uartRxDataOutValid),
-		.dataInTx (kbdAsciiData),	//keyboard parallel data to Tx
-		.dataInTxValid (kbdAsciiDataValid),
+		.dataInTx (ansiOutData),	
+		.dataInTxValid (ansiOutDataValid),
 		.dataInTxBusy (dataInTxBusy),
 		.rxError (),
 		.rxBitTick(),
@@ -151,15 +143,25 @@ Note!
 		.resetn (userResetn),
 		.keyTimeout (keyTimeout),
 		.ansiEscDebug(debug0),
-		.rxDataInValid (uartRxDataOutValid),
-		.rxDataIn (uartRxDataOut),
-		.rxANSIDataOutValid (serialANSIDataValid),
-		.rxANSIDataOut (serialANSIData));
+		.rxDataIn (arbDataOut),
+		.rxDataInValid (arbDataOutValid),
+		.rxANSIDataOut (ansiOutData),
+		.rxANSIDataOutValid (ansiOutDataValid));
+
+	arb2x1 uarb(
+		.clk (clk),
+		.resetn (userResetn),
+		.d0 (kbdAsciiData),
+		.d0v (kbdAsciiDataValid),
+		.d1 (uartRxDataOut),
+		.d1v (uartRxDataOutValid),
+		.od (arbDataOut),
+		.odv (arbDataOutValid));
 
 	vga uvga(
 		.resetn (resetn),
-		.inputCmdData (serialANSIData),
-		.inputCmdValid (serialANSIDataValid),
+		.inputCmdData (ansiOutData),
+		.inputCmdValid (ansiOutDataValid),
 		.inputKeyA (keyAOut),
 		.inputKeyB (keyBOut),
 		.debugUARTTxData (),

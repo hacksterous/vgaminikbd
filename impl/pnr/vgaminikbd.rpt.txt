@@ -11,27 +11,27 @@
   <Tool Version>: V1.9.11.03
   <Part Number>: GW1NZ-LV1QN48C6/I5
   <Device>: GW1NZ-1
-  <Created Time>:Sat Aug  9 16:49:58 2025
+  <Created Time>:Sat Aug 23 18:22:55 2025
 
 
 2. PnR Details
 
   Running placement:
-    Placement Phase 0: CPU time = 0h 0m 0.129s, Elapsed time = 0h 0m 0.125s
-    Placement Phase 1: CPU time = 0h 0m 0.043s, Elapsed time = 0h 0m 0.041s
-    Placement Phase 2: CPU time = 0h 0m 0.158s, Elapsed time = 0h 0m 0.156s
+    Placement Phase 0: CPU time = 0h 0m 0.129s, Elapsed time = 0h 0m 0.126s
+    Placement Phase 1: CPU time = 0h 0m 0.045s, Elapsed time = 0h 0m 0.044s
+    Placement Phase 2: CPU time = 0h 0m 0.151s, Elapsed time = 0h 0m 0.147s
     Placement Phase 3: CPU time = 0h 0m 1s, Elapsed time = 0h 0m 1s
     Total Placement: CPU time = 0h 0m 2s, Elapsed time = 0h 0m 2s
  Running routing:
     Routing Phase 0: CPU time = 0h 0m 0.001s, Elapsed time = 0h 0m 0.001s
-    Routing Phase 1: CPU time = 0h 0m 0.061s, Elapsed time = 0h 0m 0.073s
-    Routing Phase 2: CPU time = 0h 0m 1s, Elapsed time = 0h 0m 1s
+    Routing Phase 1: CPU time = 0h 0m 0.067s, Elapsed time = 0h 0m 0.074s
+    Routing Phase 2: CPU time = 0h 0m 0.995s, Elapsed time = 0h 0m 0.983s
     Routing Phase 3: CPU time = 0h 0m 0s, Elapsed time = 0h 0m 0s
     Total Routing: CPU time = 0h 0m 1s, Elapsed time = 0h 0m 1s
  Generate output files:
-    CPU time = 0h 0m 0.293s, Elapsed time = 0h 0m 0.34s
+    CPU time = 0h 0m 0.293s, Elapsed time = 0h 0m 0.353s
 
- Total Time and Memory Usage: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s, Peak memory usage = 665MB
+ Total Time and Memory Usage: CPU time = 0h 0m 3s, Elapsed time = 0h 0m 3s, Peak memory usage = 481MB
 
 
 3. Resource Usage Summary
@@ -39,15 +39,15 @@
   --------------------------------------------------------------------------------
   Resources                   | Usage                               | Utilization
   --------------------------------------------------------------------------------
-  Logic                       | 993/1152                            |  87%
-    --LUT,ALU,ROM16           | 993(896 LUT, 97 ALU, 0 ROM16)       | -
+  Logic                       | 1003/1152                           |  88%
+    --LUT,ALU,ROM16           | 1003(906 LUT, 97 ALU, 0 ROM16)      | -
     --SSRAM(RAM16)            | 0                                   | -
-  Register                    | 385/957                             |  41%
+  Register                    | 381/957                             |  40%
     --Logic Register as Latch | 0/864                               |  0%
-    --Logic Register as FF    | 381/864                             |  45%
+    --Logic Register as FF    | 379/864                             |  44%
     --I/O Register as Latch   | 0/93                                |  0%
-    --I/O Register as FF      | 4/93                                |  5%
-  CLS                         | 541/576                             |  94%
+    --I/O Register as FF      | 2/93                                |  3%
+  CLS                         | 547/576                             |  95%
   I/O Port                    | 13/41                               |  32%
   I/O Buf                     | 13                                  | -
     --Input Buf               | 6                                   | -
@@ -98,8 +98,8 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Port Name  | Diff Pair | Loc./Bank     | Constraint | Dir.  | Site     | CFG             | IO Type    | Drive | Pull Mode | PCI Clamp | Hysteresis | Open Drain | BankVccio 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-keyA       | -         | 13/1          | Y          | in    | IOR10[B] | -               | LVTTL33    | NA    | NONE      | NA        | NONE       | NA         | 3.3       
-keyB       | -         | 44/0          | Y          | in    | IOT13[A] | JTAGSEL_N       | LVTTL33    | NA    | NONE      | NA        | NONE       | NA         | 3.3       
+keyA       | -         | 13/1          | Y          | in    | IOR10[B] | -               | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
+keyB       | -         | 44/0          | Y          | in    | IOT13[A] | JTAGSEL_N       | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
 KBD_CLK    | -         | 29/1          | Y          | in    | IOR6[E]  | FASTRD_N/D3     | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
 KBD_DATA   | -         | 19/1          | Y          | in    | IOR6[J]  | DOUT/WE_N       | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
 UART_RX0   | -         | 16/1          | Y          | in    | IOR6[F]  | -               | LVTTL33    | NA    | UP        | NA        | NONE       | NA         | 3.3       
@@ -131,7 +131,7 @@ Loc./Bank| Signal    | Dir.  | Site     | CFG             | IO Type  | Drive | P
 8/0      | -         | in    | IOT10[B] | GCLKC_0         | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
 46/0     | -         | in    | IOT12[A] | DONE            | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
 45/0     | -         | in    | IOT12[B] | READY           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
-44/0     | keyB      | in    | IOT13[A] | JTAGSEL_N       | LVTTL33  | NA    | NONE      | NA        | NONE       | NA         | 3.3  
+44/0     | keyB      | in    | IOT13[A] | JTAGSEL_N       | LVTTL33  | NA    | UP        | NA        | NONE       | NA         | 3.3  
 43/0     | -         | in    | IOT14[A] | MODE0           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
 42/0     | -         | in    | IOT14[B] | MODE1           | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
 41/0     | -         | in    | IOT15[B] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
@@ -164,7 +164,7 @@ Loc./Bank| Signal    | Dir.  | Site     | CFG             | IO Type  | Drive | P
 23/1     | pixel     | out   | IOR8[B]  | -               | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
 22/1     | hsync     | out   | IOR9[A]  | SI/D2           | LVTTL33  | 16    | NONE      | NA        | NA         | OFF        | 3.3  
 20/1     | -         | in    | IOR10[A] | -               | LVCMOS33 | NA    | UP        | NA        | NONE       | NA         | 3.3  
-13/1     | keyA      | in    | IOR10[B] | -               | LVTTL33  | NA    | NONE      | NA        | NONE       | NA         | 3.3  
+13/1     | keyA      | in    | IOR10[B] | -               | LVTTL33  | NA    | UP        | NA        | NONE       | NA         | 3.3  
 ---------------------------------------------------------------------------------------------------------------------------------------
 =======================================================================================================================================
 

@@ -22,10 +22,11 @@
 `define CMD_LF 10
 `define CMD_DOWN 10 
 `define CMD_RIGHT 11
-`define CMD_LEFT 12
+//clear screen -> Form Feed ASCII code 12
+`define CMD_CLS 12
 `define CMD_CR 13
 `define CMD_HOME 13
-`define CMD_CLS 14
+`define CMD_LEFT 14
 `define CMD_END 15
 `define CMD_ERASE_SOL 16
 `define CMD_ERASE_EOL 17
@@ -42,6 +43,7 @@
 `define CMD_STATUSBARTOG 26
 `define CMD_ESC 27
 `define CMD_MOVROWSUP 28
+`define CMD_DISP_BLANKOUT 29
 `define CHAR_ESC 27
 `define CHAR_SPC 32
 `define CHAR_ZERO 48
