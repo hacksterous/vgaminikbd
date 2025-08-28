@@ -307,7 +307,6 @@ module vga(
 	wire rowDMARdColMaxxed;
 	wire rowDMARdRowMaxxed;
 	wire rowDMAMoveRowsDone = rowDMARdRowAtCursor & rowDMARdColMaxxed;
-
 	wire rowDMAMoveRowsUpDone = rowDMARdRowMaxxed & rowDMARdColMaxxed; 
 
 	wire rowDMAMoveColsRdEn = (rowDMAState == ROWDMA_COLMOVE_READ);
@@ -375,12 +374,12 @@ module vga(
 			end
 			ROWDMA_ROWMOVEUP_READ: begin
 				//move the byte at Row R, Column C to Row R-1, Column C
-				//for R = 31, 30, ... (currentCursorRow + 1), and C = 0, 1, ... 79
+				//for R = (currentScrolledRow + 1), (currentScrolledRow + 2) ... and C = 0, 1, ... 79
 				nextRowDMAState = ROWDMA_ROWMOVEUP_WRITE;
 			end
 			ROWDMA_ROWMOVE_READ: begin
 				//move the byte at Row R, Column C to Row R+1, Column C
-				//for R = 30, 29, ... (currentCursorRow + 1), and C = 0, 1, ... 79
+				//for R = 30, 29, ... (currentScrolledRow + 1), and C = 0, 1, ... 79
 				nextRowDMAState = ROWDMA_ROWMOVE_WRITE;
 			end
 			ROWDMA_ROWMOVEUP_WRITE: begin
@@ -481,7 +480,10 @@ module vga(
 		end
 	end
 
-	wire rowEraseMoveRows = rowDMAMoveRowsWrEn & rowDMARdRowAtCursor & rowDMARdColMaxxed;
+	//wire rowEraseMoveRows = rowDMAMoveRowsWrEn & rowDMARdRowAtCursor & rowDMARdColMaxxed;
+	//wire rowEraseMoveRowsUp = rowDMAMoveRowsUpWrEn & rowDMARdRowMaxxed & rowDMARdColMaxxed;
+	wire rowEraseMoveRows = rowDMAMoveRowsWrEn & rowDMAMoveRowsDone;
+	wire rowEraseMoveRowsUp = rowDMAMoveRowsUpWrEn & rowDMAMoveRowsUpDone;
 	wire charBufferInitStateIsIdle;
 	charBufferInit ucharbufinit (
 		.clk (clk),
@@ -493,7 +495,8 @@ module vga(
 					& ~clearRowOnScrollUp
 					& ~inputCmdEraseEOL
 					& ~rowDMAMoveColsDone
-					& ~rowDMAMoveRowsUpDone
+					//& ~rowDMAMoveRowsUpDone
+					& ~rowEraseMoveRowsUp
 					& ~inputCmdEraseLine),
 		.sequential (~inputKeyB),
 		.scrollRow (scrollRow),

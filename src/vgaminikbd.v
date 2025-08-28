@@ -142,7 +142,7 @@ Note!
 		.clk (clk),
 		.resetn (userResetn),
 		.keyTimeout (keyTimeout),
-		.ansiEscDebug(debug0),
+		.ansiEscDebug(),
 		.rxDataIn (arbDataOut),
 		.rxDataInValid (arbDataOutValid),
 		.rxANSIDataOut (ansiOutData),
@@ -158,6 +158,8 @@ Note!
 		.od (arbDataOut),
 		.odv (arbDataOutValid));
 
+	assign debug0 = 1'b1;
+	assign debug2 = 1'b1;
 	vga uvga(
 		.resetn (resetn),
 		.inputCmdData (ansiOutData),
@@ -172,7 +174,7 @@ Note!
 		.userResetn (userResetn),
 		.debug0 (), //green
 		.debug1 (debug1), //red
-		.debug2 (debug2), //blue
+		.debug2 (), //blue
 		.pixel (pixel),
 		.hsync (hsync),
 		.vsync (vsync));

@@ -38,12 +38,23 @@
 `define CMD_SETCOL 21
 `define CMD_SETROW 22
 `define CMD_INSTOG 23
+//typically CMD_MOVROWS and CMD_MOVCOLS go together
+//to mimic the actions of a return key press at the
+//middle of a line of text
 `define CMD_MOVROWS 24
 `define CMD_MOVCOLS 25
 `define CMD_STATUSBARTOG 26
 `define CMD_ESC 27
 `define CMD_MOVROWSUP 28
-`define CMD_DISP_BLANKOUT 29
+`define CMD_SUBCMD 29
+`define CMD_SUBCMD_DISPBLANKTOG 1
+`define CMD_SUBCMD_VSPLITTOG 2
+`define CMD_SUBCMD_SCROLL_DOWN 3
+`define CMD_SUBCMD_CMD_CURTOG 4
+`define CMD_SUBCMD_CMD_CHRTOG 5
+//CMD_SPLIT_COLMODE -> rows move up/down start at column 61 and not 0
+//also, character entry wraps around at column 60
+`define CMD_SPLIT_COLMODE 30
 `define CHAR_ESC 27
 `define CHAR_SPC 32
 `define CHAR_ZERO 48
