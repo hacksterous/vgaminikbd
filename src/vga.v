@@ -101,13 +101,17 @@ module vga(
 
 	
 	localparam TABLEN = 4'd4; //tab is 4 space wide
-	localparam MAXCOL_M_1 = 79;
-	localparam MAXCOL_M_2 = 78;
+	localparam [6:0] MAXCOL_M_1 = 79;
+	localparam [6:0] MAXCOL_M_2 = 78;
 	localparam MAXCOL_M_TABLEN_1 = 75;
 	localparam MAXROW_M_1 = 31;
 	localparam MAXROW_M_1_SCROLL = 30;
 	localparam MAXCHARWIDTH_M_1 = 7;	//1 blank pixel + 7 pixels
 	localparam MAXCHARHEIGHT_M_1 = 14;	//9 lines + 1 blank line + 2 cursor lines + 3 interrow blank lines
+
+	localparam [6:0] VSPLIT_MODE_MAXCOL_M_1 = 59;
+	localparam VSPLIT_MODE_SPINE = 60;
+	localparam [6:0] VSPLIT_MODE_MAXCOL = 61;
 
 	localparam MAXCHARS_M_1 = 12'd2559;
 
@@ -170,8 +174,11 @@ module vga(
 	wire cursorBlink;
 
 	reg cursorInvisible;
+	reg displayBlank;
 	reg pendingSetCol;
 	reg pendingSetRow;
+	reg pendingSubCmd;
+	reg vertSplitScroll;
 
 	//insertMode	commandMode				Vi Mode
 	// 	0			0					Overwrite mode
@@ -252,7 +259,6 @@ module vga(
 	wire inputCmdInsertToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_INSTOG);
 
 	//do we have any use for making the cursor invisible?
-	//TODO:
 	wire inputCmdCursorToggle = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_CURTOG);
 
 	//freeze the bottom row (status bar)
@@ -264,6 +270,7 @@ module vga(
 									(currentCursorRow[4:0] == MAXROW_M_1_SCROLL):
 									(currentCursorRow[4:0] == MAXROW_M_1);
 
+	//inputCmdMoveRowsCommand -> move rows down
 	wire inputCmdMoveRowsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWS);
 	wire inputCmdMoveColsCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVCOLS);
 	wire inputCmdMoveRowsUpCommand = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_MOVROWSUP);
@@ -287,6 +294,7 @@ module vga(
 
 	wire inputCmdSetCol = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETCOL);
 	wire inputCmdSetRow = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SETROW);
+	wire inputCmdSubCmd = inputCmdLow32 & (inputCmdMemWrData[4:0] == 5'd`CMD_SUBCMD);
 
 	wire rowDMAInsReadWrite;
 	wire rowDMAInsDone;
@@ -356,11 +364,19 @@ module vga(
 					nextRowDMARdRow = currentScrolledRow;
 				end else if (inputCmdMoveRowsUp) begin
 					nextRowDMAState = ROWDMA_ROWMOVEUP_READ;
-					nextRowDMARdCol = 7'h0;
+					if (vertSplitScroll) begin
+						nextRowDMARdCol = VSPLIT_MODE_MAXCOL; //61
+					end else begin
+						nextRowDMARdCol = 7'h0;
+					end
 					nextRowDMARdRow = currentScrolledRow + 1'b1;
 				end else if (inputCmdMoveRows) begin
 					nextRowDMAState = ROWDMA_ROWMOVE_READ;
-					nextRowDMARdCol = 7'h0;
+					if (vertSplitScroll) begin
+						nextRowDMARdCol = VSPLIT_MODE_MAXCOL; //61
+					end else begin
+						nextRowDMARdCol = 7'h0;
+					end
 					nextRowDMARdRow = 5'd30;
 				end else if (inputCmdInsertChar) begin
 					nextRowDMAState = ROWDMA_INSCHAR_READ;
@@ -374,7 +390,7 @@ module vga(
 			end
 			ROWDMA_ROWMOVEUP_READ: begin
 				//move the byte at Row R, Column C to Row R-1, Column C
-				//for R = (currentScrolledRow + 1), (currentScrolledRow + 2) ... and C = 0, 1, ... 79
+				//for R = (currentScrolledRow + 1), (currentScrolledRow + 2) ... 31 and C = 0, 1, ... 79
 				nextRowDMAState = ROWDMA_ROWMOVEUP_WRITE;
 			end
 			ROWDMA_ROWMOVE_READ: begin
@@ -388,7 +404,11 @@ module vga(
 					nextRowDMAState = ROWDMA_IDLE;
 					nextRowDMARdCol = 7'h0;
 				end else if (rowDMARdColMaxxed) begin
-					nextRowDMARdCol = 7'h0;
+					if (vertSplitScroll) begin
+						nextRowDMARdCol = VSPLIT_MODE_MAXCOL; //61
+					end else begin
+						nextRowDMARdCol = 7'h0;
+					end
 					nextRowDMARdRow = (rowDMARdRow + 1'b1);
 				end else begin
 					nextRowDMARdCol = (rowDMARdCol + 1'b1);
@@ -400,7 +420,11 @@ module vga(
 					nextRowDMAState = ROWDMA_IDLE;
 					nextRowDMARdCol = 7'h0;
 				end else if (rowDMARdColMaxxed) begin
-					nextRowDMARdCol = 7'h0;
+					if (vertSplitScroll) begin
+						nextRowDMARdCol = VSPLIT_MODE_MAXCOL; //61
+					end else begin
+						nextRowDMARdCol = 7'h0;
+					end
 					nextRowDMARdRow = (rowDMARdRow - 1'b1);
 				end else begin
 					nextRowDMARdCol = (rowDMARdCol + 1'b1);
@@ -510,7 +534,7 @@ module vga(
 		//rowInitRow = rowDMARdRow is set by the previous MOVEROWS operation, and equals (currentScrolledRow - 1)
 		//For MOVEROWSUP, if Row #31 is frozen, delete Row #30, else delete Row #31
 		.rowInitRow ((rowDMAMoveRowsUpDone & frozenBottomRowMode)? 5'd30: (rowDMAMoveRowsUpDone)? 5'd31: (rowDMAMoveColsDone)? rowDMARdRow: currentScrolledRow),
-		.rowInitCol ((inputCmdEraseEOL | rowDMAMoveColsDone)? currentCursorCol: 7'h0),
+		.rowInitCol ((vertSplitScroll)? VSPLIT_MODE_MAXCOL: (inputCmdEraseEOL | rowDMAMoveColsDone)? currentCursorCol: 7'h0),
 		.initWrEn (charBufferInitInProgress),
 		.initAddress (charBufferInitAddr),
 		.initData (charBufferInitData));
@@ -543,6 +567,8 @@ module vga(
 			frozenBottomRowMode <= `DELAY 1'b0;
 			pendingSetCol <= `DELAY 1'b0; //1 means next input byte will set the column
 			pendingSetRow <= `DELAY 1'b0; //1 means next input byte will set the column
+			pendingSubCmd <= `DELAY 1'b0; //1 means next input byte will be a sub command
+			vertSplitScroll <= `DELAY 1'b0; //scroll column 61-79 only
 			cursorInvisible <= `DELAY 1'b0; //1 means cursor is invisible
 			currentCursorCol <= `DELAY 7'h0;
 			currentCursorRow <= `DELAY 5'h0;
@@ -554,6 +580,7 @@ module vga(
 			inputCmdScrollUp_r0 <= `DELAY inputCmdScrollUp;
 			pendingSetCol <= `DELAY (inputCmdSetCol & inputCmdValid_r0)? 1'b1: pendingSetCol; 
 			pendingSetRow <= `DELAY (inputCmdSetRow & inputCmdValid_r0)? 1'b1: pendingSetRow; 
+			pendingSubCmd <= `DELAY (inputCmdSubCmd & inputCmdValid_r0)? 1'b1: pendingSubCmd;
 			//1 means cursor is invisible
 			//during backspace or delete operation, make cursor invisible
 			cursorInvisible <= `DELAY (inputCmdCursorToggle)? ~cursorInvisible: cursorInvisible; 
@@ -563,7 +590,8 @@ module vga(
 												{insertMode, commandMode};
 			frozenBottomRowMode <= `DELAY (inputCmdStatusBarToggle)? ~frozenBottomRowMode: frozenBottomRowMode;
 			inputCmdValid_r0 <= `DELAY inputCmdValid;
-			inputCmdMemWrEn <= `DELAY inputCmdValid & |inputCmdData[6:5] & ~pendingSetCol & ~pendingSetRow;
+			inputCmdMemWrEn <= `DELAY inputCmdValid & |inputCmdData[6:5] 
+										& ~pendingSetCol & ~pendingSetRow & ~pendingSubCmd;
 			inputCmdMemWrData <= `DELAY inputCmdData;
 			//character at current cursor is stored at (MAXROW_M_1 + 1) * currentCursorCol + currentCursorRow
 			if (eraseToSOLInProgress & rowDMAWrColMaxxed & rowDMAWrEnLast) begin
@@ -589,6 +617,24 @@ module vga(
 				end else if (pendingSetCol) begin
 					currentCursorCol <= `DELAY inputCmdMemWrData[6:0];
 					pendingSetCol <= `DELAY 1'b0;
+				end else if (pendingSubCmd) begin
+					if (inputCmdLow16) begin
+						case (inputCmdMemWrData[3:0])
+							4'd`CMD_SUBCMD_VSPLITTOG: begin
+								vertSplitScroll <= `DELAY ~vertSplitScroll;
+							end
+							4'd`CMD_SUBCMD_SCROLL_DOWN: begin
+								scrollRow <= `DELAY (scrollRow - 1'b1);
+							end
+							4'd`CMD_SUBCMD_CMD_CURTOG: begin
+								cursorInvisible <= `DELAY ~cursorInvisible;
+							end
+							4'd`CMD_SUBCMD_DISPBLANKTOG: begin
+								displayBlank <= `DELAY ~displayBlank;
+							end
+						endcase
+					end
+					pendingSubCmd <= `DELAY 1'b0;
 				end else if (inputCmdMemWrData[7:4] == 4'h0) begin
 					case (inputCmdMemWrData[3:0])
 						4'd`CMD_SCROLL_DOWN: begin
@@ -653,7 +699,8 @@ module vga(
 					//printable character > ASCII 31 < 128
 					//in insert mode, this code is used only when cursor column is max
 					//either not in insert mode, or at max column
-					if (currentCursorCol[6:0] == MAXCOL_M_1) begin
+					if (((currentCursorCol[6:0] == MAXCOL_M_1) & ~vertSplitScroll) | 
+						((currentCursorCol[6:0] == VSPLIT_MODE_MAXCOL_M_1) & vertSplitScroll)) begin
 						currentCursorCol <= `DELAY 7'h0;
 						if (cursorOnLastPhysicalRow) begin
 							scrollRow <= `DELAY (scrollRow + 1'b1);
@@ -670,7 +717,7 @@ module vga(
 	end //always
 
 	assign debug0 = ~inputCmdMoveColsInProgress & ~frozenBottomRowMode; //green
-	assign debug1 = 1'b1; //red
+	assign debug1 = ~vertSplitScroll; //red
 	assign debug2 = ~insertMode; //blue
 
 	wire [4:0] shiftedHeightCounter = ({1'b0, charHeightCounter_r0[3:0]} - 5'd9);
